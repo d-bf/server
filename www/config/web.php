@@ -1,12 +1,26 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+$params = require(__DIR__ . '/platforms.php');
 
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'gii'],
+	'modules' => [
+		'gii' => 'yii\gii\Module',
+	],
     'components' => [
+		'urlManager' => [
+			'enablePrettyUrl' => true,
+			'showScriptName' => false,
+			'enableStrictParsing' => false,
+			'rules' => [
+				'<controller:\w+>/<id:\d+>/<action:\w+>' => '<controller>/<action>',
+				'<controller:\w+>/<id:\d+>' => '<controller>/view',
+				'<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+			],
+		],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '2wnyxzheRhadQcR22o3V47z8NjdEnCzo',

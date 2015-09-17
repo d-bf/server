@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="dbf_server" id="Project2583989" html="n" template="Default" database="MySql" >
+	<schema name="dbf_server" schemaname="dbf_server" >
+		<table name="algorithm" >
+			<column name="id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<column name="name" type="varchar" length="100" jt="12" />
+			<index name="pk_algorithm" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_algorithm" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cracker" >
+			<column name="id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<column name="name" type="varchar" length="80" jt="12" />
+			<column name="gen_type" type="tinyint" jt="-6" >
+				<defo>0</defo>
+				<comment><![CDATA[0 (000): not supported; 1 (001): stdin; 2 (010): file; 3 (011): both;]]></comment>
+			</column>
+			<index name="pk_cracker" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_cracker" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cracker_algo" >
+			<column name="cracker_id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<column name="algo_id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<index name="pk_cracker_algo" unique="PRIMARY_KEY" >
+				<column name="cracker_id" />
+				<column name="algo_id" />
+			</index>
+			<index name="idx_cracker_algo" unique="NORMAL" >
+				<column name="cracker_id" />
+			</index>
+			<index name="idx_cracker_algo_0" unique="NORMAL" >
+				<column name="algo_id" />
+			</index>
+			<fk name="fk_cracker_algo" to_schema="dbf_server" to_table="cracker" delete_action="cascade" update_action="cascade" >
+				<fk_column name="cracker_id" pk="id" />
+			</fk>
+			<fk name="fk_cracker_algo_0" to_schema="dbf_server" to_table="algorithm" delete_action="cascade" update_action="cascade" >
+				<fk_column name="algo_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cracker_gen" >
+			<column name="cracker_id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<column name="gen_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<index name="idx_cracker_gen" unique="NORMAL" >
+				<column name="cracker_id" />
+			</index>
+			<index name="idx_cracker_gen_0" unique="NORMAL" >
+				<column name="gen_id" />
+			</index>
+			<index name="pk_cracker_gen" unique="PRIMARY_KEY" >
+				<column name="cracker_id" />
+				<column name="gen_id" />
+			</index>
+			<fk name="fk_cracker_gen" to_schema="dbf_server" to_table="cracker" delete_action="cascade" update_action="cascade" >
+				<fk_column name="cracker_id" pk="id" />
+			</fk>
+			<fk name="fk_cracker_gen_0" to_schema="dbf_server" to_table="generator" delete_action="cascade" update_action="cascade" >
+				<fk_column name="gen_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB DEFAULT CHARACTER SET=utf8]]></storage>
+		</table>
+		<table name="cracker_plat" >
+			<column name="cracker_id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<column name="plat_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="md5" type="char" length="32" jt="1" />
+			<index name="idx_cracker_plat" unique="NORMAL" >
+				<column name="cracker_id" />
+			</index>
+			<index name="idx_cracker_plat_0" unique="NORMAL" >
+				<column name="plat_id" />
+			</index>
+			<index name="pk_cracker_plat" unique="PRIMARY_KEY" >
+				<column name="cracker_id" />
+				<column name="plat_id" />
+			</index>
+			<fk name="fk_cracker_plat" to_schema="dbf_server" to_table="cracker" delete_action="cascade" update_action="cascade" >
+				<fk_column name="cracker_id" pk="id" />
+			</fk>
+			<fk name="fk_cracker_plat_0" to_schema="dbf_server" to_table="platform" delete_action="cascade" update_action="cascade" >
+				<fk_column name="plat_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="gen_plat" >
+			<column name="gen_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="plat_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="alt_plat_id" type="tinyint" jt="-6" unsigned="y" >
+				<comment><![CDATA[if NULL generator exists for the current platform, else alternative platform's id of the generator]]></comment>
+			</column>
+			<column name="md5" type="char" length="32" jt="1" />
+			<index name="pk_gen_plat" unique="PRIMARY_KEY" >
+				<column name="gen_id" />
+				<column name="plat_id" />
+			</index>
+			<index name="idx_gen_plat" unique="NORMAL" >
+				<column name="gen_id" />
+			</index>
+			<index name="idx_gen_plat_0" unique="NORMAL" >
+				<column name="plat_id" />
+			</index>
+			<index name="idx_gen_plat_1" unique="NORMAL" >
+				<column name="alt_plat_id" />
+			</index>
+			<fk name="fk_gen_plat" to_schema="dbf_server" to_table="generator" delete_action="cascade" update_action="cascade" >
+				<fk_column name="gen_id" pk="id" />
+			</fk>
+			<fk name="fk_gen_plat_0" to_schema="dbf_server" to_table="platform" delete_action="cascade" update_action="cascade" >
+				<fk_column name="plat_id" pk="id" />
+			</fk>
+			<fk name="fk_gen_plat_1" to_schema="dbf_server" to_table="platform" delete_action="cascade" update_action="cascade" >
+				<fk_column name="alt_plat_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="generator" >
+			<column name="id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="name" type="varchar" length="80" jt="12" />
+			<index name="pk_generator" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_generator" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="platform" >
+			<column name="id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="name" type="varchar" length="32" jt="12" mandatory="y" >
+				<comment><![CDATA[os_arch_processor[_brand]]]></comment>
+			</column>
+			<index name="pk_platform" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_platform" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="subtask" >
+			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" autoincrement="y" />
+			<column name="task_id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
+			<column name="start" type="bigint" jt="-5" mandatory="y" unsigned="y" />
+			<column name="offset" type="bigint" jt="-5" unsigned="y" />
+			<column name="status" type="tinyint" length="1" jt="-6" >
+				<comment><![CDATA[0: not assigned; 1: assigned; 2: error; 3: finished;]]></comment>
+			</column>
+			<index name="pk_subtask" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_subtask" unique="NORMAL" >
+				<column name="task_id" />
+			</index>
+			<fk name="fk_subtask" to_schema="dbf_server" to_table="task" delete_action="cascade" update_action="cascade" >
+				<fk_column name="task_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="task" >
+			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" autoincrement="y" />
+			<column name="gen_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="algo_id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<column name="len_min" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="len_max" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="charset_1" type="varchar" length="255" jt="12" />
+			<column name="charset_2" type="varchar" length="255" jt="12" />
+			<column name="charset_3" type="varchar" length="255" jt="12" />
+			<column name="charset_4" type="varchar" length="255" jt="12" />
+			<column name="mask" type="varchar" length="255" jt="12" mandatory="y" />
+			<index name="pk_jobs" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_task" unique="NORMAL" >
+				<column name="algo_id" />
+			</index>
+			<index name="idx_task_0" unique="NORMAL" >
+				<column name="gen_id" />
+			</index>
+			<fk name="fk_task" to_schema="dbf_server" to_table="generator" delete_action="cascade" update_action="cascade" >
+				<fk_column name="gen_id" pk="id" />
+			</fk>
+			<fk name="fk_task_0" to_schema="dbf_server" to_table="algorithm" delete_action="cascade" update_action="cascade" >
+				<fk_column name="algo_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<view name="view_all_cracker_gen_plat" >
+			<view_script><![CDATA[SELECT cracker_plat.cracker_id, cracker_gen.gen_id, cracker_plat.plat_id, NULL as gen_plat_id FROM cracker_plat JOIN cracker_gen ON cracker_plat.cracker_id = cracker_gen.cracker_id 
+UNION
+SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.alt_plat_id IS NULL, gen_plat.plat_id, gen_plat.alt_plat_id) as gen_plat_id FROM cracker JOIN cracker_plat ON cracker.id = cracker_plat.cracker_id JOIN gen_plat ON cracker_plat.plat_id = gen_plat.plat_id WHERE cracker.gen_type > 0 ]]></view_script>
+			<column name="cracker_id" type="int unsigned" />
+			<column name="gen_id" type="tinyint unsigned" />
+			<column name="gen_plat_id" type="tinyint" />
+			<column name="plat_id" type="tinyint unsigned" />
+		</view>
+		<view name="view_cracker_gen_plat" >
+			<view_script><![CDATA[SELECT * FROM view_all_cracker_gen_plat GROUP BY cracker_id, gen_id, plat_id]]></view_script>
+			<column name="cracker_id" type="int unsigned" />
+			<column name="gen_id" type="tinyint unsigned" />
+			<column name="gen_plat_id" type="tinyint" />
+			<column name="plat_id" type="tinyint unsigned" />
+		</view>
+	</schema>
+	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.34-bin.jar" host="127.0.0.1" port="3306" instance="dbf_server" user="root" passwd="cm9vdA==" schema_mapping="" />
+	<layout id="Layout2583989" name="dbf_server" joined_routing="y" show_column_type="y" show_relation_columns="y" >
+		<entity schema="dbf_server" name="task" color="b2cdf7" x="435" y="405" />
+		<entity schema="dbf_server" name="generator" color="b2cdf7" x="255" y="255" />
+		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="675" y="255" />
+		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="465" y="135" />
+		<entity schema="dbf_server" name="view_cracker_gen_plat" color="a8c4ef" x="870" y="150" />
+		<entity schema="dbf_server" name="view_all_cracker_gen_plat" color="a8c4ef" x="870" y="45" />
+		<entity schema="dbf_server" name="subtask" color="b2cdf7" x="495" y="285" />
+		<entity schema="dbf_server" name="cracker_algo" color="b2cdf7" x="675" y="135" />
+		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="255" />
+		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="180" y="45" />
+		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="180" y="135" />
+		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="165" y="360" />
+	</layout>
+</project>

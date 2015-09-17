@@ -1,0 +1,11 @@
+{
+	"name" : "mask",
+	"platforms" : [
+		"linux_32_cpu",
+		"linux_64_cpu",
+		"win_32_cpu",
+		"win_64_cpu",
+		"mac_32_cpu",
+		"mac_64_cpu"
+	]
+}
