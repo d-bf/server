@@ -24,6 +24,8 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
+	public $mode, $charset, $maskChar, $maskCharError, $_LEN_MAX = 55;
+
     /**
      * @inheritdoc
      */
@@ -32,17 +34,101 @@ class Task extends \yii\db\ActiveRecord
         return '{{%task}}';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['gen_id', 'algo_id', 'len_min', 'len_max', 'mask'], 'required'],
-            [['gen_id', 'algo_id', 'len_min', 'len_max'], 'integer'],
-            [['charset_1', 'charset_2', 'charset_3', 'charset_4', 'mask'], 'string', 'max' => 255]
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			[['gen_id', 'algo_id', 'len_min', 'len_max', 'mode'], 'required'],
+			[
+				'charset',
+				'match', 'pattern' => '/^.+$/', 'skipOnEmpty' => false,
+				'message' => '{attribute} cannot be blank.',
+				'when' => function($model) {
+					return $model->mode == 0;
+				},
+				'whenClient' => "function() {
+					return $('#task-mode').val() == '0';
+				}"
+			],
+			[
+				['charset_1', 'charset_2', 'charset_3', 'charset_4'],
+				'match', 'pattern' => '/^.+$/', 'skipOnEmpty' => false,
+				'message' => '{attribute} cannot be blank.',
+				'when' => function($model, $attribute) {
+					if ($model->mode == 1) {
+						foreach ($model->maskChar as $mc)
+							if ($mc == '?' . explode('_', $attribute)[1])
+								return true;
+					}
+					return false;
+				},
+				'whenClient' => "function(attribute) {
+					var ret = false;
+					if ($('#task-mode').val() == '1') {
+						$('#task-maskchars input:enabled').each(function(index, element) {
+							if ($(element).val() == '?' + attribute.name.split('_')[1]) {
+								ret = true;
+								return false; // Break loop
+							}
+						});
+					}
+					return ret;
+				}"
+			],
+			[
+				'maskChar',
+				'each',
+				'rule' => [
+					'match', 'pattern' => '/^\?{0,1}.{1}$/', 'skipOnEmpty' => false,
+					'message' => '{attribute} cannot be blank.'
+				],
+				'when' => function($model) {
+					return $model->mode == 1;
+				},
+				'enableClientValidation' => false
+			],
+			[
+				'maskChar',
+				'match', 'pattern' => '/^\?{0,1}.{1}$/', 'skipOnEmpty' => false,
+				'message' => '{attribute} cannot be blank.',
+				'when' => function() {
+					return false;
+				},
+				'whenClient' => "function(attribute) {
+					return (($('#task-mode').val() == '1') && (! $(attribute.input).prop('disabled')));
+				}"
+			],
+			[
+				'maskCharError',
+				'required',
+				'when' => function($model) {
+					if ($model->mode == 1) {
+						foreach ($model->maskChar as $mc)
+							if (empty($mc))
+								return true;
+					}
+					return false;
+				},
+				'whenClient' => "function(attribute) {
+					var ret = false;
+					if ($('#task-mode').val() == '1') {
+						$('#task-maskchars input:visible:enabled').each(function(index, element) {
+							if ($(element).val().length == 0) {
+								ret = true;
+								return false; // Break loop
+							}
+						});
+					}
+					return ret;
+				}"
+			],
+			[['gen_id', 'algo_id', 'len_min', 'len_max'], 'integer'],
+			['len_max', 'compare', 'compareAttribute' => 'len_min', 'operator' => '>='],
+			[['charset_1', 'charset_2', 'charset_3','charset_4', 'mask'], 'string', 'max' => 255]
+		];
+	}
 
     /**
      * @inheritdoc
@@ -53,13 +139,17 @@ class Task extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'gen_id' => Yii::t('app', 'Gen ID'),
             'algo_id' => Yii::t('app', 'Algo ID'),
-            'len_min' => Yii::t('app', 'Len Min'),
-            'len_max' => Yii::t('app', 'Len Max'),
-            'charset_1' => Yii::t('app', 'Charset 1'),
-            'charset_2' => Yii::t('app', 'Charset 2'),
-            'charset_3' => Yii::t('app', 'Charset 3'),
-            'charset_4' => Yii::t('app', 'Charset 4'),
+            'len_min' => Yii::t('app', 'Min'),
+            'len_max' => Yii::t('app', 'Max'),
+            'charset_1' => Yii::t('app', 'Custom Charset 1'),
+            'charset_2' => Yii::t('app', 'Custom Charset 2'),
+            'charset_3' => Yii::t('app', 'Custom Charset 3'),
+            'charset_4' => Yii::t('app', 'Custom Charset 4'),
             'mask' => Yii::t('app', 'Mask'),
+            'mode' => Yii::t('app', 'Mode'),
+            'charset' => Yii::t('app', 'Charset'),
+            'maskChar' => Yii::t('app', 'Mask Char'),
+            'maskCharError' => Yii::t('app', 'Mask Char')
         ];
     }
 

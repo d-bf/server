@@ -53,23 +53,39 @@ class TaskController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Task model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Task();
+	/**
+	 * Creates a new Task model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * @return mixed
+	 */
+	public function actionCreate()
+	{
+		$model = new Task();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
+		if ($model->load(Yii::$app->request->post())) {
+			if ($model->mode == 1) { // Mask
+				$model->mask = '';
+				foreach ($model->maskChar as $mc)
+					$model->mask .= $mc;
+			} else { // Simple
+				$model->charset_1 = $model->charset;
+				$model->charset_2 = null;
+				$model->charset_3 = null;
+				$model->charset_4 = null;
+				$model->mask = str_repeat('?1', $model->len_max);
+			}
+			$model->save();
+
+			return $this->redirect([
+				'view',
+				'id' => $model->id
+			]);
+		} else {
+			return $this->render( 'create', [
+				'model' => $model
+			]);
+		}
+	}
 
     /**
      * Updates an existing Task model.
