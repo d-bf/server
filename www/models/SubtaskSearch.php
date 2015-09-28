@@ -12,13 +12,23 @@ use app\models\Subtask;
  */
 class SubtaskSearch extends Subtask
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'task_id', 'start', 'offset', 'status'], 'integer'],
+            [
+                [
+                    'id',
+                    'task_id',
+                    'start',
+                    'offset',
+                    'status'
+                ],
+                'integer'
+            ]
         ];
     }
 
@@ -33,7 +43,7 @@ class SubtaskSearch extends Subtask
 
     /**
      * Creates data provider instance with search query applied
-     *
+     * 
      * @param array $params
      *
      * @return ActiveDataProvider
@@ -41,27 +51,27 @@ class SubtaskSearch extends Subtask
     public function search($params)
     {
         $query = Subtask::find();
-
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
-
+        
         $this->load($params);
-
+        
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        
         $query->andFilterWhere([
             'id' => $this->id,
             'task_id' => $this->task_id,
             'start' => $this->start,
             'offset' => $this->offset,
-            'status' => $this->status,
+            'status' => $this->status
         ]);
-
+        
         return $dataProvider;
     }
 }

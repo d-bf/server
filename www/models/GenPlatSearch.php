@@ -12,14 +12,27 @@ use app\models\GenPlat;
  */
 class GenPlatSearch extends GenPlat
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['gen_id', 'plat_id', 'alt_plat_id'], 'integer'],
-            [['md5'], 'safe'],
+            [
+                [
+                    'gen_id',
+                    'plat_id',
+                    'alt_plat_id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'md5'
+                ],
+                'safe'
+            ]
         ];
     }
 
@@ -34,7 +47,7 @@ class GenPlatSearch extends GenPlat
 
     /**
      * Creates data provider instance with search query applied
-     *
+     * 
      * @param array $params
      *
      * @return ActiveDataProvider
@@ -42,27 +55,31 @@ class GenPlatSearch extends GenPlat
     public function search($params)
     {
         $query = GenPlat::find();
-
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
-
+        
         $this->load($params);
-
+        
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        
         $query->andFilterWhere([
             'gen_id' => $this->gen_id,
             'plat_id' => $this->plat_id,
-            'alt_plat_id' => $this->alt_plat_id,
+            'alt_plat_id' => $this->alt_plat_id
         ]);
-
-        $query->andFilterWhere(['like', 'md5', $this->md5]);
-
+        
+        $query->andFilterWhere([
+            'like',
+            'md5',
+            $this->md5
+        ]);
+        
         return $dataProvider;
     }
 }

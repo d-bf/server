@@ -12,13 +12,20 @@ use app\models\CrackerAlgo;
  */
 class CrackerAlgoSearch extends CrackerAlgo
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['cracker_id', 'algo_id'], 'integer'],
+            [
+                [
+                    'cracker_id',
+                    'algo_id'
+                ],
+                'integer'
+            ]
         ];
     }
 
@@ -33,7 +40,7 @@ class CrackerAlgoSearch extends CrackerAlgo
 
     /**
      * Creates data provider instance with search query applied
-     *
+     * 
      * @param array $params
      *
      * @return ActiveDataProvider
@@ -41,24 +48,24 @@ class CrackerAlgoSearch extends CrackerAlgo
     public function search($params)
     {
         $query = CrackerAlgo::find();
-
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
-
+        
         $this->load($params);
-
+        
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        
         $query->andFilterWhere([
             'cracker_id' => $this->cracker_id,
-            'algo_id' => $this->algo_id,
+            'algo_id' => $this->algo_id
         ]);
-
+        
         return $dataProvider;
     }
 }

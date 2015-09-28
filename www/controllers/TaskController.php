@@ -14,94 +14,104 @@ use yii\filters\VerbFilter;
  */
 class TaskController extends Controller
 {
+
     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
+                    'delete' => [
+                        'post'
+                    ]
+                ]
+            ]
         ];
     }
 
     /**
      * Lists all Task models.
+     * 
      * @return mixed
      */
     public function actionIndex()
     {
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
     /**
      * Displays a single Task model.
+     * 
      * @param string $id
      * @return mixed
      */
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id)
         ]);
     }
 
-	/**
-	 * Creates a new Task model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 * @return mixed
-	 */
-	public function actionCreate()
-	{
-		$model = new Task();
-
-		if ($model->load(Yii::$app->request->post())) {
-			if ($model->mode == 1) { // Mask
-				$model->mask = '';
-				foreach ($model->maskChar as $mc)
-					$model->mask .= $mc;
-			} else { // Simple
-				$model->charset_1 = $model->charset;
-				$model->charset_2 = null;
-				$model->charset_3 = null;
-				$model->charset_4 = null;
-				$model->mask = str_repeat('?1', $model->len_max);
-			}
-			$model->save();
-
-			return $this->redirect([
-				'view',
-				'id' => $model->id
-			]);
-		} else {
-			return $this->render( 'create', [
-				'model' => $model
-			]);
-		}
-	}
+    /**
+     * Creates a new Task model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * 
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Task();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->mode == 1) { // Mask
+                $model->mask = '';
+                foreach ($model->maskChar as $mc)
+                    $model->mask .= $mc;
+            } else { // Simple
+                $model->charset_1 = $model->charset;
+                $model->charset_2 = null;
+                $model->charset_3 = null;
+                $model->charset_4 = null;
+                $model->mask = str_repeat('?1', $model->len_max);
+            }
+            $model->save();
+            
+            return $this->redirect([
+                'view',
+                'id' => $model->id
+            ]);
+        } else {
+            return $this->render('create', [
+                'model' => $model
+            ]);
+        }
+    }
 
     /**
      * Updates an existing Task model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     * 
      * @param string $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect([
+                'view',
+                'id' => $model->id
+            ]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model
             ]);
         }
     }
@@ -109,19 +119,23 @@ class TaskController extends Controller
     /**
      * Deletes an existing Task model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     * 
      * @param string $id
      * @return mixed
      */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        
+        return $this->redirect([
+            'index'
+        ]);
     }
 
     /**
      * Finds the Task model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     * 
      * @param string $id
      * @return Task the loaded model
      * @throws NotFoundHttpException if the model cannot be found

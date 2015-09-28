@@ -1,5 +1,4 @@
 <?php
-
 use tests\codeception\_pages\AboutPage;
 
 /* @var $scenario Codeception\Scenario */

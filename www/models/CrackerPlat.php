@@ -6,7 +6,7 @@ use Yii;
 
 /**
  * This is the model class for table "{{%cracker_plat}}".
- *
+ * 
  * @property integer $cracker_id
  * @property integer $plat_id
  * @property string $md5
@@ -16,6 +16,7 @@ use Yii;
  */
 class CrackerPlat extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -30,9 +31,27 @@ class CrackerPlat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cracker_id', 'plat_id'], 'required'],
-            [['cracker_id', 'plat_id'], 'integer'],
-            [['md5'], 'string', 'max' => 32]
+            [
+                [
+                    'cracker_id',
+                    'plat_id'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'cracker_id',
+                    'plat_id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'md5'
+                ],
+                'string',
+                'max' => 32
+            ]
         ];
     }
 
@@ -44,28 +63,35 @@ class CrackerPlat extends \yii\db\ActiveRecord
         return [
             'cracker_id' => Yii::t('app', 'Cracker ID'),
             'plat_id' => Yii::t('app', 'Plat ID'),
-            'md5' => Yii::t('app', 'Md5'),
+            'md5' => Yii::t('app', 'Md5')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCracker()
     {
-        return $this->hasOne(Cracker::className(), ['id' => 'cracker_id']);
+        return $this->hasOne(Cracker::className(), [
+            'id' => 'cracker_id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getPlat()
     {
-        return $this->hasOne(Platform::className(), ['id' => 'plat_id']);
+        return $this->hasOne(Platform::className(), [
+            'id' => 'plat_id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     * 
      * @return CrackerPlatQuery the active query used by this AR class.
      */
     public static function find()

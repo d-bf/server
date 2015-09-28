@@ -12,13 +12,20 @@ use app\models\CrackerGen;
  */
 class CrackerGenSearch extends CrackerGen
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['cracker_id', 'gen_id'], 'integer'],
+            [
+                [
+                    'cracker_id',
+                    'gen_id'
+                ],
+                'integer'
+            ]
         ];
     }
 
@@ -33,7 +40,7 @@ class CrackerGenSearch extends CrackerGen
 
     /**
      * Creates data provider instance with search query applied
-     *
+     * 
      * @param array $params
      *
      * @return ActiveDataProvider
@@ -41,24 +48,24 @@ class CrackerGenSearch extends CrackerGen
     public function search($params)
     {
         $query = CrackerGen::find();
-
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
-
+        
         $this->load($params);
-
+        
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        
         $query->andFilterWhere([
             'cracker_id' => $this->cracker_id,
-            'gen_id' => $this->gen_id,
+            'gen_id' => $this->gen_id
         ]);
-
+        
         return $dataProvider;
     }
 }

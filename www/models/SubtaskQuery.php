@@ -4,19 +4,23 @@ namespace app\models;
 
 /**
  * This is the ActiveQuery class for [[Subtask]].
- *
+ * 
  * @see Subtask
  */
 class SubtaskQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        $this->andWhere('[[status]]=1');
-        return $this;
-    }*/
 
+    /*
+     * public function active()
+     * {
+     * $this->andWhere('[[status]]=1');
+     * return $this;
+     * }
+     */
+    
     /**
      * @inheritdoc
+     * 
      * @return Subtask[]|array
      */
     public function all($db = null)
@@ -26,6 +30,7 @@ class SubtaskQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
+     * 
      * @return Subtask|array|null
      */
     public function one($db = null)

@@ -1,5 +1,4 @@
 <?php
-
 use tests\codeception\_pages\ContactPage;
 
 /* @var $scenario Codeception\Scenario */
@@ -23,11 +22,11 @@ $I->see('The verification code is incorrect');
 
 $I->amGoingTo('submit contact form with not correct email');
 $contactPage->submit([
-    'name'			=>	'tester',
-    'email'			=>	'tester.email',
-    'subject'		=>	'test subject',
-    'body'			=>	'test content',
-    'verifyCode'	=>	'testme',
+    'name' => 'tester',
+    'email' => 'tester.email',
+    'subject' => 'test subject',
+    'body' => 'test content',
+    'verifyCode' => 'testme'
 ]);
 $I->expectTo('see that email adress is wrong');
 $I->dontSee('Name cannot be blank', '.help-inline');
@@ -38,11 +37,11 @@ $I->dontSee('The verification code is incorrect', '.help-inline');
 
 $I->amGoingTo('submit contact form with correct data');
 $contactPage->submit([
-    'name'			=>	'tester',
-    'email'			=>	'tester@example.com',
-    'subject'		=>	'test subject',
-    'body'			=>	'test content',
-    'verifyCode'	=>	'testme',
+    'name' => 'tester',
+    'email' => 'tester@example.com',
+    'subject' => 'test subject',
+    'body' => 'test content',
+    'verifyCode' => 'testme'
 ]);
 $I->dontSeeElement('#contact-form');
 $I->see('Thank you for contacting us. We will respond to you as soon as possible.');

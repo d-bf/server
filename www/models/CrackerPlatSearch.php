@@ -12,14 +12,26 @@ use app\models\CrackerPlat;
  */
 class CrackerPlatSearch extends CrackerPlat
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['cracker_id', 'plat_id'], 'integer'],
-            [['md5'], 'safe'],
+            [
+                [
+                    'cracker_id',
+                    'plat_id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'md5'
+                ],
+                'safe'
+            ]
         ];
     }
 
@@ -34,7 +46,7 @@ class CrackerPlatSearch extends CrackerPlat
 
     /**
      * Creates data provider instance with search query applied
-     *
+     * 
      * @param array $params
      *
      * @return ActiveDataProvider
@@ -42,26 +54,30 @@ class CrackerPlatSearch extends CrackerPlat
     public function search($params)
     {
         $query = CrackerPlat::find();
-
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
-
+        
         $this->load($params);
-
+        
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        
         $query->andFilterWhere([
             'cracker_id' => $this->cracker_id,
-            'plat_id' => $this->plat_id,
+            'plat_id' => $this->plat_id
         ]);
-
-        $query->andFilterWhere(['like', 'md5', $this->md5]);
-
+        
+        $query->andFilterWhere([
+            'like',
+            'md5',
+            $this->md5
+        ]);
+        
         return $dataProvider;
     }
 }

@@ -9,18 +9,18 @@ return [
             'class' => 'yii\faker\FixtureController',
             'fixtureDataPath' => '@tests/codeception/fixtures',
             'templatePath' => '@tests/codeception/templates',
-            'namespace' => 'tests\codeception\fixtures',
-        ],
+            'namespace' => 'tests\codeception\fixtures'
+        ]
     ],
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=localhost;dbname=yii2_basic_tests',
+            'dsn' => 'mysql:host=localhost;dbname=yii2_basic_tests'
         ],
         'mailer' => [
-            'useFileTransport' => true,
+            'useFileTransport' => true
         ],
         'urlManager' => [
-            'showScriptName' => true,
-        ],
-    ],
+            'showScriptName' => true
+        ]
+    ]
 ];

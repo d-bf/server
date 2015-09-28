@@ -6,7 +6,7 @@ use Yii;
 
 /**
  * This is the model class for table "{{%platform}}".
- *
+ * 
  * @property integer $id
  * @property string $name
  *
@@ -16,6 +16,7 @@ use Yii;
  */
 class Platform extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -30,10 +31,32 @@ class Platform extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name'], 'required'],
-            [['id'], 'integer'],
-            [['name'], 'string', 'max' => 32],
-            [['name'], 'unique']
+            [
+                [
+                    'id',
+                    'name'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'name'
+                ],
+                'string',
+                'max' => 32
+            ],
+            [
+                [
+                    'name'
+                ],
+                'unique'
+            ]
         ];
     }
 
@@ -44,36 +67,46 @@ class Platform extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'Name')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrackerPlats()
     {
-        return $this->hasMany(CrackerPlat::className(), ['plat_id' => 'id']);
+        return $this->hasMany(CrackerPlat::className(), [
+            'plat_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGenPlats()
     {
-        return $this->hasMany(GenPlat::className(), ['plat_id' => 'id']);
+        return $this->hasMany(GenPlat::className(), [
+            'plat_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGenPlats0()
     {
-        return $this->hasMany(GenPlat::className(), ['alt_plat_id' => 'id']);
+        return $this->hasMany(GenPlat::className(), [
+            'alt_plat_id' => 'id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     * 
      * @return PlatformQuery the active query used by this AR class.
      */
     public static function find()

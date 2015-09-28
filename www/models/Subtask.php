@@ -6,7 +6,7 @@ use Yii;
 
 /**
  * This is the model class for table "{{%subtask}}".
- *
+ * 
  * @property string $id
  * @property string $task_id
  * @property string $start
@@ -17,6 +17,7 @@ use Yii;
  */
 class Subtask extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -31,8 +32,22 @@ class Subtask extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'start'], 'required'],
-            [['task_id', 'start', 'offset', 'status'], 'integer']
+            [
+                [
+                    'task_id',
+                    'start'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'task_id',
+                    'start',
+                    'offset',
+                    'status'
+                ],
+                'integer'
+            ]
         ];
     }
 
@@ -46,20 +61,24 @@ class Subtask extends \yii\db\ActiveRecord
             'task_id' => Yii::t('app', 'Task ID'),
             'start' => Yii::t('app', 'Start'),
             'offset' => Yii::t('app', 'Offset'),
-            'status' => Yii::t('app', 'Status'),
+            'status' => Yii::t('app', 'Status')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getTask()
     {
-        return $this->hasOne(Task::className(), ['id' => 'task_id']);
+        return $this->hasOne(Task::className(), [
+            'id' => 'task_id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     * 
      * @return SubtaskQuery the active query used by this AR class.
      */
     public static function find()

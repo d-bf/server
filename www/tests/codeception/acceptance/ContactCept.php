@@ -1,5 +1,4 @@
 <?php
-
 use tests\codeception\_pages\ContactPage;
 
 /* @var $scenario Codeception\Scenario */
@@ -30,7 +29,7 @@ $contactPage->submit([
     'email' => 'tester.email',
     'subject' => 'test subject',
     'body' => 'test content',
-    'verifyCode' => 'testme',
+    'verifyCode' => 'testme'
 ]);
 if (method_exists($I, 'wait')) {
     $I->wait(3); // only for selenium
@@ -48,7 +47,7 @@ $contactPage->submit([
     'email' => 'tester@example.com',
     'subject' => 'test subject',
     'body' => 'test content',
-    'verifyCode' => 'testme',
+    'verifyCode' => 'testme'
 ]);
 if (method_exists($I, 'wait')) {
     $I->wait(3); // only for selenium

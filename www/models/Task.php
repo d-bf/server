@@ -6,7 +6,7 @@ use Yii;
 
 /**
  * This is the model class for table "{{%task}}".
- *
+ * 
  * @property string $id
  * @property integer $gen_id
  * @property integer $algo_id
@@ -24,7 +24,8 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
-	public $mode, $charset, $maskChar, $maskCharError, $_LEN_MAX = 55;
+
+    public $mode, $charset, $maskChar, $maskCharError, $_LEN_MAX = 55;
 
     /**
      * @inheritdoc
@@ -34,37 +35,55 @@ class Task extends \yii\db\ActiveRecord
         return '{{%task}}';
     }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-			[['gen_id', 'algo_id', 'len_min', 'len_max', 'mode'], 'required'],
-			[
-				'charset',
-				'match', 'pattern' => '/^.+$/', 'skipOnEmpty' => false,
-				'message' => '{attribute} cannot be blank.',
-				'when' => function($model) {
-					return $model->mode == 0;
-				},
-				'whenClient' => "function() {
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [
+                [
+                    'gen_id',
+                    'algo_id',
+                    'len_min',
+                    'len_max',
+                    'mode'
+                ],
+                'required'
+            ],
+            [
+                'charset',
+                'match',
+                'pattern' => '/^.+$/',
+                'skipOnEmpty' => false,
+                'message' => '{attribute} cannot be blank.',
+                'when' => function ($model) {
+                    return $model->mode == 0;
+                },
+                'whenClient' => "function() {
 					return $('#task-mode').val() == '0';
 				}"
-			],
-			[
-				['charset_1', 'charset_2', 'charset_3', 'charset_4'],
-				'match', 'pattern' => '/^.+$/', 'skipOnEmpty' => false,
-				'message' => '{attribute} cannot be blank.',
-				'when' => function($model, $attribute) {
-					if ($model->mode == 1) {
-						foreach ($model->maskChar as $mc)
-							if ($mc == '?' . explode('_', $attribute)[1])
-								return true;
-					}
-					return false;
-				},
-				'whenClient' => "function(attribute) {
+            ],
+            [
+                [
+                    'charset_1',
+                    'charset_2',
+                    'charset_3',
+                    'charset_4'
+                ],
+                'match',
+                'pattern' => '/^.+$/',
+                'skipOnEmpty' => false,
+                'message' => '{attribute} cannot be blank.',
+                'when' => function ($model, $attribute) {
+                    if ($model->mode == 1) {
+                        foreach ($model->maskChar as $mc)
+                            if ($mc == '?' . explode('_', $attribute)[1])
+                                return true;
+                    }
+                    return false;
+                },
+                'whenClient' => "function(attribute) {
 					var ret = false;
 					if ($('#task-mode').val() == '1') {
 						$('#task-maskchars input:enabled').each(function(index, element) {
@@ -76,42 +95,46 @@ class Task extends \yii\db\ActiveRecord
 					}
 					return ret;
 				}"
-			],
-			[
-				'maskChar',
-				'each',
-				'rule' => [
-					'match', 'pattern' => '/^\?{0,1}.{1}$/', 'skipOnEmpty' => false,
-					'message' => '{attribute} cannot be blank.'
-				],
-				'when' => function($model) {
-					return $model->mode == 1;
-				},
-				'enableClientValidation' => false
-			],
-			[
-				'maskChar',
-				'match', 'pattern' => '/^\?{0,1}.{1}$/', 'skipOnEmpty' => false,
-				'message' => '{attribute} cannot be blank.',
-				'when' => function() {
-					return false;
-				},
-				'whenClient' => "function(attribute) {
+            ],
+            [
+                'maskChar',
+                'each',
+                'rule' => [
+                    'match',
+                    'pattern' => '/^\?{0,1}.{1}$/',
+                    'skipOnEmpty' => false,
+                    'message' => '{attribute} cannot be blank.'
+                ],
+                'when' => function ($model) {
+                    return $model->mode == 1;
+                },
+                'enableClientValidation' => false
+            ],
+            [
+                'maskChar',
+                'match',
+                'pattern' => '/^\?{0,1}.{1}$/',
+                'skipOnEmpty' => false,
+                'message' => '{attribute} cannot be blank.',
+                'when' => function () {
+                    return false;
+                },
+                'whenClient' => "function(attribute) {
 					return (($('#task-mode').val() == '1') && (! $(attribute.input).prop('disabled')));
 				}"
-			],
-			[
-				'maskCharError',
-				'required',
-				'when' => function($model) {
-					if ($model->mode == 1) {
-						foreach ($model->maskChar as $mc)
-							if (empty($mc))
-								return true;
-					}
-					return false;
-				},
-				'whenClient' => "function(attribute) {
+            ],
+            [
+                'maskCharError',
+                'required',
+                'when' => function ($model) {
+                    if ($model->mode == 1) {
+                        foreach ($model->maskChar as $mc)
+                            if (empty($mc))
+                                return true;
+                    }
+                    return false;
+                },
+                'whenClient' => "function(attribute) {
 					var ret = false;
 					if ($('#task-mode').val() == '1') {
 						$('#task-maskchars input:visible:enabled').each(function(index, element) {
@@ -123,12 +146,35 @@ class Task extends \yii\db\ActiveRecord
 					}
 					return ret;
 				}"
-			],
-			[['gen_id', 'algo_id', 'len_min', 'len_max'], 'integer'],
-			['len_max', 'compare', 'compareAttribute' => 'len_min', 'operator' => '>='],
-			[['charset_1', 'charset_2', 'charset_3','charset_4', 'mask'], 'string', 'max' => 255]
-		];
-	}
+            ],
+            [
+                [
+                    'gen_id',
+                    'algo_id',
+                    'len_min',
+                    'len_max'
+                ],
+                'integer'
+            ],
+            [
+                'len_max',
+                'compare',
+                'compareAttribute' => 'len_min',
+                'operator' => '>='
+            ],
+            [
+                [
+                    'charset_1',
+                    'charset_2',
+                    'charset_3',
+                    'charset_4',
+                    'mask'
+                ],
+                'string',
+                'max' => 255
+            ]
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -154,31 +200,41 @@ class Task extends \yii\db\ActiveRecord
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getSubtasks()
     {
-        return $this->hasMany(Subtask::className(), ['task_id' => 'id']);
+        return $this->hasMany(Subtask::className(), [
+            'task_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGen()
     {
-        return $this->hasOne(Generator::className(), ['id' => 'gen_id']);
+        return $this->hasOne(Generator::className(), [
+            'id' => 'gen_id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getAlgo()
     {
-        return $this->hasOne(Algorithm::className(), ['id' => 'algo_id']);
+        return $this->hasOne(Algorithm::className(), [
+            'id' => 'algo_id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     * 
      * @return TaskQuery the active query used by this AR class.
      */
     public static function find()

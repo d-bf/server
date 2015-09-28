@@ -12,14 +12,25 @@ use app\models\Generator;
  */
 class GeneratorSearch extends Generator
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name'], 'safe'],
+            [
+                [
+                    'id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'name'
+                ],
+                'safe'
+            ]
         ];
     }
 
@@ -34,7 +45,7 @@ class GeneratorSearch extends Generator
 
     /**
      * Creates data provider instance with search query applied
-     *
+     * 
      * @param array $params
      *
      * @return ActiveDataProvider
@@ -42,25 +53,29 @@ class GeneratorSearch extends Generator
     public function search($params)
     {
         $query = Generator::find();
-
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
-
+        
         $this->load($params);
-
+        
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id' => $this->id
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
-
+        
+        $query->andFilterWhere([
+            'like',
+            'name',
+            $this->name
+        ]);
+        
         return $dataProvider;
     }
 }

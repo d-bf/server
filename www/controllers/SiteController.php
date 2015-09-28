@@ -11,26 +11,35 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => [
+                    'logout'
+                ],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => [
+                            'logout'
+                        ],
                         'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
+                        'roles' => [
+                            '@'
+                        ]
+                    ]
+                ]
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
+                    'logout' => [
+                        'post'
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -38,12 +47,12 @@ class SiteController extends Controller
     {
         return [
             'error' => [
-                'class' => 'yii\web\ErrorAction',
+                'class' => 'yii\web\ErrorAction'
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null
+            ]
         ];
     }
 
@@ -57,20 +66,20 @@ class SiteController extends Controller
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
+        
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
         return $this->render('login', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
+        
         return $this->goHome();
     }
 
@@ -79,11 +88,11 @@ class SiteController extends Controller
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
+            
             return $this->refresh();
         }
         return $this->render('contact', [
-            'model' => $model,
+            'model' => $model
         ]);
     }
 

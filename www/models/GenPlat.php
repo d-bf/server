@@ -6,7 +6,7 @@ use Yii;
 
 /**
  * This is the model class for table "{{%gen_plat}}".
- *
+ * 
  * @property integer $gen_id
  * @property integer $plat_id
  * @property string $md5
@@ -18,6 +18,7 @@ use Yii;
  */
 class GenPlat extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -32,9 +33,28 @@ class GenPlat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['gen_id', 'plat_id'], 'required'],
-            [['gen_id', 'plat_id', 'alt_plat_id'], 'integer'],
-            [['md5'], 'string', 'max' => 32]
+            [
+                [
+                    'gen_id',
+                    'plat_id'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'gen_id',
+                    'plat_id',
+                    'alt_plat_id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'md5'
+                ],
+                'string',
+                'max' => 32
+            ]
         ];
     }
 
@@ -47,36 +67,46 @@ class GenPlat extends \yii\db\ActiveRecord
             'gen_id' => Yii::t('app', 'Gen ID'),
             'plat_id' => Yii::t('app', 'Plat ID'),
             'md5' => Yii::t('app', 'Md5'),
-            'alt_plat_id' => Yii::t('app', 'Alt Plat ID'),
+            'alt_plat_id' => Yii::t('app', 'Alt Plat ID')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGen()
     {
-        return $this->hasOne(Generator::className(), ['id' => 'gen_id']);
+        return $this->hasOne(Generator::className(), [
+            'id' => 'gen_id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getPlat()
     {
-        return $this->hasOne(Platform::className(), ['id' => 'plat_id']);
+        return $this->hasOne(Platform::className(), [
+            'id' => 'plat_id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getAltPlat()
     {
-        return $this->hasOne(Platform::className(), ['id' => 'alt_plat_id']);
+        return $this->hasOne(Platform::className(), [
+            'id' => 'alt_plat_id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     * 
      * @return GenPlatQuery the active query used by this AR class.
      */
     public static function find()
