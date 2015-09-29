@@ -70,15 +70,44 @@ class TaskController extends Controller
         
         if ($model->load(Yii::$app->request->post())) {
             if ($model->mode == 1) { // Mask
+                $model->charset_1 = count_chars($model->charset_1, 3); // Get unique chars only
+                $model->charset_2 = count_chars($model->charset_2, 3); // Get unique chars only
+                $model->charset_3 = count_chars($model->charset_3, 3); // Get unique chars only
+                $model->charset_4 = count_chars($model->charset_4, 3); // Get unique chars only
+                
+                $charLenMap = [
+                    '?l' => 26,
+                    '?u' => 26,
+                    '?d' => 10,
+                    '?s' => 33,
+                    '?a' => 95,
+                    '?1' => strlen($model->charset_1),
+                    '?2' => strlen($model->charset_2),
+                    '?3' => strlen($model->charset_3),
+                    '?4' => strlen($model->charset_4)
+                ];
+                
                 $model->mask = '';
                 foreach ($model->maskChar as $mc)
                     $model->mask .= $mc;
+                
+                $model->key_total = 0;
+                for ($len = $model->len_min; $len <= $model->len_max; $len++) {
+                    $charLen = 1;
+                    for ($l = 1; $l <= $len; $l++)
+                        $charLen *= isset($charLenMap[$model->maskChar[$l]]) ? $charLenMap[$model->maskChar[$l]] : 1;
+                    $model->key_total += $charLen;
+                }
             } else { // Simple
-                $model->charset_1 = $model->charset;
+                $model->charset_1 = count_chars($model->charset, 3); // Get unique chars only
                 $model->charset_2 = null;
                 $model->charset_3 = null;
                 $model->charset_4 = null;
+                
                 $model->mask = str_repeat('?1', $model->len_max);
+                $model->key_total = 0;
+                for ($len = $model->len_min; $len <= $model->len_max; $len++)
+                    $model->key_total += pow(strlen($model->charset_1), $len);
             }
             $model->save();
             
