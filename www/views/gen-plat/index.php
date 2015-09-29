@@ -18,6 +18,23 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app', 'Create Gen Plat'), ['create'], ['class' => 'btn btn-success'])?>
     </p>
 
-    <?=GridView::widget(['dataProvider' => $dataProvider,'filterModel' => $searchModel,'columns' => [['class' => 'yii\grid\SerialColumn'],'gen_id','plat_id','md5','alt_plat_id',['class' => 'yii\grid\ActionColumn']]]);?>
+    <?php
+    echo GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            [
+                'class' => 'yii\grid\SerialColumn'
+            ],
+            'gen_id',
+            'plat_id',
+            'md5',
+            'alt_plat_id',
+            [
+                'class' => 'yii\grid\ActionColumn'
+            ]
+        ]
+    ]);
+    ?>
 
 </div>
