@@ -25,7 +25,11 @@ class TaskSearch extends Task
                     'gen_id',
                     'algo_id',
                     'len_min',
-                    'len_max'
+                    'len_max',
+                    'key_total',
+                    'key_assigned',
+                    'key_finished',
+                    'key_error'
                 ],
                 'integer'
             ],
@@ -79,7 +83,11 @@ class TaskSearch extends Task
             'gen_id' => $this->gen_id,
             'algo_id' => $this->algo_id,
             'len_min' => $this->len_min,
-            'len_max' => $this->len_max
+            'len_max' => $this->len_max,
+            'key_total' => $this->key_total,
+            'key_assigned' => $this->key_assigned,
+            'key_finished' => $this->key_finished,
+            'key_error' => $this->key_error
         ]);
         
         $query->andFilterWhere([

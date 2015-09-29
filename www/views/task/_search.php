@@ -39,6 +39,14 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'mask') ?>
 
+    <?php // echo $form->field($model, 'key_total') ?> 
+
+    <?php // echo $form->field($model, 'key_assigned') ?> 
+
+    <?php // echo $form->field($model, 'key_finished') ?> 
+
+    <?php // echo $form->field($model, 'key_error') ?> 
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary'])?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default'])?>

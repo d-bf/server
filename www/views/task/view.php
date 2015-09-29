@@ -23,6 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=Html::a(Yii::t('app', 'Delete'), ['delete','id' => $model->id], ['class' => 'btn btn-danger','data' => ['confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),'method' => 'post']])?>
     </p>
 
-    <?=DetailView::widget(['model' => $model,'attributes' => ['id','gen_id','algo_id','len_min','len_max','charset_1','charset_2','charset_3','charset_4','mask']])?>
+    <?=DetailView::widget(['model' => $model,'attributes' => ['id','gen_id','algo_id','len_min','len_max','charset_1','charset_2','charset_3','charset_4','mask','key_total','key_assigned','key_finished','key_error']])?>
 
 </div>

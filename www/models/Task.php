@@ -17,6 +17,10 @@ use Yii;
  * @property string $charset_3
  * @property string $charset_4
  * @property string $mask
+ * @property string $key_total
+ * @property string $key_assigned
+ * @property string $key_finished
+ * @property string $key_error
  *
  * @property Subtask[] $subtasks
  * @property Generator $gen
@@ -152,7 +156,11 @@ class Task extends \yii\db\ActiveRecord
                     'gen_id',
                     'algo_id',
                     'len_min',
-                    'len_max'
+                    'len_max',
+                    'key_total',
+                    'key_assigned',
+                    'key_finished',
+                    'key_error'
                 ],
                 'integer'
             ],
@@ -192,6 +200,10 @@ class Task extends \yii\db\ActiveRecord
             'charset_3' => Yii::t('app', 'Custom Charset 3'),
             'charset_4' => Yii::t('app', 'Custom Charset 4'),
             'mask' => Yii::t('app', 'Mask'),
+            'key_total' => Yii::t('app', 'Total'),
+            'key_assigned' => Yii::t('app', 'Assigned'),
+            'key_finished' => Yii::t('app', 'Finished'),
+            'key_error' => Yii::t('app', 'Error'),
             'mode' => Yii::t('app', 'Mode'),
             'charset' => Yii::t('app', 'Charset'),
             'maskChar' => Yii::t('app', 'Mask Char'),
