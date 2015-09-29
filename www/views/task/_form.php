@@ -61,10 +61,10 @@ $form = ActiveForm::begin([
 	<fieldset>
 		<legend>
 			<label for="task-mode" class="col-sm-1">Mode</label>
-			<div class="col-sm-2">
+			<span class="col-sm-2">
 				<?= Html::activeDropDownList($model, 'mode', ['Simple', 'Mask'], ['class' => 'form-control'])?>
-				<div class="help-block help-block-error"></div>
-			</div>
+				<span class="help-block help-block-error"></span>
+			</span>
 		</legend>
 
 		<?= Html::activeHiddenInput($model, 'mask', ['id' => 'task-mask'])?>
@@ -207,7 +207,7 @@ echo $form->field($model, 'charset', [
 					<div>?l : Lower case = abcdefghijklmnopqrstuvwxyz</div>
 					<div>?u : Upper case = ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
 					<div>?d : Digits = 0123456789</div>
-					<div>?s : Special chars = ! "#$%&'()*+,-./:;<=>?@[\]^_`{|}~</div>
+					<div>?s : Special chars = ! "#$%&amp;'()*+,-./:;&lt;=>?@[\]^_`{|}~</div>
 					<div>?a : All chars = ?l?u?d?s</div>
 					<div>?1 : Custom Charset 1</div>
 					<div>?2 : Custom Charset 2</div>
