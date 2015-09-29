@@ -70,13 +70,13 @@ $form = ActiveForm::begin([
 		<?= Html::activeHiddenInput($model, 'mask', ['id' => 'task-mask'])?>
 
 		<div class="mode-1">
-			<?= $form->field($model, 'charset_1')->textInput()?>
+			<?= $form->field($model, 'charset_1')->textInput(['id'=>'task-charset_1'])?>
 
-			<?= $form->field($model, 'charset_2')->textInput()?>
+			<?= $form->field($model, 'charset_2')->textInput(['id'=>'task-charset_2'])?>
 
-			<?= $form->field($model, 'charset_3')->textInput()?>
+			<?= $form->field($model, 'charset_3')->textInput(['id'=>'task-charset_3'])?>
 
-			<?= $form->field($model, 'charset_4')->textInput()?>
+			<?= $form->field($model, 'charset_4')->textInput(['id'=>'task-charset_4'])?>
 		</div>
 
 		<div class="mode-0">
@@ -180,6 +180,7 @@ echo $form->field($model, 'charset', [
             ],
             'template' => '<span class="input-group-addon">' . sprintf('%02d', $char) . '</span>{input}'
         ])->textInput([
+            'id' => "task-maskchar-$char",
             'class' => 'form-control mask-input',
             'maxlength' => '1',
             'data-toggle' => 'popover',

@@ -77,6 +77,8 @@ $(function() {
 				for (char; char <= max_len; char++) {
 					$('.field-task-maskchar-' + char).show();
 					$('.field-task-maskchar-' + char + ' input').prop('disabled', false);
+					if ($('#task-create-form').yiiActiveForm('find', 'task-maskcharerror').status > 0) // Form has been validated before
+						$('#task-create-form').yiiActiveForm('validateAttribute', 'task-maskchar-' + char); // Validate the newly added field again
 				}
 			} else if (char > max_len) {
 				for (char; char > max_len; char--) {
@@ -84,6 +86,8 @@ $(function() {
 					$('.field-task-maskchar-' + char).hide();
 				}
 			}
+			if ($('#task-create-form').yiiActiveForm('find', 'task-maskcharerror').status > 0) // Form has been validated before
+				$('#task-create-form').yiiActiveForm('validateAttribute', 'task-maskcharerror'); // Validate task-maskcharerror
 		}
 	}
 	
@@ -113,9 +117,13 @@ $(function() {
 			maskChar = '?4';
 		
 		$('#' + $(this).attr('data-mask-id') + ' input').val(maskChar).trigger('change');
-//		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-maskcharerror');
-		$('#task-create-form').data('yiiActiveForm').submitting = true;
-		$('#task-create-form').yiiActiveForm('validate');
+		
+		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-charset_1');
+		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-charset_2');
+		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-charset_3');
+		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-charset_4');
+		if ($('#task-create-form').yiiActiveForm('find', 'task-maskcharerror').status > 0)
+			$('#task-create-form').yiiActiveForm('validateAttribute', 'task-maskcharerror');
 	});
 	
 	var temp_mask_char;
