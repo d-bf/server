@@ -7,10 +7,11 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
-        'gii'
+        'api'
     ],
     'modules' => [
-        'gii' => 'yii\gii\Module'
+        'gii' => 'yii\gii\Module',
+        'api' => 'app\modules\api\Api'
     ],
     'components' => [
         'urlManager' => [
