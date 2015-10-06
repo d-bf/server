@@ -32,6 +32,8 @@ class Api extends \yii\base\Module implements BootstrapInterface
     {
         parent::init();
         
+        \Yii::$app->user->enableSession = false;
+        
         $this->modules = [
             'v1' => 'app\modules\api\versions\v1\ApiV1'
         ];
