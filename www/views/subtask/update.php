@@ -17,7 +17,8 @@ $this->params['breadcrumbs'][] = [
     'label' => $model->id,
     'url' => [
         'view',
-        'id' => $model->id
+        'id' => $model->id,
+        'task_id' => $model->task_id
     ]
 ];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');

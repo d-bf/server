@@ -34,6 +34,7 @@ class Subtask extends \yii\db\ActiveRecord
         return [
             [
                 [
+                    'id',
                     'task_id',
                     'start'
                 ],
@@ -41,6 +42,7 @@ class Subtask extends \yii\db\ActiveRecord
             ],
             [
                 [
+                    'id',
                     'task_id',
                     'start',
                     'offset',

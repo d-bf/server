@@ -147,7 +147,7 @@
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
 		<table name="subtask" >
-			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" autoincrement="y" />
+			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="task_id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="start" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="offset" type="bigint" jt="-5" unsigned="y" />
@@ -156,6 +156,7 @@
 			</column>
 			<index name="pk_subtask" unique="PRIMARY_KEY" >
 				<column name="id" />
+				<column name="task_id" />
 			</index>
 			<index name="idx_subtask" unique="NORMAL" >
 				<column name="task_id" />
@@ -227,12 +228,12 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="465" y="135" />
 		<entity schema="dbf_server" name="view_cracker_gen_plat" color="a8c4ef" x="870" y="150" />
 		<entity schema="dbf_server" name="view_all_cracker_gen_plat" color="a8c4ef" x="870" y="45" />
-		<entity schema="dbf_server" name="subtask" color="b2cdf7" x="495" y="285" />
 		<entity schema="dbf_server" name="cracker_algo" color="b2cdf7" x="675" y="135" />
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="255" />
 		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="180" y="45" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="180" y="135" />
 		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="165" y="360" />
 		<entity schema="dbf_server" name="task" color="b2cdf7" x="435" y="405" />
+		<entity schema="dbf_server" name="subtask" color="b2cdf7" x="495" y="285" />
 	</layout>
 </project>
