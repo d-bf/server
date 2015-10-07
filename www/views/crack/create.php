@@ -2,18 +2,18 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Task */
+/* @var $model app\models\Crack */
 
 $this->title = Yii::t('app', 'New Crack');
 $this->params['breadcrumbs'][] = [
-    'label' => Yii::t('app', 'Tasks'),
+    'label' => Yii::t('app', 'Cracks'),
     'url' => [
         'index'
     ]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="task-create">
+<div class="crack-create">
 
 	<h1><?= Html::encode($this->title) ?></h1>
 

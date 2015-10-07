@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Task]].
+ * This is the ActiveQuery class for [[Crack]].
  * 
- * @see Task
+ * @see Crack
  */
-class TaskQuery extends \yii\db\ActiveQuery
+class CrackQuery extends \yii\db\ActiveQuery
 {
 
     /*
@@ -21,7 +21,7 @@ class TaskQuery extends \yii\db\ActiveQuery
     /**
      * @inheritdoc
      * 
-     * @return Task[]|array
+     * @return Crack[]|array
      */
     public function all($db = null)
     {
@@ -31,7 +31,7 @@ class TaskQuery extends \yii\db\ActiveQuery
     /**
      * @inheritdoc
      * 
-     * @return Task|array|null
+     * @return Crack|array|null
      */
     public function one($db = null)
     {

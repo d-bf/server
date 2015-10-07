@@ -7,7 +7,7 @@ $(function() {
 	
 	/* Change mode */
 	function applyMode() {
-		if ($('#task-mode').val() == 0) { // Simple
+		if ($('#crack-mode').val() == 0) { // Simple
 			$('.mode-1').hide();
 			$('.mode-0').show();
 		} else { // Mask
@@ -19,7 +19,7 @@ $(function() {
 	
 	applyMode();
 	
-	$('#task-mode').on('change', function() {
+	$('#crack-mode').on('change', function() {
 		applyMode();
 	});
 	
@@ -29,7 +29,7 @@ $(function() {
 	}
 	
 	function addChars(chars) {
-		var charset = $('#task-charset').val();
+		var charset = $('#crack-charset').val();
 		for (i = 0; i < chars.length; i++)
 			charset = charset.replace(RegExp(escapeRegExp(chars[i]), 'g'), '');
 		
@@ -37,66 +37,66 @@ $(function() {
 	}
 	
 	$('#charset_l').on('click', function() {
-		$('#task-charset').val(addChars(chars_l));
-		$('#task-charset').focus();
+		$('#crack-charset').val(addChars(chars_l));
+		$('#crack-charset').focus();
 	});
 	
 	$('#charset_u').on('click', function() {
-		$('#task-charset').val(addChars(chars_u));
-		$('#task-charset').focus();
+		$('#crack-charset').val(addChars(chars_u));
+		$('#crack-charset').focus();
 	});
 	
 	$('#charset_d').on('click', function() {
-		$('#task-charset').val(addChars(chars_d));
-		$('#task-charset').focus();
+		$('#crack-charset').val(addChars(chars_d));
+		$('#crack-charset').focus();
 	});
 	
 	$('#charset_s').on('click', function() {
-		$('#task-charset').val(addChars(chars_s));
-		$('#task-charset').focus();
+		$('#crack-charset').val(addChars(chars_s));
+		$('#crack-charset').focus();
 	});
 	
 	$('#charset_a').on('click', function() {
-		$('#task-charset').val(addChars(chars_a));
-		$('#task-charset').focus();
+		$('#crack-charset').val(addChars(chars_a));
+		$('#crack-charset').focus();
 	});
 	
 	$('#charset_clear').on('click', function() {
-		$('#task-charset').val('');
-		$('#task-charset').focus();
+		$('#crack-charset').val('');
+		$('#crack-charset').focus();
 	});
 	
 	/* Mask mode: add mask */
 	$('.mask-input-group input').popover();
 	function applyMaskChars() {
-		if ($('#task-mode').val() == 1) {
-			max_len = $('#task-len_max').val();
-			char = $('#task-maskchars').children('div.input-group:visible').length;
+		if ($('#crack-mode').val() == 1) {
+			max_len = $('#crack-len_max').val();
+			char = $('#crack-maskchars').children('div.input-group:visible').length;
 			if (char < max_len) {
 				char++;
 				for (char; char <= max_len; char++) {
-					$('.field-task-maskchar-' + char).show();
-					$('.field-task-maskchar-' + char + ' input').prop('disabled', false);
-					if ($('#task-create-form').yiiActiveForm('find', 'task-maskcharerror').status > 0) // Form has been validated before
-						$('#task-create-form').yiiActiveForm('validateAttribute', 'task-maskchar-' + char); // Validate the newly added field again
+					$('.field-crack-maskchar-' + char).show();
+					$('.field-crack-maskchar-' + char + ' input').prop('disabled', false);
+					if ($('#crack-create-form').yiiActiveForm('find', 'crack-maskcharerror').status > 0) // Form has been validated before
+						$('#crack-create-form').yiiActiveForm('validateAttribute', 'crack-maskchar-' + char); // Validate the newly added field again
 				}
 			} else if (char > max_len) {
 				for (char; char > max_len; char--) {
-					$('.field-task-maskchar-' + char + ' input').prop('disabled', true);
-					$('.field-task-maskchar-' + char).hide();
+					$('.field-crack-maskchar-' + char + ' input').prop('disabled', true);
+					$('.field-crack-maskchar-' + char).hide();
 				}
 			}
-			if ($('#task-create-form').yiiActiveForm('find', 'task-maskcharerror').status > 0) // Form has been validated before
-				$('#task-create-form').yiiActiveForm('validateAttribute', 'task-maskcharerror'); // Validate task-maskcharerror
+			if ($('#crack-create-form').yiiActiveForm('find', 'crack-maskcharerror').status > 0) // Form has been validated before
+				$('#crack-create-form').yiiActiveForm('validateAttribute', 'crack-maskcharerror'); // Validate crack-maskcharerror
 		}
 	}
 	
-	$('#task-len_max').on('change', function() {
+	$('#crack-len_max').on('change', function() {
 		applyMaskChars();
 	});
 	applyMaskChars();
 	
-	$(document).on('focus', '.task-mask-btn-group button', function() {
+	$(document).on('focus', '.crack-mask-btn-group button', function() {
 		if (this.id == 'mask_l')
 			maskChar = '?l';
 		else if (this.id == 'mask_u')
@@ -118,12 +118,12 @@ $(function() {
 		
 		$('#' + $(this).attr('data-mask-id') + ' input').val(maskChar).trigger('change');
 		
-		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-charset_1');
-		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-charset_2');
-		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-charset_3');
-		$('#task-create-form').yiiActiveForm('validateAttribute', 'task-charset_4');
-		if ($('#task-create-form').yiiActiveForm('find', 'task-maskcharerror').status > 0)
-			$('#task-create-form').yiiActiveForm('validateAttribute', 'task-maskcharerror');
+		$('#crack-create-form').yiiActiveForm('validateAttribute', 'crack-charset_1');
+		$('#crack-create-form').yiiActiveForm('validateAttribute', 'crack-charset_2');
+		$('#crack-create-form').yiiActiveForm('validateAttribute', 'crack-charset_3');
+		$('#crack-create-form').yiiActiveForm('validateAttribute', 'crack-charset_4');
+		if ($('#crack-create-form').yiiActiveForm('find', 'crack-maskcharerror').status > 0)
+			$('#crack-create-form').yiiActiveForm('validateAttribute', 'crack-maskcharerror');
 	});
 	
 	var temp_mask_char;

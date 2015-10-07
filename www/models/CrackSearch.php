@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Task;
+use app\models\Crack;
 
 /**
- * TaskSearch represents the model behind the search form about `app\models\Task`.
+ * CrackSearch represents the model behind the search form about `app\models\Crack`.
  */
-class TaskSearch extends Task
+class CrackSearch extends Crack
 {
 
     /**
@@ -64,7 +64,7 @@ class TaskSearch extends Task
      */
     public function search($params)
     {
-        $query = Task::find();
+        $query = Crack::find();
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query

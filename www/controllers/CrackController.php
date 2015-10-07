@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Task;
-use app\models\TaskSearch;
+use app\models\Crack;
+use app\models\CrackSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TaskController implements the CRUD actions for Task model.
+ * CrackController implements the CRUD actions for Crack model.
  */
-class TaskController extends Controller
+class CrackController extends Controller
 {
 
     public function behaviors()
@@ -30,13 +30,13 @@ class TaskController extends Controller
     }
 
     /**
-     * Lists all Task models.
+     * Lists all Crack models.
      * 
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TaskSearch();
+        $searchModel = new CrackSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
         return $this->render('index', [
@@ -46,7 +46,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Displays a single Task model.
+     * Displays a single Crack model.
      * 
      * @param string $id
      * @return mixed
@@ -59,14 +59,14 @@ class TaskController extends Controller
     }
 
     /**
-     * Creates a new Task model.
+     * Creates a new Crack model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * 
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Task();
+        $model = new Crack();
         
         if ($model->load(Yii::$app->request->post())) {
             if ($model->mode == 1) { // Mask
@@ -123,7 +123,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Updates an existing Task model.
+     * Updates an existing Crack model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * 
      * @param string $id
@@ -146,7 +146,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Deletes an existing Task model.
+     * Deletes an existing Crack model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * 
      * @param string $id
@@ -162,16 +162,16 @@ class TaskController extends Controller
     }
 
     /**
-     * Finds the Task model based on its primary key value.
+     * Finds the Crack model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * 
      * @param string $id
-     * @return Task the loaded model
+     * @return Crack the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Task::findOne($id)) !== null) {
+        if (($model = Crack::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

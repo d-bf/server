@@ -49,13 +49,13 @@ class SubtaskController extends Controller
      * Displays a single Subtask model.
      * 
      * @param string $id
-     * @param string $task_id
+     * @param string $crack_id
      * @return mixed
      */
-    public function actionView($id, $task_id)
+    public function actionView($id, $crack_id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id, $task_id)
+            'model' => $this->findModel($id, $crack_id)
         ]);
     }
 
@@ -73,7 +73,7 @@ class SubtaskController extends Controller
             return $this->redirect([
                 'view',
                 'id' => $model->id,
-                'task_id' => $model->task_id
+                'crack_id' => $model->crack_id
             ]);
         } else {
             return $this->render('create', [
@@ -87,18 +87,18 @@ class SubtaskController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * 
      * @param string $id
-     * @param string $task_id
+     * @param string $crack_id
      * @return mixed
      */
-    public function actionUpdate($id, $task_id)
+    public function actionUpdate($id, $crack_id)
     {
-        $model = $this->findModel($id, $task_id);
+        $model = $this->findModel($id, $crack_id);
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect([
                 'view',
                 'id' => $model->id,
-                'task_id' => $model->task_id
+                'crack_id' => $model->crack_id
             ]);
         } else {
             return $this->render('update', [
@@ -112,12 +112,12 @@ class SubtaskController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * 
      * @param string $id
-     * @param string $task_id
+     * @param string $crack_id
      * @return mixed
      */
-    public function actionDelete($id, $task_id)
+    public function actionDelete($id, $crack_id)
     {
-        $this->findModel($id, $task_id)->delete();
+        $this->findModel($id, $crack_id)->delete();
         
         return $this->redirect([
             'index'
@@ -129,15 +129,15 @@ class SubtaskController extends Controller
      * If the model is not found, a 404 HTTP exception will be thrown.
      * 
      * @param string $id
-     * @param string $task_id
+     * @param string $crack_id
      * @return Subtask the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $task_id)
+    protected function findModel($id, $crack_id)
     {
         if (($model = Subtask::findOne([
             'id' => $id,
-            'task_id' => $task_id
+            'crack_id' => $crack_id
         ])) !== null) {
             return $model;
         } else {

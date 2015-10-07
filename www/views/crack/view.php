@@ -3,18 +3,18 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Task */
+/* @var $model app\models\Crack */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = [
-    'label' => Yii::t('app', 'Tasks'),
+    'label' => Yii::t('app', 'Cracks'),
     'url' => [
         'index'
     ]
 ];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="task-view">
+<div class="crack-view">
 
 	<h1><?= Html::encode($this->title) ?></h1>
 

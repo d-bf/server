@@ -40,7 +40,7 @@ AppAsset::register($this);
             [
                 'label' => 'New Crack',
                 'url' => [
-                    '/task/create'
+                    '/crack/create'
                 ]
             ],
             [

@@ -8,12 +8,12 @@ use Yii;
  * This is the model class for table "{{%subtask}}".
  * 
  * @property string $id
- * @property string $task_id
+ * @property string $crack_id
  * @property string $start
  * @property string $offset
  * @property integer $status
  *
- * @property Task $task
+ * @property Crack $crack
  */
 class Subtask extends \yii\db\ActiveRecord
 {
@@ -35,7 +35,7 @@ class Subtask extends \yii\db\ActiveRecord
             [
                 [
                     'id',
-                    'task_id',
+                    'crack_id',
                     'start'
                 ],
                 'required'
@@ -43,7 +43,7 @@ class Subtask extends \yii\db\ActiveRecord
             [
                 [
                     'id',
-                    'task_id',
+                    'crack_id',
                     'start',
                     'offset',
                     'status'
@@ -60,7 +60,7 @@ class Subtask extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'task_id' => Yii::t('app', 'Task ID'),
+            'crack_id' => Yii::t('app', 'Crack ID'),
             'start' => Yii::t('app', 'Start'),
             'offset' => Yii::t('app', 'Offset'),
             'status' => Yii::t('app', 'Status')
@@ -71,10 +71,10 @@ class Subtask extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTask()
+    public function getCrack()
     {
-        return $this->hasOne(Task::className(), [
-            'id' => 'task_id'
+        return $this->hasOne(Crack::className(), [
+            'id' => 'crack_id'
         ]);
     }
 

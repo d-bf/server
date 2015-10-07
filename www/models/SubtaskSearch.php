@@ -22,7 +22,7 @@ class SubtaskSearch extends Subtask
             [
                 [
                     'id',
-                    'task_id',
+                    'crack_id',
                     'start',
                     'offset',
                     'status'
@@ -66,7 +66,7 @@ class SubtaskSearch extends Subtask
         
         $query->andFilterWhere([
             'id' => $this->id,
-            'task_id' => $this->task_id,
+            'crack_id' => $this->crack_id,
             'start' => $this->start,
             'offset' => $this->offset,
             'status' => $this->status

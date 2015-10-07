@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id')->textInput(['maxlength' => true])?>
 
-    <?= $form->field($model, 'task_id')->textInput(['maxlength' => true])?>
+    <?= $form->field($model, 'crack_id')->textInput(['maxlength' => true])?>
 
     <?= $form->field($model, 'start')->textInput(['maxlength' => true])?>
 

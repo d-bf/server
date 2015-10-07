@@ -12,6 +12,44 @@
 			</index>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
+		<table name="crack" >
+			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" autoincrement="y" />
+			<column name="gen_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="algo_id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<column name="len_min" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="len_max" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="charset_1" type="varchar" length="255" jt="12" />
+			<column name="charset_2" type="varchar" length="255" jt="12" />
+			<column name="charset_3" type="varchar" length="255" jt="12" />
+			<column name="charset_4" type="varchar" length="255" jt="12" />
+			<column name="mask" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="key_total" type="bigint" jt="-5" unsigned="y" />
+			<column name="key_assigned" type="bigint" jt="-5" unsigned="y" >
+				<defo>0</defo>
+			</column>
+			<column name="key_finished" type="bigint" jt="-5" unsigned="y" >
+				<defo>0</defo>
+			</column>
+			<column name="key_error" type="bigint" jt="-5" unsigned="y" >
+				<defo>0</defo>
+			</column>
+			<index name="pk_crack" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_crack" unique="NORMAL" >
+				<column name="gen_id" />
+			</index>
+			<index name="idx_crack_0" unique="NORMAL" >
+				<column name="algo_id" />
+			</index>
+			<fk name="fk_crack" to_schema="dbf_server" to_table="generator" delete_action="cascade" update_action="cascade" >
+				<fk_column name="gen_id" pk="id" />
+			</fk>
+			<fk name="fk_crack_0" to_schema="dbf_server" to_table="algorithm" delete_action="cascade" update_action="cascade" >
+				<fk_column name="algo_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
 		<table name="cracker" >
 			<column name="id" type="int" jt="4" mandatory="y" unsigned="y" />
 			<column name="name" type="varchar" length="80" jt="12" />
@@ -146,62 +184,18 @@
 			</index>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
-		<table name="subtask" >
+		<table name="task" >
 			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
-			<column name="task_id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
+			<column name="crack_id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="start" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="offset" type="bigint" jt="-5" unsigned="y" />
 			<column name="status" type="tinyint" length="1" jt="-6" >
 				<comment><![CDATA[0: not assigned; 1: assigned; 2: error; 3: finished;]]></comment>
 			</column>
-			<index name="pk_subtask" unique="PRIMARY_KEY" >
+			<index name="pk_task" unique="PRIMARY_KEY" >
 				<column name="id" />
-				<column name="task_id" />
+				<column name="crack_id" />
 			</index>
-			<index name="idx_subtask" unique="NORMAL" >
-				<column name="task_id" />
-			</index>
-			<fk name="fk_subtask" to_schema="dbf_server" to_table="task" delete_action="cascade" update_action="cascade" >
-				<fk_column name="task_id" pk="id" />
-			</fk>
-			<storage><![CDATA[engine=InnoDB]]></storage>
-		</table>
-		<table name="task" >
-			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" autoincrement="y" />
-			<column name="gen_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
-			<column name="algo_id" type="int" jt="4" mandatory="y" unsigned="y" />
-			<column name="len_min" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
-			<column name="len_max" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
-			<column name="charset_1" type="varchar" length="255" jt="12" />
-			<column name="charset_2" type="varchar" length="255" jt="12" />
-			<column name="charset_3" type="varchar" length="255" jt="12" />
-			<column name="charset_4" type="varchar" length="255" jt="12" />
-			<column name="mask" type="varchar" length="255" jt="12" mandatory="y" />
-			<column name="key_total" type="bigint" jt="-5" unsigned="y" />
-			<column name="key_assigned" type="bigint" jt="-5" unsigned="y" >
-				<defo>0</defo>
-			</column>
-			<column name="key_finished" type="bigint" jt="-5" unsigned="y" >
-				<defo>0</defo>
-			</column>
-			<column name="key_error" type="bigint" jt="-5" unsigned="y" >
-				<defo>0</defo>
-			</column>
-			<index name="pk_jobs" unique="PRIMARY_KEY" >
-				<column name="id" />
-			</index>
-			<index name="idx_task" unique="NORMAL" >
-				<column name="algo_id" />
-			</index>
-			<index name="idx_task_0" unique="NORMAL" >
-				<column name="gen_id" />
-			</index>
-			<fk name="fk_task" to_schema="dbf_server" to_table="generator" delete_action="cascade" update_action="cascade" >
-				<fk_column name="gen_id" pk="id" />
-			</fk>
-			<fk name="fk_task_0" to_schema="dbf_server" to_table="algorithm" delete_action="cascade" update_action="cascade" >
-				<fk_column name="algo_id" pk="id" />
-			</fk>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
 		<view name="view_all_cracker_gen_plat" >
@@ -233,7 +227,7 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="180" y="45" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="180" y="135" />
 		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="165" y="360" />
-		<entity schema="dbf_server" name="task" color="b2cdf7" x="435" y="405" />
-		<entity schema="dbf_server" name="subtask" color="b2cdf7" x="495" y="285" />
+		<entity schema="dbf_server" name="crack" color="b2cdf7" x="435" y="405" />
+		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="285" />
 	</layout>
 </project>

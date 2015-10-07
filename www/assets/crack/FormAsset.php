@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
-namespace app\assets\task;
+namespace app\assets\crack;
 
 use yii\web\AssetBundle;
 
@@ -25,7 +25,7 @@ class FormAsset extends AssetBundle
     public $css = [];
 
     public $js = [
-        'js/task/form.js'
+        'js/crack/form.js'
     ];
 
     public $depends = [

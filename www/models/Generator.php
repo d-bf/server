@@ -12,7 +12,7 @@ use Yii;
  *
  * @property CrackerGen[] $crackerGens
  * @property GenPlat[] $genPlats
- * @property Task[] $tasks
+ * @property Crack[] $cracks
  */
 class Generator extends \yii\db\ActiveRecord
 {
@@ -96,9 +96,9 @@ class Generator extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getCracks()
     {
-        return $this->hasMany(Task::className(), [
+        return $this->hasMany(Crack::className(), [
             'gen_id' => 'id'
         ]);
     }

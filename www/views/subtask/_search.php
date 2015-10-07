@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id')?>
 
-    <?= $form->field($model, 'task_id')?>
+    <?= $form->field($model, 'crack_id')?>
 
     <?= $form->field($model, 'start')?>
 

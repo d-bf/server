@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%task}}".
+ * This is the model class for table "{{%crack}}".
  * 
  * @property string $id
  * @property integer $gen_id
@@ -22,11 +22,11 @@ use Yii;
  * @property string $key_finished
  * @property string $key_error
  *
- * @property Subtask[] $subtasks
+ * @property Sub[] $subtasks
  * @property Generator $gen
  * @property Algorithm $algo
  */
-class Task extends \yii\db\ActiveRecord
+class Crack extends \yii\db\ActiveRecord
 {
 
     public $mode, $charset, $maskChar, $maskCharError, $_LEN_MAX = 55;
@@ -36,7 +36,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%task}}';
+        return '{{%crack}}';
     }
 
     /**
@@ -65,7 +65,7 @@ class Task extends \yii\db\ActiveRecord
                     return $model->mode == 0;
                 },
                 'whenClient' => "function() {
-					return $('#task-mode').val() == '0';
+					return $('#crack-mode').val() == '0';
 				}"
             ],
             [
@@ -89,8 +89,8 @@ class Task extends \yii\db\ActiveRecord
                 },
                 'whenClient' => "function(attribute) {
 					var ret = false;
-					if ($('#task-mode').val() == '1') {
-						$('#task-maskchars input:enabled').each(function(index, element) {
+					if ($('#crack-mode').val() == '1') {
+						$('#crack-maskchars input:enabled').each(function(index, element) {
 							if ($(element).val() == '?' + attribute.name.split('_')[1]) {
 								ret = true;
 								return false; // Break loop
@@ -124,7 +124,7 @@ class Task extends \yii\db\ActiveRecord
                     return false;
                 },
                 'whenClient' => "function(attribute) {
-					return (($('#task-mode').val() == '1') && (! $(attribute.input).prop('disabled')));
+					return (($('#crack-mode').val() == '1') && (! $(attribute.input).prop('disabled')));
 				}"
             ],
             [
@@ -140,8 +140,8 @@ class Task extends \yii\db\ActiveRecord
                 },
                 'whenClient' => "function(attribute) {
 					var ret = false;
-					if ($('#task-mode').val() == '1') {
-						$('#task-maskchars input:visible:enabled').each(function(index, element) {
+					if ($('#crack-mode').val() == '1') {
+						$('#crack-maskchars input:visible:enabled').each(function(index, element) {
 							if ($(element).val().length == 0) {
 								ret = true;
 								return false; // Break loop
@@ -218,7 +218,7 @@ class Task extends \yii\db\ActiveRecord
     public function getSubtasks()
     {
         return $this->hasMany(Subtask::className(), [
-            'task_id' => 'id'
+            'crack_id' => 'id'
         ]);
     }
 
@@ -247,10 +247,10 @@ class Task extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      * 
-     * @return TaskQuery the active query used by this AR class.
+     * @return CrackQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new TaskQuery(get_called_class());
+        return new CrackQuery(get_called_class());
     }
 }

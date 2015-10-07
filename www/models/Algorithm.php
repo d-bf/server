@@ -11,7 +11,7 @@ use Yii;
  * @property string $name
  *
  * @property CrackerAlgo[] $crackerAlgos
- * @property Task[] $tasks
+ * @property Crack[] $cracks
  */
 class Algorithm extends \yii\db\ActiveRecord
 {
@@ -84,9 +84,9 @@ class Algorithm extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getCracks()
     {
-        return $this->hasMany(Task::className(), [
+        return $this->hasMany(Crack::className(), [
             'algo_id' => 'id'
         ]);
     }
