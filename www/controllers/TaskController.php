@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Subtask;
-use app\models\SubtaskSearch;
+use app\models\Task;
+use app\models\TaskSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SubtaskController implements the CRUD actions for Subtask model.
+ * TaskController implements the CRUD actions for Task model.
  */
-class SubtaskController extends Controller
+class TaskController extends Controller
 {
 
     public function behaviors()
@@ -30,13 +30,13 @@ class SubtaskController extends Controller
     }
 
     /**
-     * Lists all Subtask models.
+     * Lists all Task models.
      * 
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SubtaskSearch();
+        $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
         return $this->render('index', [
@@ -46,7 +46,7 @@ class SubtaskController extends Controller
     }
 
     /**
-     * Displays a single Subtask model.
+     * Displays a single Task model.
      * 
      * @param string $id
      * @param string $crack_id
@@ -60,14 +60,14 @@ class SubtaskController extends Controller
     }
 
     /**
-     * Creates a new Subtask model.
+     * Creates a new Task model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * 
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Subtask();
+        $model = new Task();
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect([
@@ -83,7 +83,7 @@ class SubtaskController extends Controller
     }
 
     /**
-     * Updates an existing Subtask model.
+     * Updates an existing Task model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * 
      * @param string $id
@@ -108,7 +108,7 @@ class SubtaskController extends Controller
     }
 
     /**
-     * Deletes an existing Subtask model.
+     * Deletes an existing Task model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * 
      * @param string $id
@@ -125,17 +125,17 @@ class SubtaskController extends Controller
     }
 
     /**
-     * Finds the Subtask model based on its primary key value.
+     * Finds the Task model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * 
      * @param string $id
      * @param string $crack_id
-     * @return Subtask the loaded model
+     * @return Task the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id, $crack_id)
     {
-        if (($model = Subtask::findOne([
+        if (($model = Task::findOne([
             'id' => $id,
             'crack_id' => $crack_id
         ])) !== null) {

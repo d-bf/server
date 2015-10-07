@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Subtask;
+use app\models\Task;
 
 /**
- * SubtaskSearch represents the model behind the search form about `app\models\Subtask`.
+ * TaskSearch represents the model behind the search form about `app\models\Task`.
  */
-class SubtaskSearch extends Subtask
+class TaskSearch extends Task
 {
 
     /**
@@ -50,7 +50,7 @@ class SubtaskSearch extends Subtask
      */
     public function search($params)
     {
-        $query = Subtask::find();
+        $query = Task::find();
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query

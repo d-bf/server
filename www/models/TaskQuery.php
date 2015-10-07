@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Subtask]].
+ * This is the ActiveQuery class for [[Task]].
  * 
- * @see Subtask
+ * @see Task
  */
-class SubtaskQuery extends \yii\db\ActiveQuery
+class TaskQuery extends \yii\db\ActiveQuery
 {
 
     /*
@@ -21,7 +21,7 @@ class SubtaskQuery extends \yii\db\ActiveQuery
     /**
      * @inheritdoc
      * 
-     * @return Subtask[]|array
+     * @return Task[]|array
      */
     public function all($db = null)
     {
@@ -31,7 +31,7 @@ class SubtaskQuery extends \yii\db\ActiveQuery
     /**
      * @inheritdoc
      * 
-     * @return Subtask|array|null
+     * @return Task|array|null
      */
     public function one($db = null)
     {

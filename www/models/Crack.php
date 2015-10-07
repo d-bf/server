@@ -22,7 +22,7 @@ use Yii;
  * @property string $key_finished
  * @property string $key_error
  *
- * @property Sub[] $subtasks
+ * @property Sub[] $tasks
  * @property Generator $gen
  * @property Algorithm $algo
  */
@@ -215,9 +215,9 @@ class Crack extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getSubtasks()
+    public function getTasks()
     {
-        return $this->hasMany(Subtask::className(), [
+        return $this->hasMany(Task::className(), [
             'crack_id' => 'id'
         ]);
     }

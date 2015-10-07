@@ -3,11 +3,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SubtaskSearch */
+/* @var $model app\models\TaskSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="subtask-search">
+<div class="task-search">
 
     <?php
     

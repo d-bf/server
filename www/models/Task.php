@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%subtask}}".
+ * This is the model class for table "{{%task}}".
  * 
  * @property string $id
  * @property string $crack_id
@@ -15,7 +15,7 @@ use Yii;
  *
  * @property Crack $crack
  */
-class Subtask extends \yii\db\ActiveRecord
+class Task extends \yii\db\ActiveRecord
 {
 
     /**
@@ -23,7 +23,7 @@ class Subtask extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%subtask}}';
+        return '{{%task}}';
     }
 
     /**
@@ -81,10 +81,10 @@ class Subtask extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      * 
-     * @return SubtaskQuery the active query used by this AR class.
+     * @return TaskQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new SubtaskQuery(get_called_class());
+        return new TaskQuery(get_called_class());
     }
 }
