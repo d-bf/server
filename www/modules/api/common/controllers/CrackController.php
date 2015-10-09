@@ -1,0 +1,13 @@
+<?php
+
+namespace app\modules\api\common\controllers;
+
+use app\modules\api\common\controllers;
+
+class CrackController extends Controller
+{
+
+    public function actionIndex()
+    {
+    }
+}

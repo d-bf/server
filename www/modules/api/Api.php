@@ -3,29 +3,65 @@
 namespace app\modules\api;
 
 use yii\base\BootstrapInterface;
+use yii\web\Response;
+use yii\web\Request;
 
 class Api extends \yii\base\Module implements BootstrapInterface
 {
 
     public $controllerNamespace = 'app\modules\api\controllers';
 
-    private static $_defaultVersion = 'v1';
+    protected $responseFormats = [
+        'application/json' => Response::FORMAT_JSON,
+        'application/xml' => Response::FORMAT_XML
+    ];
+
+    protected static $defaultVersion = 'v1';
 
     public static function getDefaultVersion()
     {
-        return self::$_defaultVersion;
+        return self::$defaultVersion;
     }
 
     public function bootstrap($app)
     {
-        $app->getUrlManager()->addRules([
+        \Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, 
+            function ($event) {
+                $request = \Yii::$app->getRequest();
+                if (strtolower(strstr($request->getPathInfo() . '/', '/', true)) == 'api') { // It's an api module request
+                    $response = \Yii::$app->getResponse();
+                    $response->format = false;
+                    foreach ($request->getAcceptableContentTypes() as $type => $params) { // Determine response format
+                        if (isset($this->responseFormats[$type])) {
+                            $response->format = $this->responseFormats[$type];
+                            $response->acceptMimeType = $type;
+                            $response->acceptParams = $params;
+                            break;
+                        }
+                    }
+                    if (empty($response->format)) { // Response format is not determined yet, use default format
+                        $response->format = Response::FORMAT_JSON;
+                        $response->acceptMimeType = 'application/json';
+                        $response->acceptParams = [];
+                    }
+                }
+            });
+        
+        $app->getUrlManager()->addRules(
             [
-                'class' => 'yii\rest\UrlRule',
-                'controller' => [
-                    'api/v1/default'
+                [
+                    'class' => 'yii\web\GroupUrlRule',
+                    'prefix' => 'api',
+                    'rules' => [
+                        '' => 'default/index',
+                        [
+                            'pattern' => '<api_ver:v\d+>/<controller:\w+>',
+                            'route' => '<api_ver>/<controller>/index',
+                            'verb' => 'POST'
+                        ]
+                    ]
                 ]
-            ]
-        ], false);
+            ], false);
     }
 
     function init()
