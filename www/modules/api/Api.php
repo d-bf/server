@@ -28,6 +28,13 @@ class Api extends \yii\base\Module implements BootstrapInterface
         \Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, 
             function ($event) {
                 $request = \Yii::$app->getRequest();
+                
+                // Enable parsing of json request
+                $request->parsers = [
+                    'application/json' => 'yii\web\JsonParser'
+                ];
+                
+                // Handle response negotiation
                 if (strtolower(strstr($request->getPathInfo() . '/', '/', true)) == 'api') { // It's an api module request
                     $response = \Yii::$app->getResponse();
                     $response->format = false;
