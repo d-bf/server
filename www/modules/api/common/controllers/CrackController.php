@@ -7,7 +7,10 @@ use app\modules\api\common\controllers;
 class CrackController extends Controller
 {
 
-    public function actionIndex()
+	/**
+	 * Get crack's information
+	 */
+    public function actionInfo()
     {
     }
 }
