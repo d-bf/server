@@ -53,9 +53,20 @@
 		<table name="cracker" >
 			<column name="id" type="int" jt="4" mandatory="y" unsigned="y" />
 			<column name="name" type="varchar" length="80" jt="12" />
-			<column name="gen_type" type="tinyint" jt="-6" >
-				<defo>0</defo>
-				<comment><![CDATA[0 (000): not supported; 1 (001): stdin; 2 (010): file; 3 (011): both;]]></comment>
+			<column name="config" type="varchar" length="500" jt="12" >
+				<comment><![CDATA[{
+    "algo_in" : "",
+    "args_format" : "",
+    "args" : [
+        "START",
+        "OFFSET",
+        "MIN",
+        "MAX",
+        "CHARSET",
+        "ALGO",
+        "HASH"
+    ]
+}]]></comment>
 			</column>
 			<index name="pk_cracker" unique="PRIMARY_KEY" >
 				<column name="id" />
@@ -89,6 +100,21 @@
 		<table name="cracker_gen" >
 			<column name="cracker_id" type="int" jt="4" mandatory="y" unsigned="y" />
 			<column name="gen_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="config" type="varchar" length="500" jt="12" >
+				<comment><![CDATA[{
+    "algo_in" : "",
+    "args_format" : "",
+    "args" : [
+        "START",
+        "OFFSET",
+        "MIN",
+        "MAX",
+        "CHARSET",
+        "ALGO",
+        "HASH"
+    ]
+}]]></comment>
+			</column>
 			<index name="idx_cracker_gen" unique="NORMAL" >
 				<column name="cracker_id" />
 			</index>
@@ -163,6 +189,20 @@
 		<table name="generator" >
 			<column name="id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
 			<column name="name" type="varchar" length="80" jt="12" />
+			<column name="config" type="varchar" length="500" jt="12" >
+				<comment><![CDATA[{
+    "args_format" : "",
+    "args" : [
+        "START",
+        "OFFSET",
+        "MIN",
+        "MAX",
+        "CHARSET",
+        "ALGO",
+        "HASH"
+    ]
+}]]></comment>
+			</column>
 			<index name="pk_generator" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
@@ -223,17 +263,17 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 	</schema>
 	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.34-bin.jar" host="127.0.0.1" port="3306" instance="dbf_server" user="root" passwd="cm9vdA==" schema_mapping="" />
 	<layout id="Layout2583989" name="dbf_server" joined_routing="y" show_column_type="y" show_relation_columns="y" >
-		<entity schema="dbf_server" name="generator" color="b2cdf7" x="255" y="255" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="675" y="255" />
-		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="465" y="135" />
 		<entity schema="dbf_server" name="cracker_algo" color="b2cdf7" x="675" y="135" />
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="255" />
 		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="180" y="45" />
-		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="180" y="135" />
-		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="165" y="360" />
-		<entity schema="dbf_server" name="crack" color="b2cdf7" x="435" y="405" />
 		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="285" />
 		<entity schema="dbf_server" name="view_cracker_gen_plat" color="a8c4ef" x="870" y="150" />
 		<entity schema="dbf_server" name="view_all_cracker_gen_plat" color="a8c4ef" x="870" y="45" />
+		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="405" />
+		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="465" y="135" />
+		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="180" y="135" />
+		<entity schema="dbf_server" name="generator" color="b2cdf7" x="255" y="255" />
+		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="165" y="375" />
 	</layout>
 </project>

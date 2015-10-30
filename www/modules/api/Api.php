@@ -1,11 +1,12 @@
 <?php
+
 namespace app\modules\api;
 
 use yii\base\BootstrapInterface;
 use yii\web\Response;
-use yii\web\Request;
 
-class Api extends \yii\base\Module implements BootstrapInterface {
+class Api extends \yii\base\Module implements BootstrapInterface
+{
 
 	public $controllerNamespace = 'app\modules\api\controllers';
 
@@ -16,11 +17,13 @@ class Api extends \yii\base\Module implements BootstrapInterface {
 
 	protected static $defaultVersion = 'v1';
 
-	public static function getDefaultVersion() {
+	public static function getDefaultVersion()
+	{
 		return self::$defaultVersion;
 	}
 
-	public function bootstrap($app) {
+	public function bootstrap($app)
+	{
 		\Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, function ($event) {
 			$request = \Yii::$app->getRequest();
 			
@@ -65,7 +68,8 @@ class Api extends \yii\base\Module implements BootstrapInterface {
 		], false);
 	}
 
-	function init() {
+	function init()
+	{
 		parent::init();
 		
 		\Yii::$app->user->enableSession = false;
