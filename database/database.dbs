@@ -42,6 +42,11 @@
 			<column name="res_assigned" type="bigint" jt="-5" mandatory="y" unsigned="y" >
 				<defo>0</defo>
 			</column>
+			<column name="ts_assign" type="int" jt="4" unsigned="y" />
+			<column name="status" type="tinyint" length="1" jt="-6" >
+				<defo>0</defo>
+				<comment><![CDATA[0: Not assigned all keys; 1: Pending (All keys are assigned); 2: Finished;]]></comment>
+			</column>
 			<index name="pk_crack" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
@@ -311,12 +316,12 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="135" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="195" y="135" />
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="390" />
-		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="90" y="255" />
 		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="255" />
 		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="255" />
-		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="390" />
 		<entity schema="dbf_server" name="crack_platform" color="b7c8e3" x="165" y="495" />
 		<entity schema="dbf_server" name="info" color="b7c8e3" x="795" y="480" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="255" />
+		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="90" y="255" />
+		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="390" />
 	</layout>
 </project>

@@ -68,7 +68,18 @@ class CrackerController extends Controller
     {
         $model = new Cracker();
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $reqData = Yii::$app->request->post();
+        
+        if (!empty($reqData)) {
+            \Yii::$app->db->transaction(function ($db) {
+                $minRes = $db->createCommand("SELECT MIN(res_assigned) FROM {{%crack}} c WHERE c.status < 2")->queryScalar();
+                if ($minRes > 0) { // Minimize res_assign for fair behaviour after adding new crack
+                    $db->createCommand("UPDATE {{%crack}} c SET c.res_assigned = (res_assigned - $minRes) WHERE c.status < 2")->execute();
+                }
+            });
+        }
+        
+        if ($model->load($reqData) && $model->save()) {
             return $this->redirect([
                 'view',
                 'id' => $model->id
