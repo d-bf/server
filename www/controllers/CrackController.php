@@ -111,6 +111,25 @@ class CrackController extends Controller
             }
             $model->save();
             
+            // TODO: Maybe should check only cracker's platform!
+            $query = 'SELECT p.name FROM {{%gen_plat}} gp JOIN {{%platform}} p ON (gp.gen_id = :genId AND p.id = gp.plat_id) UNION ';
+            $query .= 'SELECT p.name FROM {{%cracker_algo}} ca JOIN {{%cracker_plat}} cp ON (ca.algo_id = :algoId AND cp.cracker_id = ca.cracker_id) JOIN {{%platform}} p ON p.id = cp.plat_id';
+            $platforms = \Yii::$app->db->createCommand($query, [
+                ':genId' => $model->gen_id,
+                ':algoId' => $model->algo_id
+            ])->queryColumn();
+            
+            $i = 0;
+            $values = '';
+            $params[':c'] = $model->id;
+            foreach ($platforms as $platform) {
+                $values .= ",(:c, :p$i)";
+                $params[":p$i"] =  $platform;
+                $i++;
+            }
+            $values = substr($values, 1);
+            \Yii::$app->db->createCommand("INSERT INTO {{%crack_platform}} (crack_id, platform_name) VALUES $values", $params)->execute();
+            
             return $this->redirect([
                 'view',
                 'id' => $model->id
