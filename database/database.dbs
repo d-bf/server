@@ -271,7 +271,7 @@
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
 		<table name="task" >
-			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
+			<column name="id" type="bigint" jt="-5" mandatory="y" unsigned="y" autoincrement="y" />
 			<column name="crack_id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="start" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="offset" type="bigint" jt="-5" unsigned="y" />
@@ -317,11 +317,11 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="195" y="135" />
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="390" />
 		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="255" />
-		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="255" />
 		<entity schema="dbf_server" name="crack_platform" color="b7c8e3" x="165" y="495" />
 		<entity schema="dbf_server" name="info" color="b7c8e3" x="795" y="480" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="255" />
 		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="90" y="255" />
 		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="390" />
+		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="255" />
 	</layout>
 </project>
