@@ -66,30 +66,39 @@ class TaskController extends Controller
         else
             $rateSelector = 'rate_cpu';
         
-        $task = \Yii::$app->db->createCommand("SELECT c.id AS id, g.name AS gen_name, a.id AS algo_id, a.name AS algo_name, a.$rateSelector AS algo_rate, c.len_min AS lenMin, c.len_max AS lenMax, c.charset_1 AS charset1, c.charset_2 AS charset2, c.charset_3 AS charset3, c.charset_4 AS charset4, c.mask AS mask, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, c.res_assigned AS resAssigned FROM {{%crack}} c JOIN {{%generator}} g ON (c.id = :crackId AND g.id = c.gen_id) JOIN {{%algorithm}} a ON a.id = c.algo_id", [
-            ':crackId' => \Yii::$app->db->createCommand("SELECT c.id FROM {{%crack}} c JOIN {{%crack_platform}} cp ON (cp.platform_name = :platformName AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_assign < :timestamp))) ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
-                ':platformName' => $info['platform'],
-                ':timestamp' => gmdate('U') - 540 // 9 min ago
-            ])->queryScalar()
+        $crack = \Yii::$app->db->createCommand("SELECT c.id AS id, c.status AS status, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, a.$rateSelector AS algo_rate FROM {{%crack}} c JOIN {{%crack_platform}} cp ON (cp.platform_name = :platformName AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_assign < :timestamp))) JOIN {{%algorithm}} a ON a.id = c.algo_id ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
+            ':platformName' => $info['platform'],
+            ':timestamp' => gmdate('U') - 540 // 9 min ago
         ])->queryOne();
         
-        // There is no pending task
-        if (!$task)
-            return $task;
+        // There is no task
+        if (!$crack)
+            return $crack;
+        
+        // Calculate start key
+        if ($crack['status'] == 0) {
+            $taskStart = \Yii::$app->db->createCommand("SELECT (start + offset) AS start FROM {{%task}} WHERE crack_id = :crackId ORDER BY id DESC LIMIT 1", [
+                ':crackId' => $crack['id'] 
+            ])->queryOne();
+
+            if (!$taskStart)
+                $taskStart = 0;
+        } else {
+            // TODO: Calculate start and offset correctly if status is 1
+        }
         
         // Calculate speed of current algorithm
         // TODO: Use the client's benchmark of current algorithm if available 
-        if ($task['algo_rate'] === null)
+        if ($crack['algo_rate'] === null)
             $rate = 0.5;
         else
-            $rate = $task['algo_rate'];
+            $rate = $crack['algo_rate'];
         $power = $info['benchmark'] * $rate;
         
         // TODO: Assign dynamic amount of work based on remained keys.
-        // Assign 3 minute of work (3 min = 180 sec)
-        $power *= 180;
+        $power *= 180; // Assign 3 minute of work (3 min = 180 sec)
         
-        $canAssign = $task['keyTotal'] - $task['keyAssigned'];
+        $canAssign = $crack['keyTotal'] - $crack['keyAssigned'];
         
         if ($canAssign > $power) { // Task won't be finished by this assignment
             $canAssign = $power;
@@ -98,18 +107,22 @@ class TaskController extends Controller
             $setStatus = ', status = 1';
         }
         
-        \Yii::$app->db->createCommand("UPDATE {{%crack}} SET key_assigned = key_assigned + :keyAssigned, ts_assign = :tsAssign $setStatus WHERE id = :crackId", [
+        \Yii::$app->db->createCommand("UPDATE {{%crack}} SET key_assigned = key_assigned + :keyAssigned, res_assigned = res_assigned + :resAssigned, ts_assign = :tsAssign $setStatus WHERE id = :crackId", [
             ':keyAssigned' => $canAssign,
+            ':resAssigned' => $info['benchmark'],
             ':tsAssign' => gmdate('U'),
-            ':crackId' => $task['id']
+            ':crackId' => $crack['id']
         ])->execute();
         
-        unset($task['algo_rate']);
-        unset($task['keyTotal']);
-        unset($task['keyAssigned']);
-        unset($task['resAssigned']);
+        unset($crack['status']);
+        unset($crack['keyTotal']);
+        unset($crack['keyAssigned']);
+        unset($crack['algo_rate']);
         
-        return $task;
+        $crack['start'] = $taskStart;
+        $crack['offset'] = $canAssign;
+        
+        return $crack;
     }
 
     /**
