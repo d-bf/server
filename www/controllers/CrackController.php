@@ -100,9 +100,9 @@ class CrackController extends Controller
                 }
             } else { // Simple
                 $model->charset_1 = count_chars($model->charset, 3); // Get unique chars only
-                $model->charset_2 = null;
-                $model->charset_3 = null;
-                $model->charset_4 = null;
+                $model->charset_2 = '';
+                $model->charset_3 = '';
+                $model->charset_4 = '';
                 
                 $model->mask = str_repeat('?1', $model->len_max);
                 $model->key_total = 0;
