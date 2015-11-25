@@ -61,7 +61,7 @@ class TaskController extends Controller
      */
     protected function getTask($info)
     {
-        if (explode('_', $info['platform'])[2] == 'gpu')
+        if (explode('_', $info['platform'])[0] == 'gpu')
             $rateSelector = 'rate_gpu';
         else
             $rateSelector = 'rate_cpu';

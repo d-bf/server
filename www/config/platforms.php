@@ -1,24 +1,24 @@
 <?php
 return [
     'platforms' => [
-        // id => 'os_arch_procesosr_brand'
-        0 => 'linux_64_cpu',
-        1 => 'linux_32_cpu',
-        2 => 'win_64_cpu',
-        3 => 'win_32_cpu',
-        4 => 'mac_64_cpu',
-        5 => 'mac_32_cpu',
-        6 => 'linux_64_gpu_amd',
-        7 => 'linux_64_gpu_nv',
-        8 => 'linux_32_gpu_amd',
-        9 => 'linux_32_gpu_nv',
-        10 => 'win_64_gpu_amd',
-        11 => 'win_64_gpu_nv',
-        12 => 'win_32_gpu_amd',
-        13 => 'win_32_gpu_nv',
-        14 => 'mac_64_gpu_amd',
-        15 => 'mac_64_gpu_nv',
-        16 => 'mac_32_gpu_amd',
-        17 => 'mac_32_gpu_nv'
+        // id => 'processor_os_arch_brand'
+        0 => 'cpu_linux_64',
+        1 => 'cpu_linux_32',
+        2 => 'cpu_win_64',
+        3 => 'cpu_win_32',
+        4 => 'cpu_mac_64',
+        5 => 'cpu_mac_32',
+        6 => 'gpu_linux_64_amd',
+        7 => 'gpu_linux_64_nv',
+        8 => 'gpu_linux_32_amd',
+        9 => 'gpu_linux_32_nv',
+        10 => 'gpu_win_64_amd',
+        11 => 'gpu_win_64_nv',
+        12 => 'gpu_win_32_amd',
+        13 => 'gpu_win_32_nv',
+        14 => 'gpu_mac_64_amd',
+        15 => 'gpu_mac_64_nv',
+        16 => 'gpu_mac_32_amd',
+        17 => 'gpu_mac_32_nv'
     ]
 ];
