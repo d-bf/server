@@ -66,7 +66,7 @@ class TaskController extends Controller
         else
             $rateSelector = 'rate_cpu';
         
-        $crack = \Yii::$app->db->createCommand("SELECT c.id AS crack_id, c.status AS status, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, a.$rateSelector AS algo_rate FROM {{%crack}} c JOIN {{%crack_platform}} cp ON (cp.platform_name = :platformName AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_assign < :timestamp))) JOIN {{%algorithm}} a ON a.id = c.algo_id ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
+        $crack = \Yii::$app->db->createCommand("SELECT c.id AS crack_id, c.status AS status, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, a.$rateSelector AS algo_rate FROM {{%crack}} c JOIN {{%crack_plat}} cp ON (cp.plat_name = :platformName AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_assign < :timestamp))) JOIN {{%algorithm}} a ON a.id = c.algo_id ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
             ':platformName' => $info['platform'],
             ':timestamp' => gmdate('U') - 540 // 9 min ago
         ])->queryOne();

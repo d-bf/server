@@ -128,7 +128,7 @@ class CrackController extends Controller
                 $i++;
             }
             $values = substr($values, 1);
-            \Yii::$app->db->createCommand("INSERT INTO {{%crack_platform}} (crack_id, platform_name) VALUES $values", $params)->execute();
+            \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_name) VALUES $values", $params)->execute();
             
             return $this->redirect([
                 'view',

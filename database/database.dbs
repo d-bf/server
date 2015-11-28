@@ -67,24 +67,24 @@
 			</fk>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
-		<table name="crack_platform" >
+		<table name="crack_plat" >
 			<column name="crack_id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
-			<column name="platform_name" type="varchar" length="32" jt="12" mandatory="y" />
+			<column name="plat_name" type="varchar" length="32" jt="12" mandatory="y" />
 			<index name="pk_crack_platform" unique="PRIMARY_KEY" >
 				<column name="crack_id" />
-				<column name="platform_name" />
+				<column name="plat_name" />
 			</index>
 			<index name="idx_crack_platform" unique="NORMAL" >
 				<column name="crack_id" />
 			</index>
 			<index name="idx_crack_platform_0" unique="NORMAL" >
-				<column name="platform_name" />
+				<column name="plat_name" />
 			</index>
 			<fk name="fk_crack_platform" to_schema="dbf_server" to_table="crack" delete_action="cascade" update_action="cascade" >
 				<fk_column name="crack_id" pk="id" />
 			</fk>
 			<fk name="fk_crack_platform_0" to_schema="dbf_server" to_table="platform" delete_action="cascade" update_action="cascade" >
-				<fk_column name="platform_name" pk="name" />
+				<fk_column name="plat_name" pk="name" />
 			</fk>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
@@ -309,19 +309,19 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 	</schema>
 	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.34-bin.jar" host="127.0.0.1" port="3306" instance="dbf_server" user="root" passwd="cm9vdA==" schema_mapping="" />
 	<layout id="Layout2583989" name="dbf_server" joined_routing="y" show_column_type="y" show_relation_columns="y" >
-		<entity schema="dbf_server" name="cracker_algo" color="b2cdf7" x="690" y="135" />
-		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="195" y="45" />
-		<entity schema="dbf_server" name="view_cracker_gen_plat" color="a8c4ef" x="885" y="150" />
-		<entity schema="dbf_server" name="view_all_cracker_gen_plat" color="a8c4ef" x="885" y="45" />
-		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="135" />
-		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="195" y="135" />
-		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="390" />
-		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="255" />
-		<entity schema="dbf_server" name="crack_platform" color="b7c8e3" x="165" y="495" />
-		<entity schema="dbf_server" name="info" color="b7c8e3" x="795" y="480" />
-		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="255" />
-		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="90" y="255" />
-		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="390" />
-		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="255" />
+		<entity schema="dbf_server" name="cracker_algo" color="b2cdf7" x="690" y="195" />
+		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="195" y="105" />
+		<entity schema="dbf_server" name="view_cracker_gen_plat" color="a8c4ef" x="885" y="210" />
+		<entity schema="dbf_server" name="view_all_cracker_gen_plat" color="a8c4ef" x="885" y="105" />
+		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="450" />
+		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="315" />
+		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="315" />
+		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="90" y="315" />
+		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="315" />
+		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="450" />
+		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="195" />
+		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="195" y="195" />
+		<entity schema="dbf_server" name="info" color="b7c8e3" x="675" y="555" />
+		<entity schema="dbf_server" name="crack_plat" color="b7c8e3" x="165" y="555" />
 	</layout>
 </project>
