@@ -111,9 +111,8 @@ class CrackController extends Controller
             }
             $model->save();
             
-            // TODO: Maybe should check only cracker's platform!
-            $query = 'SELECT p.name FROM {{%gen_plat}} gp JOIN {{%platform}} p ON (gp.gen_id = :genId AND p.id = gp.plat_id) UNION ';
-            $query .= 'SELECT p.name FROM {{%cracker_algo}} ca JOIN {{%cracker_plat}} cp ON (ca.algo_id = :algoId AND cp.cracker_id = ca.cracker_id) JOIN {{%platform}} p ON p.id = cp.plat_id';
+            $query = 'SELECT DISTINCT p.name FROM {{%gen_plat}} gp JOIN {{%cracker_plat}} cp ON (gp.gen_id = :genId AND cp.plat_id = gp.plat_id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND cp.cracker_id = ca.cracker_id) JOIN {{%platform}} p ON p.id = cp.plat_id UNION ';
+            $query .= 'SELECT DISTINCT p.name FROM {{%cracker_algo}} ca JOIN {{%cracker_gen}} cg ON (ca.algo_id = :algoId AND cg.gen_id = :genId AND cg.cracker_id = ca.cracker_id) JOIN {{%cracker_plat}} cp ON cp.cracker_id = cg.cracker_id JOIN {{%platform}} p ON p.id = cp.plat_id';
             $platforms = \Yii::$app->db->createCommand($query, [
                 ':genId' => $model->gen_id,
                 ':algoId' => $model->algo_id

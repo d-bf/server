@@ -257,6 +257,35 @@
 				<column name="info_name" />
 			</index>
 		</table>
+		<table name="plat_algo_cracker" >
+			<column name="plat_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
+			<column name="algo_id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<column name="cracker_id" type="int" jt="4" mandatory="y" unsigned="y" />
+			<index name="pk_plat_algo_cracker" unique="PRIMARY_KEY" >
+				<column name="plat_id" />
+				<column name="algo_id" />
+				<column name="cracker_id" />
+			</index>
+			<index name="idx_plat_algo_cracker" unique="NORMAL" >
+				<column name="plat_id" />
+			</index>
+			<index name="idx_plat_algo_cracker_0" unique="NORMAL" >
+				<column name="algo_id" />
+			</index>
+			<index name="idx_plat_algo_cracker_1" unique="NORMAL" >
+				<column name="cracker_id" />
+			</index>
+			<fk name="fk_plat_algo_cracker" to_schema="dbf_server" to_table="platform" delete_action="cascade" update_action="cascade" >
+				<fk_column name="plat_id" pk="id" />
+			</fk>
+			<fk name="fk_plat_algo_cracker_0" to_schema="dbf_server" to_table="algorithm" delete_action="cascade" update_action="cascade" >
+				<fk_column name="algo_id" pk="id" />
+			</fk>
+			<fk name="fk_plat_algo_cracker_1" to_schema="dbf_server" to_table="cracker" delete_action="cascade" update_action="cascade" >
+				<fk_column name="cracker_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
 		<table name="platform" >
 			<column name="id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
 			<column name="name" type="varchar" length="32" jt="12" mandatory="y" >
@@ -322,6 +351,7 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="195" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="195" y="195" />
 		<entity schema="dbf_server" name="info" color="b7c8e3" x="675" y="555" />
+		<entity schema="dbf_server" name="plat_algo_cracker" color="b7c8e3" x="480" y="45" />
 		<entity schema="dbf_server" name="crack_plat" color="b7c8e3" x="165" y="555" />
 	</layout>
 </project>
