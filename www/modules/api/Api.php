@@ -59,7 +59,7 @@ class Api extends \yii\base\Module implements BootstrapInterface
 				'rules' => [
 					'' => 'default/index',
 					[
-						'pattern' => '<api_ver:v\d+>/<controller:\w+>/<action:\w+>',
+						'pattern' => '<api_ver:v\d+>/<controller:\w+>/<action:(\w|-)+>',
 						'route' => '<api_ver>/<controller>/<action>',
 						'verb' => 'POST'
 					]

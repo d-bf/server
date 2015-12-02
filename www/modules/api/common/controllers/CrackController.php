@@ -19,7 +19,7 @@ class CrackController extends Controller
                 ':crackId' => $reqData['id']
             ])->queryOne();
         } else {
-            return [];   
+            return [];
         }
     }
 }
