@@ -17,14 +17,17 @@ use Yii;
  * @property string $charset_3
  * @property string $charset_4
  * @property string $mask
+ * @property string $target
  * @property string $key_total
  * @property string $key_assigned
  * @property string $key_finished
  * @property string $key_error
  *
- * @property Sub[] $tasks
  * @property Generator $gen
  * @property Algorithm $algo
+ * @property CrackPlat[] $crackPlats
+ * @property Platform[] $platNames
+ * @property Task[] $tasks
  */
 class Crack extends \yii\db\ActiveRecord
 {
@@ -180,6 +183,13 @@ class Crack extends \yii\db\ActiveRecord
                 ],
                 'string',
                 'max' => 255
+            ],
+            [
+                [
+                    'target'
+                ],
+                'string',
+                'max' => 60000
             ]
         ];
     }
@@ -200,6 +210,7 @@ class Crack extends \yii\db\ActiveRecord
             'charset_3' => Yii::t('app', 'Custom Charset 3'),
             'charset_4' => Yii::t('app', 'Custom Charset 4'),
             'mask' => Yii::t('app', 'Mask'),
+            'mask' => Yii::t('app', 'Target'),
             'key_total' => Yii::t('app', 'Total'),
             'key_assigned' => Yii::t('app', 'Assigned'),
             'key_finished' => Yii::t('app', 'Finished'),
@@ -209,17 +220,6 @@ class Crack extends \yii\db\ActiveRecord
             'maskChar' => Yii::t('app', 'Mask Char'),
             'maskCharError' => Yii::t('app', 'Mask Char')
         ];
-    }
-
-    /**
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTasks()
-    {
-        return $this->hasMany(Task::className(), [
-            'crack_id' => 'id'
-        ]);
     }
 
     /**
@@ -241,6 +241,41 @@ class Crack extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Algorithm::className(), [
             'id' => 'algo_id'
+        ]);
+    }
+
+    /**
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCrackPlats()
+    {
+        return $this->hasMany(CrackPlat::className(), [
+            'crack_id' => 'id'
+        ]);
+    }
+
+    /**
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlatNames()
+    {
+        return $this->hasMany(Platform::className(), [
+            'name' => 'plat_name'
+        ])->viaTable('{{%crack_plat}}', [
+            'crack_id' => 'id'
+        ]);
+    }
+
+    /**
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), [
+            'crack_id' => 'id'
         ]);
     }
 

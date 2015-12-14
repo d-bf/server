@@ -56,6 +56,8 @@ $form = ActiveForm::begin([
 
 	<?= $form->field($model, 'algo_id')->dropDownList(ArrayHelper::map(Algorithm::find()->orderBy(['name' => SORT_ASC])->all(), 'id', 'name'))?>
 
+	<?= $form->field($model, 'target')->textarea(['maxlength' => true])->hint('One hash per line') ?>
+
 	<hr>
 
 	<fieldset>
