@@ -120,14 +120,17 @@ class CrackController extends Controller
             
             $i = 0;
             $values = '';
-            $params[':c'] = $model->id;
+            $params = [];
             foreach ($platforms as $platform) {
                 $values .= ",(:c, :p$i)";
-                $params[":p$i"] =  $platform;
+                $params[":p$i"] = $platform;
                 $i++;
             }
-            $values = substr($values, 1);
-            \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_name) VALUES $values", $params)->execute();
+            if (count($params) > 0) {
+                $values = substr($values, 1);
+                $params[':c'] = $model->id;
+                \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_name) VALUES $values", $params)->execute();
+            }
             
             return $this->redirect([
                 'view',
