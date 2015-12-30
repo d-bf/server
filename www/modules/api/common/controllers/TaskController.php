@@ -82,7 +82,7 @@ class TaskController extends Controller
         $power = $info['benchmark'] * $rate;
         
         // TODO: Assign dynamic amount of work based on remained keys.
-        $power *= 180; // Assign 3 minute of work (3 min = 180 sec)
+        $power *= 188743680; // Assign 3 minute of work: (3 min = 180 sec), (1M = 1048576) => 180 * 1048576 = 188743680
         
         $assign = $crack['keyTotal'] - $crack['keyAssigned'];
         
