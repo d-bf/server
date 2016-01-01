@@ -29,7 +29,8 @@
 			<column name="charset_3" type="varchar" length="255" jt="12" />
 			<column name="charset_4" type="varchar" length="255" jt="12" />
 			<column name="mask" type="varchar" length="255" jt="12" mandatory="y" />
-			<column name="target" type="varchar" length="60000" decimal="0" jt="12" />
+			<column name="target" type="varchar" length="30000" jt="12" />
+			<column name="result" type="varchar" length="30000" jt="12" />
 			<column name="key_total" type="bigint" jt="-5" unsigned="y" />
 			<column name="key_assigned" type="bigint" jt="-5" unsigned="y" >
 				<defo>0</defo>
@@ -162,17 +163,8 @@
 			<column name="plat_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
 			<column name="config" type="varchar" length="500" jt="12" >
 				<comment><![CDATA[{
-    "algo_in" : "",
-    "args_format" : "",
-    "args" : [
-        "START",
-        "OFFSET",
-        "MIN",
-        "MAX",
-        "CHARSET",
-        "ALGO",
-        "HASH"
-    ]
+    "args" : "",
+    "args_opt" : ""
 }]]></comment>
 			</column>
 			<column name="md5" type="char" length="32" jt="1" />
@@ -341,13 +333,13 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="330" />
 		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="90" y="330" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="195" y="210" />
-		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="195" y="105" />
 		<entity schema="dbf_server" name="plat_algo_cracker" color="b7c8e3" x="480" y="45" />
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="210" />
-		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="450" />
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="450" />
 		<entity schema="dbf_server" name="crack_plat" color="b7c8e3" x="165" y="555" />
 		<entity schema="dbf_server" name="info" color="b7c8e3" x="690" y="540" />
+		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="195" y="105" />
 		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="330" />
+		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="450" />
 	</layout>
 </project>
