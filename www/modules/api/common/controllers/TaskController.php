@@ -50,6 +50,14 @@ class TaskController extends Controller
      */
     public function actionResult()
     {
+        $reqData = \Yii::$app->request->post();
+        foreach ($reqData as $taskInfo) { // taskInfo: {"crack_id":"","start":"","offset":"","result":""}
+            $task = \Yii::$app->db->createCommand("SELECT crack_id FROM {{task}} WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
+                ':crackId' => $taskInfo['crack_id'],
+                ':start' => $taskInfo['start'],
+                ':offset' => $taskInfo['offset']
+            ])->queryScalar();
+        }
     }
 
     /**
@@ -123,14 +131,5 @@ class TaskController extends Controller
         $crack['offset'] = "$assign";
         
         return $crack;
-    }
-
-    /**
-     * Retrieve average speed of the system
-     * 
-     * @param mixed $speed current client's speed
-     */
-    protected function getAvgSpeed($speed)
-    {
     }
 }
