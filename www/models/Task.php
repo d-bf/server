@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "{{%task}}".
  * 
- * @property string $id
  * @property string $crack_id
  * @property string $start
  * @property string $offset
@@ -34,7 +33,6 @@ class Task extends \yii\db\ActiveRecord
         return [
             [
                 [
-                    'id',
                     'crack_id',
                     'start'
                 ],
@@ -42,7 +40,6 @@ class Task extends \yii\db\ActiveRecord
             ],
             [
                 [
-                    'id',
                     'crack_id',
                     'start',
                     'offset',
@@ -59,7 +56,6 @@ class Task extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
             'crack_id' => Yii::t('app', 'Crack ID'),
             'start' => Yii::t('app', 'Start'),
             'offset' => Yii::t('app', 'Offset'),
