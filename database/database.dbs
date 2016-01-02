@@ -297,7 +297,7 @@
 			<column name="start" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="offset" type="bigint" jt="-5" unsigned="y" />
 			<column name="status" type="tinyint" length="1" jt="-6" >
-				<comment><![CDATA[0: not assigned; 1: assigned; 2: error; 3: finished;]]></comment>
+				<comment><![CDATA[<0: not executed successfully; 0: executed successfully; >0: executed with error;]]></comment>
 			</column>
 			<index name="idx_task" unique="NORMAL" >
 				<column name="crack_id" />
@@ -339,7 +339,7 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 		<entity schema="dbf_server" name="crack_plat" color="b7c8e3" x="165" y="555" />
 		<entity schema="dbf_server" name="info" color="b7c8e3" x="690" y="540" />
 		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="195" y="105" />
-		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="330" />
 		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="450" />
+		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="330" />
 	</layout>
 </project>

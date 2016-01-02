@@ -47,7 +47,7 @@ class TaskController extends Controller {
 	 */
 	public function actionResult() {
 		$reqData = \Yii::$app->request->post();
-		foreach ($reqData as $taskInfo) { // taskInfo: {"crack_id":"","start":"","offset":"","result":""}
+		foreach ($reqData as $taskInfo) { // taskInfo: {"crack_id":"","start":"","offset":"","result":"","status":""}
 			$task = \Yii::$app->db->createCommand("SELECT crack_id FROM {{task}} WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
 				':crackId' => $taskInfo['crack_id'],
 				':start' => $taskInfo['start'],
@@ -55,7 +55,20 @@ class TaskController extends Controller {
 			])->queryScalar();
 			
 			if ($task) { // Task is valid
-				if (!empty($taskInfo['result'])) { // Add result
+				if (isset($taskInfo['status'])) {
+					$status = $taskInfo['status'];
+					if (($status === 0) || ($status === '0')) {
+						$status = 0;
+					} else {
+						$status = intval($status);
+						if ($status == 0) // intval() failed
+							$status = -3;
+					}
+				} else {
+					$status = -3;
+				}
+				
+				if (($status === 0) && !empty($taskInfo['result'])) { // Result exists and is valid
 					$transaction = \Yii::$app->db->beginTransaction();
 					
 					$lastResult = \Yii::$app->db->createCommand("SELECT result FROM {{crack}} WHERE id = :id", [
@@ -75,7 +88,7 @@ class TaskController extends Controller {
 				
 				// Update task status
 				\Yii::$app->db->createCommand("UPDATE {{task}} SET status = :status WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
-					':status' => 3, // Finished
+					':status' => $status,
 					':crackId' => $taskInfo['crack_id'],
 					':start' => $taskInfo['start'],
 					':offset' => $taskInfo['offset']
@@ -113,7 +126,7 @@ class TaskController extends Controller {
 		$power = $info['benchmark'] * $rate;
 		
 		// TODO: Assign dynamic amount of work based on remained keys.
-		$power *= 1024; // Assign 3 minute of work: (3 min = 180 sec), (1M = 1048576) => 180 * 1048576 = 188743680
+		$power *= 188743680; // Assign 3 minute of work: (3 min = 180 sec), (1M = 1048576) => 180 * 1048576 = 188743680
 		
 		$assign = $crack['keyTotal'] - $crack['keyAssigned'];
 		
@@ -132,7 +145,7 @@ class TaskController extends Controller {
 				':crackId' => $crack['crack_id'],
 				':start' => $taskStart,
 				':offset' => $assign,
-				':status' => 1
+				':status' => null
 			])->execute();
 		} else {
 			// TODO: Calculate start and offset correctly if status is 1
