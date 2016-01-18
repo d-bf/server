@@ -115,7 +115,7 @@ class TaskController extends Controller {
 		
 		// There is no task
 		if (!$crack)
-			return $crack;
+			return false;
 			
 			// Calculate speed of current algorithm
 			// TODO: Use the client's benchmark of current algorithm if available
@@ -148,8 +148,22 @@ class TaskController extends Controller {
 				':status' => null
 			])->execute();
 		} else {
-			// TODO: Calculate start and offset correctly if status is 1
+			// TODO: Handle situations where task is bigger or is too small
+			$task = \Yii::$app->db->createCommand("SELECT start, offset FROM {{%task}} WHERE crack_id = :crackId AND offset <= :assign ORDER BY offset DESC", [
+				':crackId' => $crack['crack_id'],
+				':assign' => $assign
+			])->queryOne();
+			
+			if ($task) {
+				$taskStart = $task['start'];
+				$assign = $task['offset'];
+			} else {
+				return false;
+			}
 		}
+		
+		if ($assign < $power) // Less resource is assigned to this crack
+			$info['benchmark'] *= ($assign / $power);
 		
 		\Yii::$app->db->createCommand("UPDATE {{%crack}} SET key_assigned = key_assigned + :keyAssigned, res_assigned = res_assigned + :resAssigned, ts_assign = :tsAssign $setStatus WHERE id = :crackId", [
 			':keyAssigned' => $assign,
