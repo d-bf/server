@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -58,8 +57,7 @@ class Crack extends \yii\db\ActiveRecord
                     'algo_id',
                     'len_min',
                     'len_max',
-                    'target',
-                    'mode'
+                    'target'
                 ],
                 'required'
             ],
@@ -313,7 +311,17 @@ class Crack extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             /* Prepare attributes according to crack mode */
-            if ($this->mode == 1) { // Mask
+            if (empty($this->mode)) { // Simple
+                $this->charset_1 = count_chars($this->charset, 3); // Get unique chars only
+                $this->charset_2 = '';
+                $this->charset_3 = '';
+                $this->charset_4 = '';
+                
+                $this->mask = str_repeat('?1', $this->len_max);
+                $this->key_total = 0;
+                for ($len = $this->len_min; $len <= $this->len_max; $len++)
+                    $this->key_total += pow(strlen($this->charset_1), $len);
+            } else { // Mask
                 $this->charset_1 = count_chars($this->charset_1, 3); // Get unique chars only
                 $this->charset_2 = count_chars($this->charset_2, 3); // Get unique chars only
                 $this->charset_3 = count_chars($this->charset_3, 3); // Get unique chars only
@@ -342,16 +350,6 @@ class Crack extends \yii\db\ActiveRecord
                         $charLen *= isset($charLenMap[$this->maskChar[$l]]) ? $charLenMap[$this->maskChar[$l]] : 1;
                     $this->key_total += $charLen;
                 }
-            } else { // Simple
-                $this->charset_1 = count_chars($this->charset, 3); // Get unique chars only
-                $this->charset_2 = '';
-                $this->charset_3 = '';
-                $this->charset_4 = '';
-                
-                $this->mask = str_repeat('?1', $this->len_max);
-                $this->key_total = 0;
-                for ($len = $this->len_min; $len <= $this->len_max; $len++)
-                    $this->key_total += pow(strlen($this->charset_1), $len);
             }
             
             return true;

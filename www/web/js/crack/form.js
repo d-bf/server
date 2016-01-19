@@ -7,19 +7,19 @@ $(function() {
 	
 	/* Change mode */
 	function applyMode() {
-		if ($('#crack-mode').val() == 0) { // Simple
-			$('.mode-1').hide();
-			$('.mode-0').show();
-		} else { // Mask
+		if ($('#crack-mode').is(":checked")) { // Mask
 			$('.mode-0').hide();
 			$('.mode-1').show();
 			applyMaskChars();
+		} else { // Simple
+			$('.mode-1').hide();
+			$('.mode-0').show();
 		}
 	}
 	
 	applyMode();
 	
-	$('#crack-mode').on('change', function() {
+	$('#crack-mode').on('switchChange.bootstrapSwitch', function() {
 		applyMode();
 	});
 	
@@ -69,7 +69,7 @@ $(function() {
 	/* Mask mode: add mask */
 	$('.mask-input-group input').popover();
 	function applyMaskChars() {
-		if ($('#crack-mode').val() == 1) {
+		if ($('#crack-mode').is(":checked")) {
 			max_len = $('#crack-len_max').val();
 			char = $('#crack-maskchars').children('div.input-group:visible').length;
 			if (char < max_len) {
