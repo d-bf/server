@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -10,20 +9,24 @@ use yii\widgets\ActiveForm;
 
 <div class="crack-search">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+<?php
+$form = ActiveForm::begin([
+    'action' => [
+        'index'
+    ],
+    'method' => 'get'
+]);
+?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'id')?>
 
-    <?= $form->field($model, 'gen_id') ?>
+    <?= $form->field($model, 'gen_id')?>
 
-    <?= $form->field($model, 'algo_id') ?>
+    <?= $form->field($model, 'algo_id')?>
 
-    <?= $form->field($model, 'len_min') ?>
+    <?= $form->field($model, 'len_min')?>
 
-    <?= $form->field($model, 'len_max') ?>
+    <?= $form->field($model, 'len_max')?>
 
     <?php // echo $form->field($model, 'charset_1') ?>
 
@@ -54,8 +57,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'ts_assign') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary'])?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default'])?>
     </div>
 
     <?php ActiveForm::end(); ?>

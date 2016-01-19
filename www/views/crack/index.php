@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -16,39 +15,40 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'New Crack'), ['create'], [
-            'class' => 'btn btn-success',
-            'title' => 'Create a new crack'
-        ]) ?>
+        <?=Html::a(Yii::t('app', 'New Crack'), ['create'], ['class' => 'btn btn-success','title' => 'Create a new crack'])?>
     </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'emptyText' => 'No cracks found.',
-        'columns' => [
-            'id',
-            // 'gen_id',
-            'algo_id',
-            // 'len_min',
-            // 'len_max',
-            // 'charset_1',
-            // 'charset_2',
-            // 'charset_3',
-            // 'charset_4',
-            // 'mask',
-            // 'target',
-            'key_total',
-            'key_assigned',
-            // 'key_finished',
-            // 'key_error',
-            // 'res_assigned',
-            // 'status',
-            // 'ts_assign',
-        	'result',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+<?php
+echo GridView::widget([
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+    'emptyText' => 'No cracks found.',
+    'columns' => [
+        'id',
+        // 'gen_id',
+        'algo_id',
+        // 'len_min',
+        // 'len_max',
+        // 'charset_1',
+        // 'charset_2',
+        // 'charset_3',
+        // 'charset_4',
+        // 'mask',
+        // 'target',
+        'key_total',
+        'key_assigned',
+        // 'key_finished',
+        // 'key_error',
+        // 'res_assigned',
+        // 'status',
+        // 'ts_assign',
+        'result',
+        
+        [
+            'class' => 'yii\grid\ActionColumn'
+        ]
+    ]
+]);
+?>
 
 </div>

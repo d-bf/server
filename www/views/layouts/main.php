@@ -17,85 +17,88 @@ AppAsset::register($this);
 <meta charset="<?= Yii::$app->charset ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags()?>
-    <title><?php
-        if (empty($this->title))
-            echo 'Distributed Brute-Force';
-        else
-            echo 'D-BF: ' . Html::encode($this->title);
-    ?></title>
+    <title>
+<?php
+if (empty($this->title))
+    echo 'Distributed Brute-Force';
+else
+    echo 'D-BF: ' . Html::encode($this->title);
+?>
+    </title>
     <?php $this->head()?>
 </head>
 <body>
 <?php $this->beginBody()?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin([
-//         'brandLabel' => 'Distributed Brute-Force',
-//         'brandUrl' => 'http://www.d-bf.ir',
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top'
-        ]
-    ]);
-    echo Nav::widget([
-        'options' => [
-            'class' => 'navbar-nav'
+<?php
+NavBar::begin([
+    // 'brandLabel' => 'Distributed Brute-Force',
+    // 'brandUrl' => 'http://www.d-bf.ir',
+    'options' => [
+        'class' => 'navbar-inverse navbar-fixed-top'
+    ]
+]);
+echo Nav::widget([
+    'options' => [
+        'class' => 'navbar-nav'
+    ],
+    'items' => [
+        [
+            'label' => 'Home',
+            'url' => [
+                '/site/index'
+            ]
         ],
-        'items' => [
-            [
-                'label' => 'Home',
-                'url' => [
-                    '/site/index'
-                ]
+        [
+            'label' => 'Cracks',
+            'url' => [
+                '/crack/index'
             ],
-            [
-                'label' => 'Cracks',
-                'url' => [
-                    '/crack/index'
-                ],
-                'options' => [
-                    'title' => 'List of cracks'
-                ]
+            'options' => [
+                'title' => 'List of cracks'
+            ]
+        ],
+        [
+            'label' => 'New Crack',
+            'url' => [
+                '/crack/create'
             ],
-            [
-                'label' => 'New Crack',
-                'url' => [
-                    '/crack/create'
-                ],
-                'options' => [
-                    'title' => 'Create a new crack'
-                ]
-            ],
-//             [
-//                 'label' => 'About',
-//                 'url' => [
-//                     '/site/about'
-//                 ]
-//             ],
-//             [
-//                 'label' => 'Contact',
-//                 'url' => [
-//                     '/site/contact'
-//                 ]
-//             ],
-//             Yii::$app->user->isGuest ? [
-//                 'label' => 'Login',
-//                 'url' => [
-//                     '/site/login'
-//                 ]
-//             ] : [
-//                 'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-//                 'url' => [
-//                     '/site/logout'
-//                 ],
-//                 'linkOptions' => [
-//                     'data-method' => 'post'
-//                 ]
-//             ]
+            'options' => [
+                'title' => 'Create a new crack'
+            ]
         ]
-    ]);
-    NavBar::end();
-    ?>
+    ]
+]);
+// [
+// 'label' => 'About',
+// 'url' => [
+// '/site/about'
+// ]
+// ],
+// [
+// 'label' => 'Contact',
+// 'url' => [
+// '/site/contact'
+// ]
+// ],
+// Yii::$app->user->isGuest ? [
+// 'label' => 'Login',
+// 'url' => [
+// '/site/login'
+// ]
+// ] : [
+// 'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+// 'url' => [
+// '/site/logout'
+// ],
+// 'linkOptions' => [
+// 'data-method' => 'post'
+// ]
+// ]
+
+NavBar::end();
+?>
 
     <div class="container">
         <?=Breadcrumbs::widget(['links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : []])?>
