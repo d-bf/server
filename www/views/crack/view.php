@@ -27,10 +27,16 @@ echo DetailView::widget([
     'model' => $model,
     'attributes' => [
         'id',
-        'gen_id',
-        'algo_id',
-        'len_min',
-        'len_max',
+        'genName',
+        'algoName',
+        [
+            'attribute' => 'len_min',
+            'label' => 'Minimum Length'
+        ],
+        [
+            'attribute' => 'len_max',
+            'label' => 'Maximum Length'
+        ],
         'charset_1',
         'charset_2',
         'charset_3',
@@ -45,7 +51,10 @@ echo DetailView::widget([
         'status',
         [
             'attribute' => 'ts_assign',
-            'format' => ['datetime', 'php:Y-m-d H:i:s']
+            'format' => [
+                'datetime',
+                'php:Y-m-d H:i:s'
+            ]
         ]
     ]
 ]);

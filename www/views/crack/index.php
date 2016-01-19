@@ -26,7 +26,7 @@ echo GridView::widget([
     'columns' => [
         'id',
         // 'gen_id',
-        'algo_id',
+        'algoName',
         // 'len_min',
         // 'len_max',
         // 'charset_1',

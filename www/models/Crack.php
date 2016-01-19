@@ -35,7 +35,7 @@ use Yii;
 class Crack extends \yii\db\ActiveRecord
 {
 
-    public $mode, $charset, $maskChar, $maskCharError, $_LEN_MAX = 55;
+    public $mode, $charset, $maskChar, $maskCharError, $_LEN_MAX = 55, $genName, $algoName;
 
     /**
      * @inheritdoc
@@ -209,7 +209,9 @@ class Crack extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'gen_id' => Yii::t('app', 'Word Generator'),
+            'genName' => Yii::t('app', 'Word Generator'),
             'algo_id' => Yii::t('app', 'Algorithm'),
+            'algoName' => Yii::t('app', 'Algorithm'),
             'len_min' => Yii::t('app', 'Min'),
             'len_max' => Yii::t('app', 'Max'),
             'charset_1' => Yii::t('app', 'Custom Charset 1'),
@@ -388,5 +390,19 @@ class Crack extends \yii\db\ActiveRecord
         }
         
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \yii\db\BaseActiveRecord::afterFind()
+     */
+    public function afterFind()
+    {
+        $this->genName = $this->gen->name;
+        $this->algoName = $this->algo->name;
+        
+        parent::afterFind();
     }
 }

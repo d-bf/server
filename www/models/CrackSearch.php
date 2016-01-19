@@ -37,6 +37,8 @@ class CrackSearch extends Crack
             ],
             [
                 [
+                    'genName',
+                    'algoName',
                     'charset_1',
                     'charset_2',
                     'charset_3',
@@ -70,9 +72,32 @@ class CrackSearch extends Crack
     {
         $query = Crack::find();
         
+        $query->joinWith([
+            'gen',
+            'algo'
+        ], false);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query
         ]);
+        
+        $dataProvider->sort->attributes['genName'] = [
+            'asc' => [
+                '{{%generator}}.name' => SORT_ASC
+            ],
+            'desc' => [
+                '{{%generator}}.name' => SORT_DESC
+            ]
+        ];
+        
+        $dataProvider->sort->attributes['algoName'] = [
+            'asc' => [
+                '{{%algorithm}}.name' => SORT_ASC
+            ],
+            'desc' => [
+                '{{%algorithm}}.name' => SORT_DESC
+            ]
+        ];
         
         $this->load($params);
         
@@ -98,6 +123,16 @@ class CrackSearch extends Crack
         ]);
         
         $query->andFilterWhere([
+            'like',
+            '{{%generator}}.name',
+            $this->genName
+        ])
+            ->andFilterWhere([
+            'like',
+            '{{%algorithm}}.name',
+            $this->algoName
+        ])
+            ->andFilterWhere([
             'like',
             'charset_1',
             $this->charset_1
