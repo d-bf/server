@@ -2,7 +2,7 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -17,7 +17,12 @@ AppAsset::register($this);
 <meta charset="<?= Yii::$app->charset ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags()?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?php
+        if (empty($this->title))
+            echo 'Distributed Brute-Force';
+        else
+            echo 'D-BF: ' . Html::encode($this->title);
+    ?></title>
     <?php $this->head()?>
 </head>
 <body>
@@ -26,23 +31,17 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Distributed Brute-Force',
-        'brandUrl' => Yii::$app->homeUrl,
+//         'brandLabel' => 'Distributed Brute-Force',
+//         'brandUrl' => 'http://www.d-bf.ir',
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top'
         ]
     ]);
     echo Nav::widget([
         'options' => [
-            'class' => 'navbar-nav navbar-right'
+            'class' => 'navbar-nav'
         ],
         'items' => [
-            [
-                'label' => 'New Crack',
-                'url' => [
-                    '/crack/create'
-                ]
-            ],
             [
                 'label' => 'Home',
                 'url' => [
@@ -50,31 +49,49 @@ AppAsset::register($this);
                 ]
             ],
             [
-                'label' => 'About',
+                'label' => 'Cracks',
                 'url' => [
-                    '/site/about'
+                    '/crack/index'
+                ],
+                'options' => [
+                    'title' => 'List of cracks'
                 ]
             ],
             [
-                'label' => 'Contact',
+                'label' => 'New Crack',
                 'url' => [
-                    '/site/contact'
+                    '/crack/create'
+                ],
+                'options' => [
+                    'title' => 'Create a new crack'
                 ]
             ],
-            Yii::$app->user->isGuest ? [
-                'label' => 'Login',
-                'url' => [
-                    '/site/login'
-                ]
-            ] : [
-                'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                'url' => [
-                    '/site/logout'
-                ],
-                'linkOptions' => [
-                    'data-method' => 'post'
-                ]
-            ]
+//             [
+//                 'label' => 'About',
+//                 'url' => [
+//                     '/site/about'
+//                 ]
+//             ],
+//             [
+//                 'label' => 'Contact',
+//                 'url' => [
+//                     '/site/contact'
+//                 ]
+//             ],
+//             Yii::$app->user->isGuest ? [
+//                 'label' => 'Login',
+//                 'url' => [
+//                     '/site/login'
+//                 ]
+//             ] : [
+//                 'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+//                 'url' => [
+//                     '/site/logout'
+//                 ],
+//                 'linkOptions' => [
+//                     'data-method' => 'post'
+//                 ]
+//             ]
         ]
     ]);
     NavBar::end();
@@ -88,7 +105,7 @@ AppAsset::register($this);
 
 	<footer class="footer">
 		<div class="container">
-			<p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+			<p class="pull-left">&copy; D-BF Project <?= date('Y') ?></p>
 
 			<p class="pull-right"><?= Yii::powered() ?></p>
 		</div>

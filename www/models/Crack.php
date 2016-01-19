@@ -204,8 +204,8 @@ class Crack extends \yii\db\ActiveRecord {
 	public function attributeLabels() {
 		return [
 			'id' => Yii::t('app', 'ID'),
-			'gen_id' => Yii::t('app', 'Gen ID'),
-			'algo_id' => Yii::t('app', 'Algo ID'),
+			'gen_id' => Yii::t('app', 'Word Generator'),
+			'algo_id' => Yii::t('app', 'Algorithm'),
 			'len_min' => Yii::t('app', 'Min'),
 			'len_max' => Yii::t('app', 'Max'),
 			'charset_1' => Yii::t('app', 'Custom Charset 1'),
@@ -214,7 +214,7 @@ class Crack extends \yii\db\ActiveRecord {
 			'charset_4' => Yii::t('app', 'Custom Charset 4'),
 			'mask' => Yii::t('app', 'Mask'),
 			'mask' => Yii::t('app', 'Target'),
-			'target' => Yii::t('app', 'Target'),
+			'target' => Yii::t('app', 'Target Hashes'),
 			'result' => Yii::t('app', 'Result'),
 			'key_total' => Yii::t('app', 'Total'),
 			'key_assigned' => Yii::t('app', 'Assigned'),

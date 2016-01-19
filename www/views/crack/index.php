@@ -12,16 +12,20 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="crack-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+	<h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Crack'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'New Crack'), ['create'], [
+            'class' => 'btn btn-success',
+            'title' => 'Create a new crack'
+        ]) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'emptyText' => 'No cracks found.',
         'columns' => [
             'id',
             // 'gen_id',
