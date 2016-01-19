@@ -27,6 +27,13 @@ echo GridView::widget([
         'id',
         // 'gen_id',
         'algoName',
+        [
+            'attribute' => 'status',
+            'filter' => $searchModel->getStatusMap(),
+            'value' => function ($model, $key, $index, $column) {
+                return $model->getStatusMap($model->status);
+            }
+        ],
         // 'len_min',
         // 'len_max',
         // 'charset_1',
@@ -40,7 +47,6 @@ echo GridView::widget([
         // 'key_finished',
         // 'key_error',
         // 'res_assigned',
-        // 'status',
         // 'ts_assign',
         'result',
         

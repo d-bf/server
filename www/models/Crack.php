@@ -292,6 +292,23 @@ class Crack extends \yii\db\ActiveRecord
         ]);
     }
 
+    public function getStatusMap($status = false)
+    {
+        $statusMap = [
+            '0' => 'Not assigned all',
+            '1' => 'Assigned all',
+            '2' => 'Finished'
+        ];
+        
+        if ($status === false) {
+            return $statusMap;
+        } elseif (isset($statusMap[$status])) {
+            return $statusMap[$status];
+        } else {
+            return \Yii::t('app', 'Unknown');
+        }
+    }
+
     /**
      * @inheritdoc
      *

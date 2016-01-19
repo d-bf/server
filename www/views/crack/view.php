@@ -48,7 +48,10 @@ echo DetailView::widget([
         'key_assigned',
         'key_finished',
         'key_error',
-        'status',
+        [
+            'attribute' => 'status',
+            'value' => $model->getStatusMap($model->status)
+        ],
         [
             'attribute' => 'ts_assign',
             'format' => [
