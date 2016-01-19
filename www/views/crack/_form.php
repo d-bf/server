@@ -71,10 +71,7 @@ echo $form->field($model, 'gen_id')->widget(Select2::classname(), [
 
 		<?php
 echo $form->field($model, 'algo_id')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Algorithm::find()->orderBy([
-        'name' => SORT_ASC
-    ])
-        ->all(), 'id', 'name'),
+    'data' => ArrayHelper::map(Algorithm::find()->all(), 'id', 'name'),
     'options' => [
         'placeholder' => 'Select...'
     ]
