@@ -244,6 +244,11 @@ echo $form->field($model, 'charset', [
     ?>
 					</div>
 				<div class="col-sm-10 col-sm-offset-2 help-block help-block-error">
+					<div>
+						<b>Mask help:</b>
+					</div>
+					<div>Each mask char can be a signle character or any of the
+						following:</div>
 					<div>?l : Lower case = abcdefghijklmnopqrstuvwxyz</div>
 					<div>?u : Upper case = ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
 					<div>?d : Digits = 0123456789</div>
