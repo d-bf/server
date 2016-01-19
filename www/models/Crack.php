@@ -68,10 +68,10 @@ class Crack extends \yii\db\ActiveRecord
                 'skipOnEmpty' => false,
                 'message' => '{attribute} cannot be blank.',
                 'when' => function ($model) {
-                    return $model->mode == 0;
+                    return empty($model->mode);
                 },
                 'whenClient' => "function() {
-					return $('#crack-mode').val() == '0';
+					return (! $('#crack-mode').is(':checked'));
 				}"
             ],
             [
@@ -86,7 +86,7 @@ class Crack extends \yii\db\ActiveRecord
                 'skipOnEmpty' => false,
                 'message' => '{attribute} cannot be blank.',
                 'when' => function ($model, $attribute) {
-                    if ($model->mode == 1) {
+                    if (! empty($model->mode)) {
                         foreach ($model->maskChar as $mc)
                             if ($mc == '?' . explode('_', $attribute)[1])
                                 return true;
@@ -95,7 +95,7 @@ class Crack extends \yii\db\ActiveRecord
                 },
                 'whenClient' => "function(attribute) {
 					var ret = false;
-					if ($('#crack-mode').val() == '1') {
+					if ($('#crack-mode').is(':checked')) {
 						$('#crack-maskchars input:enabled').each(function(index, element) {
 							if ($(element).val() == '?' + attribute.name.split('_')[1]) {
 								ret = true;
@@ -116,7 +116,7 @@ class Crack extends \yii\db\ActiveRecord
                     'message' => '{attribute} cannot be blank.'
                 ],
                 'when' => function ($model) {
-                    return $model->mode == 1;
+                    return (! empty($model->mode));
                 },
                 'enableClientValidation' => false
             ],
@@ -130,14 +130,14 @@ class Crack extends \yii\db\ActiveRecord
                     return false;
                 },
                 'whenClient' => "function(attribute) {
-					return (($('#crack-mode').val() == '1') && (! $(attribute.input).prop('disabled')));
+					return ($('#crack-mode').is(':checked') && (! $(attribute.input).prop('disabled')));
 				}"
             ],
             [
                 'maskCharError',
                 'required',
                 'when' => function ($model) {
-                    if ($model->mode == 1) {
+                    if (! empty($model->mode)) {
                         foreach ($model->maskChar as $mc)
                             if (empty($mc))
                                 return true;
@@ -146,7 +146,7 @@ class Crack extends \yii\db\ActiveRecord
                 },
                 'whenClient' => "function(attribute) {
 					var ret = false;
-					if ($('#crack-mode').val() == '1') {
+					if ($('#crack-mode').is(':checked')) {
 						$('#crack-maskchars input:visible:enabled').each(function(index, element) {
 							if ($(element).val().length == 0) {
 								ret = true;

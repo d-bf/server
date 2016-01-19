@@ -7,7 +7,7 @@ $(function() {
 	
 	/* Change mode */
 	function applyMode() {
-		if ($('#crack-mode').is(":checked")) { // Mask
+		if ($('#crack-mode').is(':checked')) { // Mask
 			$('.mode-0').hide();
 			$('.mode-1').show();
 			applyMaskChars();
