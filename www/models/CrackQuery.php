@@ -1,10 +1,9 @@
 <?php
-
 namespace app\models;
 
 /**
  * This is the ActiveQuery class for [[Crack]].
- * 
+ *
  * @see Crack
  */
 class CrackQuery extends \yii\db\ActiveQuery
@@ -20,7 +19,7 @@ class CrackQuery extends \yii\db\ActiveQuery
     
     /**
      * @inheritdoc
-     * 
+     *
      * @return Crack[]|array
      */
     public function all($db = null)
@@ -30,7 +29,7 @@ class CrackQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return Crack|array|null
      */
     public function one($db = null)

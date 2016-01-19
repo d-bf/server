@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -50,16 +49,18 @@ class LoginForm extends Model
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
-     * 
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     *
+     * @param string $attribute
+     *            the attribute currently being validated
+     * @param array $params
+     *            the additional name-value pairs given in the rule
      */
     public function validatePassword($attribute, $params)
     {
-        if (!$this->hasErrors()) {
+        if (! $this->hasErrors()) {
             $user = $this->getUser();
             
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (! $user || ! $user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }
@@ -67,7 +68,7 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided username and password.
-     * 
+     *
      * @return boolean whether the user is logged in successfully
      */
     public function login()
@@ -80,7 +81,7 @@ class LoginForm extends Model
 
     /**
      * Finds user by [[username]]
-     * 
+     *
      * @return User|null
      */
     public function getUser()

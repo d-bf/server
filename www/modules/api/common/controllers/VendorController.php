@@ -1,5 +1,4 @@
 <?php
-
 namespace app\modules\api\common\controllers;
 
 use app\modules\api\common\controllers;
@@ -37,7 +36,7 @@ class VendorController extends Controller
                         ':platformName' => $reqData['platform_id']
                     ])->queryOne();
                     
-                    if (!$crackerInfo)
+                    if (! $crackerInfo)
                         return 0;
                     
                     $info['name'] = $reqData['name'];
@@ -61,7 +60,7 @@ class VendorController extends Controller
                         ':name' => $reqData['name']
                     ])->queryOne();
                     
-                    if (!$generatorInfo)
+                    if (! $generatorInfo)
                         return 0;
                     
                     $info['name'] = $reqData['name'];
@@ -89,6 +88,5 @@ class VendorController extends Controller
      * vendor_type: cracker | generator
      */
     public function actionUpdate()
-    {
-    }
+    {}
 }

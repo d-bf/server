@@ -1,5 +1,4 @@
 <?php
-
 namespace tests\codeception\unit\models;
 
 use Yii;

@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -31,7 +30,7 @@ class CrackerGenController extends Controller
 
     /**
      * Lists all CrackerGen models.
-     * 
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -47,9 +46,9 @@ class CrackerGenController extends Controller
 
     /**
      * Displays a single CrackerGen model.
-     * 
-     * @param integer $cracker_id
-     * @param integer $gen_id
+     *
+     * @param integer $cracker_id            
+     * @param integer $gen_id            
      * @return mixed
      */
     public function actionView($cracker_id, $gen_id)
@@ -62,7 +61,7 @@ class CrackerGenController extends Controller
     /**
      * Creates a new CrackerGen model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * 
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -85,9 +84,9 @@ class CrackerGenController extends Controller
     /**
      * Updates an existing CrackerGen model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * 
-     * @param integer $cracker_id
-     * @param integer $gen_id
+     *
+     * @param integer $cracker_id            
+     * @param integer $gen_id            
      * @return mixed
      */
     public function actionUpdate($cracker_id, $gen_id)
@@ -110,9 +109,9 @@ class CrackerGenController extends Controller
     /**
      * Deletes an existing CrackerGen model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * 
-     * @param integer $cracker_id
-     * @param integer $gen_id
+     *
+     * @param integer $cracker_id            
+     * @param integer $gen_id            
      * @return mixed
      */
     public function actionDelete($cracker_id, $gen_id)
@@ -127,9 +126,9 @@ class CrackerGenController extends Controller
     /**
      * Finds the CrackerGen model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * 
-     * @param integer $cracker_id
-     * @param integer $gen_id
+     *
+     * @param integer $cracker_id            
+     * @param integer $gen_id            
      * @return CrackerGen the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

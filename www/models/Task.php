@@ -1,12 +1,11 @@
 <?php
-
 namespace app\models;
 
 use Yii;
 
 /**
  * This is the model class for table "{{%task}}".
- * 
+ *
  * @property string $crack_id
  * @property string $start
  * @property string $offset
@@ -76,7 +75,7 @@ class Task extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return TaskQuery the active query used by this AR class.
      */
     public static function find()

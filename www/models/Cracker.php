@@ -1,12 +1,11 @@
 <?php
-
 namespace app\models;
 
 use Yii;
 
 /**
  * This is the model class for table "{{%cracker}}".
- * 
+ *
  * @property integer $id
  * @property string $name
  * @property integer $gen_type
@@ -117,7 +116,7 @@ class Cracker extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return CrackerQuery the active query used by this AR class.
      */
     public static function find()

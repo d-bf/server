@@ -1,12 +1,11 @@
 <?php
-
 namespace tests\codeception\_pages;
 
 use yii\codeception\BasePage;
 
 /**
  * Represents login page
- * 
+ *
  * @property \AcceptanceTester|\FunctionalTester $actor
  */
 class LoginPage extends BasePage
@@ -16,8 +15,8 @@ class LoginPage extends BasePage
 
     /**
      *
-     * @param string $username
-     * @param string $password
+     * @param string $username            
+     * @param string $password            
      */
     public function login($username, $password)
     {

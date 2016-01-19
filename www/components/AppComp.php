@@ -1,5 +1,4 @@
 <?php
-
 namespace app\components;
 
 use Yii;
@@ -28,17 +27,20 @@ class AppComp extends \yii\base\Component
 
     /**
      * Sends a file to user.
-     * 
-     * @param string $fileName file name
-     * @param string $filePath file path
-     * @param string $mimeType mime type of the content. If null, it will be guessed automatically based on the given file name.
-     * @param boolean $terminate whether to terminate the current application after calling this method
+     *
+     * @param string $fileName
+     *            file name
+     * @param string $filePath
+     *            file path
+     * @param string $mimeType
+     *            mime type of the content. If null, it will be guessed automatically based on the given file name.
+     * @param boolean $terminate
+     *            whether to terminate the current application after calling this method
      */
     public static function sendFile($fileName, $filePath, $mimeType = null, $terminate = false)
     {
         $chunkSize = 1048576; // 1 MB
         
-
         if (empty($fileName))
             $fileName = basename($filePath);
         if ($mimeType === null) {
@@ -95,7 +97,6 @@ class AppComp extends \yii\base\Component
         
         $length = $contentEnd - $contentStart + 1; // Calculate new content length
         
-
         header('Pragma: public');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');

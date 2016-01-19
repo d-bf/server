@@ -1,5 +1,4 @@
 <?php
-
 namespace app\modules\api\versions\v1;
 
 class ApiV1 extends \yii\base\Module

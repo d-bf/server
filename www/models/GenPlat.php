@@ -1,12 +1,11 @@
 <?php
-
 namespace app\models;
 
 use Yii;
 
 /**
  * This is the model class for table "{{%gen_plat}}".
- * 
+ *
  * @property integer $gen_id
  * @property integer $plat_id
  * @property string $md5
@@ -106,7 +105,7 @@ class GenPlat extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return GenPlatQuery the active query used by this AR class.
      */
     public static function find()

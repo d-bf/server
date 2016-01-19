@@ -1,10 +1,9 @@
 <?php
-
 namespace app\models;
 
 /**
  * This is the ActiveQuery class for [[CrackerAlgo]].
- * 
+ *
  * @see CrackerAlgo
  */
 class CrackerAlgoQuery extends \yii\db\ActiveQuery
@@ -20,7 +19,7 @@ class CrackerAlgoQuery extends \yii\db\ActiveQuery
     
     /**
      * @inheritdoc
-     * 
+     *
      * @return CrackerAlgo[]|array
      */
     public function all($db = null)
@@ -30,7 +29,7 @@ class CrackerAlgoQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return CrackerAlgo|array|null
      */
     public function one($db = null)

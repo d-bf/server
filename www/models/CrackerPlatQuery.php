@@ -1,10 +1,9 @@
 <?php
-
 namespace app\models;
 
 /**
  * This is the ActiveQuery class for [[CrackerPlat]].
- * 
+ *
  * @see CrackerPlat
  */
 class CrackerPlatQuery extends \yii\db\ActiveQuery
@@ -20,7 +19,7 @@ class CrackerPlatQuery extends \yii\db\ActiveQuery
     
     /**
      * @inheritdoc
-     * 
+     *
      * @return CrackerPlat[]|array
      */
     public function all($db = null)
@@ -30,7 +29,7 @@ class CrackerPlatQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return CrackerPlat|array|null
      */
     public function one($db = null)

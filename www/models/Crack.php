@@ -319,7 +319,7 @@ class Crack extends \yii\db\ActiveRecord
                 
                 $this->mask = str_repeat('?1', $this->len_max);
                 $this->key_total = 0;
-                for ($len = $this->len_min; $len <= $this->len_max; $len++)
+                for ($len = $this->len_min; $len <= $this->len_max; $len ++)
                     $this->key_total += pow(strlen($this->charset_1), $len);
             } else { // Mask
                 $this->charset_1 = count_chars($this->charset_1, 3); // Get unique chars only
@@ -344,9 +344,9 @@ class Crack extends \yii\db\ActiveRecord
                     $this->mask .= $mc;
                 
                 $this->key_total = 0;
-                for ($len = $this->len_min; $len <= $this->len_max; $len++) {
+                for ($len = $this->len_min; $len <= $this->len_max; $len ++) {
                     $charLen = 1;
-                    for ($l = 1; $l <= $len; $l++)
+                    for ($l = 1; $l <= $len; $l ++)
                         $charLen *= isset($charLenMap[$this->maskChar[$l]]) ? $charLenMap[$this->maskChar[$l]] : 1;
                     $this->key_total += $charLen;
                 }
@@ -380,7 +380,7 @@ class Crack extends \yii\db\ActiveRecord
         foreach ($platforms as $platform) {
             $values .= ",(:c, :p$i)";
             $params[":p$i"] = $platform;
-            $i++;
+            $i ++;
         }
         if (count($params) > 0) {
             $values = substr($values, 1);

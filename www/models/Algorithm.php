@@ -1,12 +1,11 @@
 <?php
-
 namespace app\models;
 
 use Yii;
 
 /**
  * This is the model class for table "{{%algorithm}}".
- * 
+ *
  * @property integer $id
  * @property string $name
  *
@@ -93,7 +92,7 @@ class Algorithm extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return AlgorithmQuery the active query used by this AR class.
      */
     public static function find()

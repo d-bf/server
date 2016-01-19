@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -31,7 +30,7 @@ class CrackerController extends Controller
 
     /**
      * Lists all Cracker models.
-     * 
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -47,8 +46,8 @@ class CrackerController extends Controller
 
     /**
      * Displays a single Cracker model.
-     * 
-     * @param integer $id
+     *
+     * @param integer $id            
      * @return mixed
      */
     public function actionView($id)
@@ -61,7 +60,7 @@ class CrackerController extends Controller
     /**
      * Creates a new Cracker model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * 
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -70,11 +69,13 @@ class CrackerController extends Controller
         
         $reqData = Yii::$app->request->post();
         
-        if (!empty($reqData)) {
+        if (! empty($reqData)) {
             \Yii::$app->db->transaction(function ($db) {
-                $minRes = $db->createCommand("SELECT MIN(res_assigned) FROM {{%crack}} c WHERE c.status < 2")->queryScalar();
+                $minRes = $db->createCommand("SELECT MIN(res_assigned) FROM {{%crack}} c WHERE c.status < 2")
+                    ->queryScalar();
                 if ($minRes > 0) { // Minimize res_assign for fair behaviour after adding new crack
-                    $db->createCommand("UPDATE {{%crack}} c SET c.res_assigned = (res_assigned - $minRes) WHERE c.status < 2")->execute();
+                    $db->createCommand("UPDATE {{%crack}} c SET c.res_assigned = (res_assigned - $minRes) WHERE c.status < 2")
+                        ->execute();
                 }
             });
         }
@@ -94,8 +95,8 @@ class CrackerController extends Controller
     /**
      * Updates an existing Cracker model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * 
-     * @param integer $id
+     *
+     * @param integer $id            
      * @return mixed
      */
     public function actionUpdate($id)
@@ -117,8 +118,8 @@ class CrackerController extends Controller
     /**
      * Deletes an existing Cracker model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * 
-     * @param integer $id
+     *
+     * @param integer $id            
      * @return mixed
      */
     public function actionDelete($id)
@@ -133,8 +134,8 @@ class CrackerController extends Controller
     /**
      * Finds the Cracker model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * 
-     * @param integer $id
+     *
+     * @param integer $id            
      * @return Cracker the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

@@ -1,12 +1,11 @@
 <?php
-
 namespace app\models;
 
 use Yii;
 
 /**
  * This is the model class for table "{{%cracker_algo}}".
- * 
+ *
  * @property integer $cracker_id
  * @property integer $algo_id
  * @property string $algo_switch
@@ -91,7 +90,7 @@ class CrackerAlgo extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return CrackerAlgoQuery the active query used by this AR class.
      */
     public static function find()

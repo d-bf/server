@@ -1,12 +1,11 @@
 <?php
-
 namespace app\models;
 
 use Yii;
 
 /**
  * This is the model class for table "{{%platform}}".
- * 
+ *
  * @property integer $id
  * @property string $name
  *
@@ -106,7 +105,7 @@ class Platform extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return PlatformQuery the active query used by this AR class.
      */
     public static function find()

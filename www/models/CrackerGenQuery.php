@@ -1,10 +1,9 @@
 <?php
-
 namespace app\models;
 
 /**
  * This is the ActiveQuery class for [[CrackerGen]].
- * 
+ *
  * @see CrackerGen
  */
 class CrackerGenQuery extends \yii\db\ActiveQuery
@@ -20,7 +19,7 @@ class CrackerGenQuery extends \yii\db\ActiveQuery
     
     /**
      * @inheritdoc
-     * 
+     *
      * @return CrackerGen[]|array
      */
     public function all($db = null)
@@ -30,7 +29,7 @@ class CrackerGenQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return CrackerGen|array|null
      */
     public function one($db = null)

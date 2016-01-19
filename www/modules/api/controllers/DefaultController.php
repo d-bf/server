@@ -1,5 +1,4 @@
 <?php
-
 namespace app\modules\api\controllers;
 
 use app\modules\api\common\controllers\Controller;

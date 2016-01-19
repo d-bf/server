@@ -1,10 +1,9 @@
 <?php
-
 namespace app\models;
 
 /**
  * This is the ActiveQuery class for [[GenPlat]].
- * 
+ *
  * @see GenPlat
  */
 class GenPlatQuery extends \yii\db\ActiveQuery
@@ -20,7 +19,7 @@ class GenPlatQuery extends \yii\db\ActiveQuery
     
     /**
      * @inheritdoc
-     * 
+     *
      * @return GenPlat[]|array
      */
     public function all($db = null)
@@ -30,7 +29,7 @@ class GenPlatQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return GenPlat|array|null
      */
     public function one($db = null)

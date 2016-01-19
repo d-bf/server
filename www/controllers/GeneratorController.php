@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -31,7 +30,7 @@ class GeneratorController extends Controller
 
     /**
      * Lists all Generator models.
-     * 
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -47,8 +46,8 @@ class GeneratorController extends Controller
 
     /**
      * Displays a single Generator model.
-     * 
-     * @param integer $id
+     *
+     * @param integer $id            
      * @return mixed
      */
     public function actionView($id)
@@ -61,7 +60,7 @@ class GeneratorController extends Controller
     /**
      * Creates a new Generator model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * 
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -83,8 +82,8 @@ class GeneratorController extends Controller
     /**
      * Updates an existing Generator model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * 
-     * @param integer $id
+     *
+     * @param integer $id            
      * @return mixed
      */
     public function actionUpdate($id)
@@ -106,8 +105,8 @@ class GeneratorController extends Controller
     /**
      * Deletes an existing Generator model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * 
-     * @param integer $id
+     *
+     * @param integer $id            
      * @return mixed
      */
     public function actionDelete($id)
@@ -122,8 +121,8 @@ class GeneratorController extends Controller
     /**
      * Finds the Generator model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * 
-     * @param integer $id
+     *
+     * @param integer $id            
      * @return Generator the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

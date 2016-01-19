@@ -1,10 +1,9 @@
 <?php
-
 namespace app\models;
 
 /**
  * This is the ActiveQuery class for [[Task]].
- * 
+ *
  * @see Task
  */
 class TaskQuery extends \yii\db\ActiveQuery
@@ -20,7 +19,7 @@ class TaskQuery extends \yii\db\ActiveQuery
     
     /**
      * @inheritdoc
-     * 
+     *
      * @return Task[]|array
      */
     public function all($db = null)
@@ -30,7 +29,7 @@ class TaskQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return Task|array|null
      */
     public function one($db = null)

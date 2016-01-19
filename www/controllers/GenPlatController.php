@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -31,7 +30,7 @@ class GenPlatController extends Controller
 
     /**
      * Lists all GenPlat models.
-     * 
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -47,9 +46,9 @@ class GenPlatController extends Controller
 
     /**
      * Displays a single GenPlat model.
-     * 
-     * @param integer $gen_id
-     * @param integer $plat_id
+     *
+     * @param integer $gen_id            
+     * @param integer $plat_id            
      * @return mixed
      */
     public function actionView($gen_id, $plat_id)
@@ -62,7 +61,7 @@ class GenPlatController extends Controller
     /**
      * Creates a new GenPlat model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * 
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -85,9 +84,9 @@ class GenPlatController extends Controller
     /**
      * Updates an existing GenPlat model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * 
-     * @param integer $gen_id
-     * @param integer $plat_id
+     *
+     * @param integer $gen_id            
+     * @param integer $plat_id            
      * @return mixed
      */
     public function actionUpdate($gen_id, $plat_id)
@@ -110,9 +109,9 @@ class GenPlatController extends Controller
     /**
      * Deletes an existing GenPlat model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * 
-     * @param integer $gen_id
-     * @param integer $plat_id
+     *
+     * @param integer $gen_id            
+     * @param integer $plat_id            
      * @return mixed
      */
     public function actionDelete($gen_id, $plat_id)
@@ -127,9 +126,9 @@ class GenPlatController extends Controller
     /**
      * Finds the GenPlat model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * 
-     * @param integer $gen_id
-     * @param integer $plat_id
+     *
+     * @param integer $gen_id            
+     * @param integer $plat_id            
      * @return GenPlat the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

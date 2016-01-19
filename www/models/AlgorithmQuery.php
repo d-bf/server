@@ -1,10 +1,9 @@
 <?php
-
 namespace app\models;
 
 /**
  * This is the ActiveQuery class for [[Algorithm]].
- * 
+ *
  * @see Algorithm
  */
 class AlgorithmQuery extends \yii\db\ActiveQuery
@@ -20,7 +19,7 @@ class AlgorithmQuery extends \yii\db\ActiveQuery
     
     /**
      * @inheritdoc
-     * 
+     *
      * @return Algorithm[]|array
      */
     public function all($db = null)
@@ -30,7 +29,7 @@ class AlgorithmQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @return Algorithm|array|null
      */
     public function one($db = null)
