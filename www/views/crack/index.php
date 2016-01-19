@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="crack-index">
 
-	<h1><?= Html::encode($this->title) ?></h1>
+	<h1>List of cracks</h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -45,7 +45,8 @@ echo GridView::widget([
         'result',
         
         [
-            'class' => 'yii\grid\ActionColumn'
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{view} {delete}'
         ]
     ]
 ]);
