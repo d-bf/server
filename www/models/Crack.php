@@ -54,6 +54,7 @@ class Crack extends \yii\db\ActiveRecord {
 					'algo_id',
 					'len_min',
 					'len_max',
+				    'target',
 					'mode'
 				],
 				'required'
