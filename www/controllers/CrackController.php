@@ -68,69 +68,7 @@ class CrackController extends Controller
     {
         $model = new Crack();
         
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->mode == 1) { // Mask
-                $model->charset_1 = count_chars($model->charset_1, 3); // Get unique chars only
-                $model->charset_2 = count_chars($model->charset_2, 3); // Get unique chars only
-                $model->charset_3 = count_chars($model->charset_3, 3); // Get unique chars only
-                $model->charset_4 = count_chars($model->charset_4, 3); // Get unique chars only
-                
-                $charLenMap = [
-                    '?l' => 26,
-                    '?u' => 26,
-                    '?d' => 10,
-                    '?s' => 33,
-                    '?a' => 95,
-                    '?1' => strlen($model->charset_1),
-                    '?2' => strlen($model->charset_2),
-                    '?3' => strlen($model->charset_3),
-                    '?4' => strlen($model->charset_4)
-                ];
-                
-                $model->mask = '';
-                foreach ($model->maskChar as $mc)
-                    $model->mask .= $mc;
-                
-                $model->key_total = 0;
-                for ($len = $model->len_min; $len <= $model->len_max; $len++) {
-                    $charLen = 1;
-                    for ($l = 1; $l <= $len; $l++)
-                        $charLen *= isset($charLenMap[$model->maskChar[$l]]) ? $charLenMap[$model->maskChar[$l]] : 1;
-                    $model->key_total += $charLen;
-                }
-            } else { // Simple
-                $model->charset_1 = count_chars($model->charset, 3); // Get unique chars only
-                $model->charset_2 = '';
-                $model->charset_3 = '';
-                $model->charset_4 = '';
-                
-                $model->mask = str_repeat('?1', $model->len_max);
-                $model->key_total = 0;
-                for ($len = $model->len_min; $len <= $model->len_max; $len++)
-                    $model->key_total += pow(strlen($model->charset_1), $len);
-            }
-            $model->save();
-            
-            $query = 'SELECT DISTINCT p.name FROM {{%gen_plat}} gp JOIN {{%cracker_plat}} cp ON (gp.gen_id = :genId AND cp.plat_id = gp.plat_id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND cp.cracker_id = ca.cracker_id) JOIN {{%platform}} p ON p.id = cp.plat_id UNION ';
-            $query .= 'SELECT DISTINCT p.name FROM {{%cracker_algo}} ca JOIN {{%cracker_gen}} cg ON (ca.algo_id = :algoId AND cg.gen_id = :genId AND cg.cracker_id = ca.cracker_id) JOIN {{%cracker_plat}} cp ON cp.cracker_id = cg.cracker_id JOIN {{%platform}} p ON p.id = cp.plat_id';
-            $platforms = \Yii::$app->db->createCommand($query, [
-                ':genId' => $model->gen_id,
-                ':algoId' => $model->algo_id
-            ])->queryColumn();
-            
-            $i = 0;
-            $values = '';
-            $params = [];
-            foreach ($platforms as $platform) {
-                $values .= ",(:c, :p$i)";
-                $params[":p$i"] = $platform;
-                $i++;
-            }
-            if (count($params) > 0) {
-                $values = substr($values, 1);
-                $params[':c'] = $model->id;
-                \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_name) VALUES $values", $params)->execute();
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
             return $this->redirect([
                 'view',
