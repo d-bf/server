@@ -467,36 +467,6 @@ class SetupController extends Controller
     {
         $this->initStartMsg(__FUNCTION__);
         
-        $data = [
-            [0, 'hashcat'],
-            [1, 'oclHashcat'],
-            [2, 'cudaHashcat']
-        ];
-        
-        $fields = 2;
-        $values = '';
-        $params = [];
-        $i = 0;
-        foreach ($data as $dataItem) {
-            $vals = '';
-            for ($f = 0; $f < $fields; $f ++) {
-                $vals .= ",:f$f$i";
-                $params[":f$f$i"] = $dataItem[$f];
-            }
-            $values .= ',(' . substr($vals, 1) . ')';
-            $i ++;
-        }
-        $values = substr($values, 1);
-        
-        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%cracker}} (id, name) VALUES $values", $params)->execute();
-        
-        $this->initEndMsg(__FUNCTION__);
-    }
-
-    private function initTable_cracker_plat()
-    {
-        $this->initStartMsg(__FUNCTION__);
-        
         $configHashcat = [
             'args' => '-a 3 -m ALGO_ID -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 --increment --increment-min=LEN_MIN --potfile-disable --outfile-format=3 -o OUT_FILE HASH_FILE MASK',
             'args_opt' => [
@@ -509,32 +479,12 @@ class SetupController extends Controller
         $configHashcat = serialize($configHashcat);
         
         $data = [
-            /* hashcat */
-            [0, 0,  $configHashcat,    null],
-            [0, 1,  $configHashcat,    null],
-            [0, 2,  $configHashcat,    null],
-            [0, 3,  $configHashcat,    null],
-            [0, 4,  $configHashcat,    null],
-            [0, 5,  $configHashcat,    null],
-            
-            /* oclHashcat (AMD) */
-            [1, 6,  null,   null],
-            [1, 8,  null,   null],
-            [1, 10, null,   null],
-            [1, 12, null,   null],
-            [1, 14, null,   null],
-            [1, 16, null,   null],
-            
-            /* cudaHashcat (NVidia) */
-            [2, 7,  null,   null],
-            [2, 9,  null,   null],
-            [2, 11, null,   null],
-            [2, 13, null,   null],
-            [2, 15, null,   null],
-            [2, 17, null,   null]
+            [0, 'hashcat', $configHashcat],
+            [1, 'oclHashcat', null],
+            [2, 'cudaHashcat', null]
         ];
         
-        $fields = 4;
+        $fields = 3;
         $values = '';
         $params = [];
         $i = 0;
@@ -549,7 +499,57 @@ class SetupController extends Controller
         }
         $values = substr($values, 1);
         
-        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%cracker_plat}} (cracker_id, plat_id, config, md5) VALUES $values", $params)->execute();
+        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%cracker}} (id, name, config) VALUES $values", $params)->execute();
+        
+        $this->initEndMsg(__FUNCTION__);
+    }
+
+    private function initTable_cracker_plat()
+    {
+        $this->initStartMsg(__FUNCTION__);
+        
+        $data = [
+            /* hashcat */
+            [0, 0, null],
+            [0, 1, null],
+            [0, 2, null],
+            [0, 3, null],
+            [0, 4, null],
+            [0, 5, null],
+            
+            /* oclHashcat (AMD) */
+            [1, 6,  null],
+            [1, 8,  null],
+            [1, 10, null],
+            [1, 12, null],
+            [1, 14, null],
+            [1, 16, null],
+            
+            /* cudaHashcat (NVidia) */
+            [2, 7,  null],
+            [2, 9,  null],
+            [2, 11, null],
+            [2, 13, null],
+            [2, 15, null],
+            [2, 17, null]
+        ];
+        
+        $fields = 3;
+        $values = '';
+        $params = [];
+        $i = 0;
+        foreach ($data as $dataItem) {
+            $vals = '';
+            for ($f = 0; $f < $fields; $f ++) {
+                $vals .= ",:f$f$i";
+                $params[":f$f$i"] = $dataItem[$f];
+            }
+            $values .= ',(' . substr($vals, 1) . ')';
+            $i ++;
+        }
+        $values = substr($values, 1);
+        
+        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%cracker_plat}} (cracker_id, plat_id, md5) VALUES $values", $params)->execute();
         
         $this->initEndMsg(__FUNCTION__);
     }

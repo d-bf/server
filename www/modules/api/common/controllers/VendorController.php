@@ -31,18 +31,17 @@ class VendorController extends Controller
                 }
             } elseif ($reqData['object_type'] == 'info') { // Information
                 if ($reqData['vendor_type'] == 'cracker') { // Cracker's information
-                    $crackerInfo = \Yii::$app->db->createCommand("SELECT cp.cracker_id AS id, cp.config AS config FROM {{%cracker}} c JOIN {{%platform}} p ON (c.name = :crackerName AND p.name = :platformName) JOIN {{%cracker_plat}} cp ON (cp.cracker_id = c.id AND cp.plat_id = p.id)", [
-                        ':crackerName' => $reqData['name'],
-                        ':platformName' => $reqData['platform_id']
+                    $crackerInfo = \Yii::$app->db->createCommand("SELECT c.id AS id, c.config AS config FROM {{%cracker}} c WHERE c.name = :crackerName", [
+                        ':crackerName' => $reqData['name']
                     ])->queryOne();
                     
                     if (! $crackerInfo)
                         return 0;
                     
                     $info['name'] = $reqData['name'];
-                    $info['config'] = unserialize($crackerInfo['config']) ?  : "";
+                    $info['config'] = unserialize($crackerInfo['config']) ?  : '';
                     
-                    $crackerGeneratorsInfo = \Yii::$app->db->createCommand("SELECT g.name AS name, cg.config AS config FROM {{%cracker_gen}} cg JOIN {{%generator}} g ON cg.gen_id = g.id WHERE cg.cracker_id = :crackerId", [
+                    $crackerGeneratorsInfo = \Yii::$app->db->createCommand("SELECT g.name AS name, cg.config AS config FROM {{%cracker_gen}} cg JOIN {{%generator}} g ON (cg.cracker_id = :crackerId AND g.id = cg.gen_id)", [
                         ':crackerId' => $crackerInfo['id']
                     ])->queryAll();
                     
@@ -50,7 +49,7 @@ class VendorController extends Controller
                     foreach ($crackerGeneratorsInfo as $crackerGeneratorInfo) {
                         array_push($info['generator'], [
                             'name' => $crackerGeneratorInfo['name'],
-                            'config' => unserialize($crackerGeneratorInfo['config']) ?  : ""
+                            'config' => unserialize($crackerGeneratorInfo['config']) ?  : ''
                         ]);
                     }
                     
@@ -64,7 +63,7 @@ class VendorController extends Controller
                         return 0;
                     
                     $info['name'] = $reqData['name'];
-                    $info['config'] = unserialize($generatorInfo['config']) ?  : "";
+                    $info['config'] = unserialize($generatorInfo['config']) ?  : '';
                     
                     return $info;
                 }
