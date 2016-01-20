@@ -124,8 +124,8 @@ CREATE TABLE `generator` (
 CREATE TABLE `gen_plat` (
   `gen_id` tinyint(3) UNSIGNED NOT NULL,
   `plat_id` tinyint(3) UNSIGNED NOT NULL,
-  `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `alt_plat_id` tinyint(3) UNSIGNED DEFAULT NULL COMMENT 'if NULL generator exists for the current platform, else alternative platform`s id of the generator'
+  `alt_plat_id` tinyint(3) UNSIGNED DEFAULT NULL COMMENT 'if NULL generator exists for the current platform, else alternative platform`s id of the generator',
+  `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
