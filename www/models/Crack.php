@@ -200,11 +200,17 @@ class Crack extends \yii\db\ActiveRecord
             ],
             [
                 [
-                    'target',
+                    'target'
+                ],
+                'string',
+                'max' => 5120
+            ],
+            [
+                [
                     'result'
                 ],
                 'string',
-                'max' => 60000
+                'max' => 10240
             ]
         ];
     }

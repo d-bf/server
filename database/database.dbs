@@ -26,7 +26,7 @@
 			<column name="charset_3" type="varchar" length="255" jt="12" />
 			<column name="charset_4" type="varchar" length="255" jt="12" />
 			<column name="mask" type="varchar" length="255" jt="12" mandatory="y" />
-			<column name="target" type="varchar" length="10240" jt="12" />
+			<column name="target" type="varchar" length="5120" jt="12" />
 			<column name="result" type="varchar" length="10240" jt="12" />
 			<column name="key_total" type="bigint" jt="-5" unsigned="y" />
 			<column name="key_assigned" type="bigint" jt="-5" unsigned="y" >
