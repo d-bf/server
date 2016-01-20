@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -16,6 +15,7 @@ use Yii;
  */
 class CrackerGen extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -30,9 +30,27 @@ class CrackerGen extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cracker_id', 'gen_id'], 'required'],
-            [['cracker_id', 'gen_id'], 'integer'],
-            [['config'], 'string', 'max' => 500]
+            [
+                [
+                    'cracker_id',
+                    'gen_id'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'cracker_id',
+                    'gen_id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'config'
+                ],
+                'string',
+                'max' => 500
+            ]
         ];
     }
 
@@ -44,28 +62,35 @@ class CrackerGen extends \yii\db\ActiveRecord
         return [
             'cracker_id' => Yii::t('app', 'Cracker ID'),
             'gen_id' => Yii::t('app', 'Gen ID'),
-            'config' => Yii::t('app', 'Config'),
+            'config' => Yii::t('app', 'Config')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCracker()
     {
-        return $this->hasOne(Cracker::className(), ['id' => 'cracker_id']);
+        return $this->hasOne(Cracker::className(), [
+            'id' => 'cracker_id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGen()
     {
-        return $this->hasOne(Generator::className(), ['id' => 'gen_id']);
+        return $this->hasOne(Generator::className(), [
+            'id' => 'gen_id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     *
      * @return CrackerGenQuery the active query used by this AR class.
      */
     public static function find()

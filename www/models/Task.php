@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -16,6 +15,7 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -30,8 +30,22 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['crack_id', 'start'], 'required'],
-            [['crack_id', 'start', 'offset', 'status'], 'integer']
+            [
+                [
+                    'crack_id',
+                    'start'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'crack_id',
+                    'start',
+                    'offset',
+                    'status'
+                ],
+                'integer'
+            ]
         ];
     }
 
@@ -44,20 +58,24 @@ class Task extends \yii\db\ActiveRecord
             'crack_id' => Yii::t('app', 'Crack ID'),
             'start' => Yii::t('app', 'Start'),
             'offset' => Yii::t('app', 'Offset'),
-            'status' => Yii::t('app', 'Status'),
+            'status' => Yii::t('app', 'Status')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrack()
     {
-        return $this->hasOne(Crack::className(), ['id' => 'crack_id']);
+        return $this->hasOne(Crack::className(), [
+            'id' => 'crack_id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     *
      * @return TaskQuery the active query used by this AR class.
      */
     public static function find()

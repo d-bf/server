@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 /**
@@ -9,14 +8,18 @@ namespace app\models;
  */
 class AlgorithmQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        $this->andWhere('[[status]]=1');
-        return $this;
-    }*/
 
+    /*
+     * public function active()
+     * {
+     * $this->andWhere('[[status]]=1');
+     * return $this;
+     * }
+     */
+    
     /**
      * @inheritdoc
+     *
      * @return Algorithm[]|array
      */
     public function all($db = null)
@@ -26,6 +29,7 @@ class AlgorithmQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
+     *
      * @return Algorithm|array|null
      */
     public function one($db = null)

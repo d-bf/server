@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -15,6 +14,7 @@ use Yii;
  */
 class CrackPlat extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -29,9 +29,26 @@ class CrackPlat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['crack_id', 'plat_name'], 'required'],
-            [['crack_id'], 'integer'],
-            [['plat_name'], 'string', 'max' => 32]
+            [
+                [
+                    'crack_id',
+                    'plat_name'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'crack_id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'plat_name'
+                ],
+                'string',
+                'max' => 32
+            ]
         ];
     }
 
@@ -42,28 +59,35 @@ class CrackPlat extends \yii\db\ActiveRecord
     {
         return [
             'crack_id' => Yii::t('app', 'Crack ID'),
-            'plat_name' => Yii::t('app', 'Plat Name'),
+            'plat_name' => Yii::t('app', 'Plat Name')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrack()
     {
-        return $this->hasOne(Crack::className(), ['id' => 'crack_id']);
+        return $this->hasOne(Crack::className(), [
+            'id' => 'crack_id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getPlatName()
     {
-        return $this->hasOne(Platform::className(), ['name' => 'plat_name']);
+        return $this->hasOne(Platform::className(), [
+            'name' => 'plat_name'
+        ]);
     }
 
     /**
      * @inheritdoc
+     *
      * @return CrackPlatQuery the active query used by this AR class.
      */
     public static function find()

@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -20,6 +19,7 @@ use Yii;
  */
 class Cracker extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -34,10 +34,31 @@ class Cracker extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id'], 'integer'],
-            [['name'], 'string', 'max' => 50],
-            [['name'], 'unique']
+            [
+                [
+                    'id'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'name'
+                ],
+                'string',
+                'max' => 50
+            ],
+            [
+                [
+                    'name'
+                ],
+                'unique'
+            ]
         ];
     }
 
@@ -48,68 +69,96 @@ class Cracker extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'Name')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrackerAlgos()
     {
-        return $this->hasMany(CrackerAlgo::className(), ['cracker_id' => 'id']);
+        return $this->hasMany(CrackerAlgo::className(), [
+            'cracker_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getAlgos()
     {
-        return $this->hasMany(Algorithm::className(), ['id' => 'algo_id'])->viaTable('{{%cracker_algo}}', ['cracker_id' => 'id']);
+        return $this->hasMany(Algorithm::className(), [
+            'id' => 'algo_id'
+        ])->viaTable('{{%cracker_algo}}', [
+            'cracker_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrackerGens()
     {
-        return $this->hasMany(CrackerGen::className(), ['cracker_id' => 'id']);
+        return $this->hasMany(CrackerGen::className(), [
+            'cracker_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGens()
     {
-        return $this->hasMany(Generator::className(), ['id' => 'gen_id'])->viaTable('{{%cracker_gen}}', ['cracker_id' => 'id']);
+        return $this->hasMany(Generator::className(), [
+            'id' => 'gen_id'
+        ])->viaTable('{{%cracker_gen}}', [
+            'cracker_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrackerPlats()
     {
-        return $this->hasMany(CrackerPlat::className(), ['cracker_id' => 'id']);
+        return $this->hasMany(CrackerPlat::className(), [
+            'cracker_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getPlats()
     {
-        return $this->hasMany(Platform::className(), ['id' => 'plat_id'])->viaTable('{{%cracker_plat}}', ['cracker_id' => 'id']);
+        return $this->hasMany(Platform::className(), [
+            'id' => 'plat_id'
+        ])->viaTable('{{%cracker_plat}}', [
+            'cracker_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getPlatAlgoCrackers()
     {
-        return $this->hasMany(PlatAlgoCracker::className(), ['cracker_id' => 'id']);
+        return $this->hasMany(PlatAlgoCracker::className(), [
+            'cracker_id' => 'id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     *
      * @return CrackerQuery the active query used by this AR class.
      */
     public static function find()

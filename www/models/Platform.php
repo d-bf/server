@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -22,6 +21,7 @@ use Yii;
  */
 class Platform extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -36,10 +36,32 @@ class Platform extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name'], 'required'],
-            [['id'], 'integer'],
-            [['name'], 'string', 'max' => 32],
-            [['name'], 'unique']
+            [
+                [
+                    'id',
+                    'name'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'id'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'name'
+                ],
+                'string',
+                'max' => 32
+            ],
+            [
+                [
+                    'name'
+                ],
+                'unique'
+            ]
         ];
     }
 
@@ -50,84 +72,120 @@ class Platform extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'Name')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrackPlats()
     {
-        return $this->hasMany(CrackPlat::className(), ['plat_name' => 'name']);
+        return $this->hasMany(CrackPlat::className(), [
+            'plat_name' => 'name'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCracks()
     {
-        return $this->hasMany(Crack::className(), ['id' => 'crack_id'])->viaTable('{{%crack_plat}}', ['plat_name' => 'name']);
+        return $this->hasMany(Crack::className(), [
+            'id' => 'crack_id'
+        ])->viaTable('{{%crack_plat}}', [
+            'plat_name' => 'name'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrackerPlats()
     {
-        return $this->hasMany(CrackerPlat::className(), ['plat_id' => 'id']);
+        return $this->hasMany(CrackerPlat::className(), [
+            'plat_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCrackers()
     {
-        return $this->hasMany(Cracker::className(), ['id' => 'cracker_id'])->viaTable('{{%cracker_plat}}', ['plat_id' => 'id']);
+        return $this->hasMany(Cracker::className(), [
+            'id' => 'cracker_id'
+        ])->viaTable('{{%cracker_plat}}', [
+            'plat_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGenPlats()
     {
-        return $this->hasMany(GenPlat::className(), ['plat_id' => 'id']);
+        return $this->hasMany(GenPlat::className(), [
+            'plat_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGenPlats0()
     {
-        return $this->hasMany(GenPlat::className(), ['alt_plat_id' => 'id']);
+        return $this->hasMany(GenPlat::className(), [
+            'alt_plat_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGens()
     {
-        return $this->hasMany(Generator::className(), ['id' => 'gen_id'])->viaTable('{{%gen_plat}}', ['plat_id' => 'id']);
+        return $this->hasMany(Generator::className(), [
+            'id' => 'gen_id'
+        ])->viaTable('{{%gen_plat}}', [
+            'plat_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getPlatAlgoCrackers()
     {
-        return $this->hasMany(PlatAlgoCracker::className(), ['plat_id' => 'id']);
+        return $this->hasMany(PlatAlgoCracker::className(), [
+            'plat_id' => 'id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getAlgos()
     {
-        return $this->hasMany(Algorithm::className(), ['id' => 'algo_id'])->viaTable('{{%plat_algo_cracker}}', ['plat_id' => 'id']);
+        return $this->hasMany(Algorithm::className(), [
+            'id' => 'algo_id'
+        ])->viaTable('{{%plat_algo_cracker}}', [
+            'plat_id' => 'id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     *
      * @return PlatformQuery the active query used by this AR class.
      */
     public static function find()

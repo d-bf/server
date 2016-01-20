@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -15,6 +14,7 @@ use Yii;
  */
 class CrackerAlgo extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -29,8 +29,20 @@ class CrackerAlgo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cracker_id', 'algo_id'], 'required'],
-            [['cracker_id', 'algo_id'], 'integer']
+            [
+                [
+                    'cracker_id',
+                    'algo_id'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'cracker_id',
+                    'algo_id'
+                ],
+                'integer'
+            ]
         ];
     }
 
@@ -41,28 +53,35 @@ class CrackerAlgo extends \yii\db\ActiveRecord
     {
         return [
             'cracker_id' => Yii::t('app', 'Cracker ID'),
-            'algo_id' => Yii::t('app', 'Algo ID'),
+            'algo_id' => Yii::t('app', 'Algo ID')
         ];
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getCracker()
     {
-        return $this->hasOne(Cracker::className(), ['id' => 'cracker_id']);
+        return $this->hasOne(Cracker::className(), [
+            'id' => 'cracker_id'
+        ]);
     }
 
     /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getAlgo()
     {
-        return $this->hasOne(Algorithm::className(), ['id' => 'algo_id']);
+        return $this->hasOne(Algorithm::className(), [
+            'id' => 'algo_id'
+        ]);
     }
 
     /**
      * @inheritdoc
+     *
      * @return CrackerAlgoQuery the active query used by this AR class.
      */
     public static function find()
