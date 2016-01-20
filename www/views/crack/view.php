@@ -27,6 +27,7 @@ echo DetailView::widget([
     'model' => $model,
     'attributes' => [
         'id',
+        'description',
         'genName',
         'algoName',
         [

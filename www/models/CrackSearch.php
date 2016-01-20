@@ -39,6 +39,7 @@ class CrackSearch extends Crack
                 [
                     'genName',
                     'algoName',
+                    'description',
                     'charset_1',
                     'charset_2',
                     'charset_3',
@@ -118,8 +119,8 @@ class CrackSearch extends Crack
             'key_finished' => $this->key_finished,
             'key_error' => $this->key_error,
             'res_assigned' => $this->res_assigned,
-            'status' => $this->status,
-            'ts_assign' => $this->ts_assign
+            'ts_assign' => $this->ts_assign,
+            'status' => $this->status
         ]);
         
         $query->andFilterWhere([
@@ -131,6 +132,11 @@ class CrackSearch extends Crack
             'like',
             '{{%algorithm}}.name',
             $this->algoName
+        ])
+            ->andFilterWhere([
+            'like',
+            'description',
+            $this->description
         ])
             ->andFilterWhere([
             'like',

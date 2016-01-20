@@ -25,6 +25,7 @@ echo GridView::widget([
     'emptyText' => 'No cracks found.',
     'columns' => [
         'id',
+        'description',
         // 'gen_id',
         'algoName',
         [

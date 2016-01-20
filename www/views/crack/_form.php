@@ -54,6 +54,8 @@ $form = ActiveForm::begin([
 ]);
 ?>
 
+   <?= $form->field($model, 'description')->textInput(['maxlength' => true])?>
+
 <?php
 if (empty($model->gen_id))
     $model->gen_id = 0;
