@@ -467,7 +467,7 @@ class SetupController extends Controller
     {
         $this->initStartMsg(__FUNCTION__);
         
-        $configHashcat = [
+        $config_hashcat = [
             'args' => '-a 3 -m ALGO_ID -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 --increment --increment-min=LEN_MIN --potfile-disable --outfile-format=3 -o OUT_FILE HASH_FILE MASK',
             'args_opt' => [
                 ['CHAR1' => '-1 CHAR1'],
@@ -476,10 +476,9 @@ class SetupController extends Controller
                 ['CHAR4' => '-4 CHAR4']
             ]
         ];
-        $configHashcat = serialize($configHashcat);
         
         $data = [
-            [0, 'hashcat', $configHashcat],
+            [0, 'hashcat', serialize($config_hashcat)],
             [1, 'oclHashcat', null],
             [2, 'cudaHashcat', null]
         ];
@@ -558,9 +557,19 @@ class SetupController extends Controller
     {
         $this->initStartMsg(__FUNCTION__);
         
+        $config_hashcat_general = [
+            'args' => '-a 3 -m ALGO_ID -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 --increment --increment-min=LEN_MIN --potfile-disable --outfile-format=3 -o OUT_FILE HASH_FILE MASK',
+            'args_opt' => [
+                ['CHAR1' => '-1 CHAR1'],
+                ['CHAR2' => '-2 CHAR2'],
+                ['CHAR3' => '-3 CHAR3'],
+                ['CHAR4' => '-4 CHAR4']
+            ]
+        ];
+        
         $data = [
             /* hashcat */
-            [0, 0,  null],
+            [0, 0,  serialize($config_hashcat_general)],
 //             [0, 1,  null],
             
             /* oclHashcat (AMD) */
