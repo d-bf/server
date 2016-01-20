@@ -287,27 +287,9 @@
 			</fk>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
-		<view name="view_all_cracker_gen_plat" >
-			<view_script><![CDATA[SELECT cracker_plat.cracker_id, cracker_gen.gen_id, cracker_plat.plat_id, NULL as gen_plat_id FROM cracker_plat JOIN cracker_gen ON cracker_plat.cracker_id = cracker_gen.cracker_id 
-UNION
-SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.alt_plat_id IS NULL, gen_plat.plat_id, gen_plat.alt_plat_id) as gen_plat_id FROM cracker JOIN cracker_plat ON cracker.id = cracker_plat.cracker_id JOIN gen_plat ON cracker_plat.plat_id = gen_plat.plat_id WHERE cracker.gen_type > 0 ]]></view_script>
-			<column name="cracker_id" type="int unsigned" />
-			<column name="gen_id" type="tinyint unsigned" />
-			<column name="gen_plat_id" type="tinyint" />
-			<column name="plat_id" type="tinyint unsigned" />
-		</view>
-		<view name="view_cracker_gen_plat" >
-			<view_script><![CDATA[SELECT * FROM view_all_cracker_gen_plat GROUP BY cracker_id, gen_id, plat_id]]></view_script>
-			<column name="cracker_id" type="int unsigned" />
-			<column name="gen_id" type="tinyint unsigned" />
-			<column name="gen_plat_id" type="tinyint" />
-			<column name="plat_id" type="tinyint unsigned" />
-		</view>
 	</schema>
 	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.36-bin.jar" host="127.0.0.1" port="3306" instance="dbf_server" user="root" passwd="cm9vdA==" />
 	<layout id="Layout2583989" name="dbf_server" joined_routing="y" show_column_type="y" show_relation_columns="y" >
-		<entity schema="dbf_server" name="view_cracker_gen_plat" color="a8c4ef" x="885" y="225" />
-		<entity schema="dbf_server" name="view_all_cracker_gen_plat" color="a8c4ef" x="885" y="120" />
 		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="90" y="330" />
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="450" />
 		<entity schema="dbf_server" name="crack_plat" color="b7c8e3" x="165" y="555" />
