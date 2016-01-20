@@ -129,19 +129,10 @@
 			<column name="cracker_id" type="int" jt="4" mandatory="y" unsigned="y" />
 			<column name="gen_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
 			<column name="config" type="varchar" length="500" jt="12" >
-				<comment><![CDATA[{
-    "algo_in" : "",
-    "args_format" : "",
-    "args" : [
-        "START",
-        "OFFSET",
-        "MIN",
-        "MAX",
-        "CHARSET",
-        "ALGO",
-        "HASH"
-    ]
-}]]></comment>
+				<comment><![CDATA[[{
+    "args" : "",
+    "args_opt" : ""
+}]]]></comment>
 			</column>
 			<index name="idx_cracker_gen" unique="NORMAL" >
 				<column name="cracker_id" />
@@ -218,18 +209,10 @@
 			<column name="id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
 			<column name="name" type="varchar" length="50" jt="12" />
 			<column name="config" type="varchar" length="500" jt="12" >
-				<comment><![CDATA[{
-    "args_format" : "",
-    "args" : [
-        "START",
-        "OFFSET",
-        "MIN",
-        "MAX",
-        "CHARSET",
-        "ALGO",
-        "HASH"
-    ]
-}]]></comment>
+				<comment><![CDATA[[{
+    "args" : "",
+    "args_opt" : ""
+}]]]></comment>
 			</column>
 			<index name="pk_generator" unique="PRIMARY_KEY" >
 				<column name="id" />
@@ -332,11 +315,11 @@ SELECT cracker_plat.cracker_id, gen_plat.gen_id, gen_plat.plat_id, IF(gen_plat.a
 		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="330" />
 		<entity schema="dbf_server" name="cracker_algo" color="b2cdf7" x="690" y="210" />
 		<entity schema="dbf_server" name="plat_algo_cracker" color="b7c8e3" x="480" y="45" />
-		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="330" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="330" />
 		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="450" />
 		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="195" y="105" />
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="210" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="195" y="210" />
+		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="330" />
 	</layout>
 </project>
