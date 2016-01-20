@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use Yii;
@@ -8,13 +9,17 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property double $rate_cpu
+ * @property double $rate_gpu
  *
- * @property CrackerAlgo[] $crackerAlgos
  * @property Crack[] $cracks
+ * @property CrackerAlgo[] $crackerAlgos
+ * @property Cracker[] $crackers
+ * @property PlatAlgoCracker[] $platAlgoCrackers
+ * @property Platform[] $plats
  */
 class Algorithm extends \yii\db\ActiveRecord
 {
-
     /**
      * @inheritdoc
      */
@@ -29,31 +34,11 @@ class Algorithm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [
-                [
-                    'id'
-                ],
-                'required'
-            ],
-            [
-                [
-                    'id'
-                ],
-                'integer'
-            ],
-            [
-                [
-                    'name'
-                ],
-                'string',
-                'max' => 100
-            ],
-            [
-                [
-                    'name'
-                ],
-                'unique'
-            ]
+            [['id'], 'required'],
+            [['id'], 'integer'],
+            [['rate_cpu', 'rate_gpu'], 'number'],
+            [['name'], 'string', 'max' => 100],
+            [['name'], 'unique']
         ];
     }
 
@@ -64,35 +49,54 @@ class Algorithm extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name')
+            'name' => Yii::t('app', 'Name'),
+            'rate_cpu' => Yii::t('app', 'Rate Cpu'),
+            'rate_gpu' => Yii::t('app', 'Rate Gpu'),
         ];
     }
 
     /**
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCrackerAlgos()
-    {
-        return $this->hasMany(CrackerAlgo::className(), [
-            'algo_id' => 'id'
-        ]);
-    }
-
-    /**
-     *
      * @return \yii\db\ActiveQuery
      */
     public function getCracks()
     {
-        return $this->hasMany(Crack::className(), [
-            'algo_id' => 'id'
-        ]);
+        return $this->hasMany(Crack::className(), ['algo_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCrackerAlgos()
+    {
+        return $this->hasMany(CrackerAlgo::className(), ['algo_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCrackers()
+    {
+        return $this->hasMany(Cracker::className(), ['id' => 'cracker_id'])->viaTable('{{%cracker_algo}}', ['algo_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlatAlgoCrackers()
+    {
+        return $this->hasMany(PlatAlgoCracker::className(), ['algo_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlats()
+    {
+        return $this->hasMany(Platform::className(), ['id' => 'plat_id'])->viaTable('{{%plat_algo_cracker}}', ['algo_id' => 'id']);
     }
 
     /**
      * @inheritdoc
-     *
      * @return AlgorithmQuery the active query used by this AR class.
      */
     public static function find()

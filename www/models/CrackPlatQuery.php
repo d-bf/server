@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[CrackerPlat]].
+ * This is the ActiveQuery class for [[CrackPlat]].
  *
- * @see CrackerPlat
+ * @see CrackPlat
  */
-class CrackerPlatQuery extends \yii\db\ActiveQuery
+class CrackPlatQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -17,7 +17,7 @@ class CrackerPlatQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return CrackerPlat[]|array
+     * @return CrackPlat[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class CrackerPlatQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return CrackerPlat|array|null
+     * @return CrackPlat|array|null
      */
     public function one($db = null)
     {

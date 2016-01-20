@@ -11,6 +11,7 @@ use Yii;
  * @property integer $algo_id
  * @property integer $len_min
  * @property integer $len_max
+ * @property string $description
  * @property string $charset_1
  * @property string $charset_2
  * @property string $charset_3
@@ -23,8 +24,8 @@ use Yii;
  * @property string $key_finished
  * @property string $key_error
  * @property string $res_assigned
- * @property integer $status
  * @property integer $ts_assign
+ * @property integer $status
  *
  * @property Generator $gen
  * @property Algorithm $algo
@@ -60,6 +61,13 @@ class Crack extends \yii\db\ActiveRecord
                     'target'
                 ],
                 'required'
+            ],
+            [
+                [
+                    'description'
+                ],
+                'string',
+                'max' => 50
             ],
             [
                 'charset',
@@ -214,6 +222,7 @@ class Crack extends \yii\db\ActiveRecord
             'algoName' => Yii::t('app', 'Algorithm'),
             'len_min' => Yii::t('app', 'Min'),
             'len_max' => Yii::t('app', 'Max'),
+            'description' => Yii::t('app', 'Description'),
             'charset_1' => Yii::t('app', 'Custom Charset 1'),
             'charset_2' => Yii::t('app', 'Custom Charset 2'),
             'charset_3' => Yii::t('app', 'Custom Charset 3'),
@@ -226,8 +235,8 @@ class Crack extends \yii\db\ActiveRecord
             'key_finished' => Yii::t('app', 'Finished'),
             'key_error' => Yii::t('app', 'Error'),
             'res_assigned' => Yii::t('app', 'Res Assigned'),
-            'status' => Yii::t('app', 'Status'),
             'ts_assign' => Yii::t('app', 'Last Assignment'),
+            'status' => Yii::t('app', 'Status'),
             'mode' => Yii::t('app', 'Mode'),
             'charset' => Yii::t('app', 'Charset'),
             'maskChar' => Yii::t('app', 'Mask Char'),

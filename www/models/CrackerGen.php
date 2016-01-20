@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use Yii;
@@ -8,14 +9,13 @@ use Yii;
  *
  * @property integer $cracker_id
  * @property integer $gen_id
- * @property string $gen_switch
+ * @property string $config
  *
  * @property Cracker $cracker
  * @property Generator $gen
  */
 class CrackerGen extends \yii\db\ActiveRecord
 {
-
     /**
      * @inheritdoc
      */
@@ -30,27 +30,9 @@ class CrackerGen extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [
-                [
-                    'cracker_id',
-                    'gen_id'
-                ],
-                'required'
-            ],
-            [
-                [
-                    'cracker_id',
-                    'gen_id'
-                ],
-                'integer'
-            ],
-            [
-                [
-                    'gen_switch'
-                ],
-                'string',
-                'max' => 40
-            ]
+            [['cracker_id', 'gen_id'], 'required'],
+            [['cracker_id', 'gen_id'], 'integer'],
+            [['config'], 'string', 'max' => 500]
         ];
     }
 
@@ -62,35 +44,28 @@ class CrackerGen extends \yii\db\ActiveRecord
         return [
             'cracker_id' => Yii::t('app', 'Cracker ID'),
             'gen_id' => Yii::t('app', 'Gen ID'),
-            'gen_switch' => Yii::t('app', 'Gen Switch')
+            'config' => Yii::t('app', 'Config'),
         ];
     }
 
     /**
-     *
      * @return \yii\db\ActiveQuery
      */
     public function getCracker()
     {
-        return $this->hasOne(Cracker::className(), [
-            'id' => 'cracker_id'
-        ]);
+        return $this->hasOne(Cracker::className(), ['id' => 'cracker_id']);
     }
 
     /**
-     *
      * @return \yii\db\ActiveQuery
      */
     public function getGen()
     {
-        return $this->hasOne(Generator::className(), [
-            'id' => 'gen_id'
-        ]);
+        return $this->hasOne(Generator::className(), ['id' => 'gen_id']);
     }
 
     /**
      * @inheritdoc
-     *
      * @return CrackerGenQuery the active query used by this AR class.
      */
     public static function find()

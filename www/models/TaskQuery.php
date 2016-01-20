@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 /**
@@ -8,18 +9,14 @@ namespace app\models;
  */
 class TaskQuery extends \yii\db\ActiveQuery
 {
+    /*public function active()
+    {
+        $this->andWhere('[[status]]=1');
+        return $this;
+    }*/
 
-    /*
-     * public function active()
-     * {
-     * $this->andWhere('[[status]]=1');
-     * return $this;
-     * }
-     */
-    
     /**
      * @inheritdoc
-     *
      * @return Task[]|array
      */
     public function all($db = null)
@@ -29,7 +26,6 @@ class TaskQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     *
      * @return Task|array|null
      */
     public function one($db = null)

@@ -5,23 +5,22 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%task}}".
+ * This is the model class for table "{{%crack_plat}}".
  *
  * @property string $crack_id
- * @property string $start
- * @property string $offset
- * @property integer $status
+ * @property string $plat_name
  *
  * @property Crack $crack
+ * @property Platform $platName
  */
-class Task extends \yii\db\ActiveRecord
+class CrackPlat extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%task}}';
+        return '{{%crack_plat}}';
     }
 
     /**
@@ -30,8 +29,9 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['crack_id', 'start'], 'required'],
-            [['crack_id', 'start', 'offset', 'status'], 'integer']
+            [['crack_id', 'plat_name'], 'required'],
+            [['crack_id'], 'integer'],
+            [['plat_name'], 'string', 'max' => 32]
         ];
     }
 
@@ -42,9 +42,7 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             'crack_id' => Yii::t('app', 'Crack ID'),
-            'start' => Yii::t('app', 'Start'),
-            'offset' => Yii::t('app', 'Offset'),
-            'status' => Yii::t('app', 'Status'),
+            'plat_name' => Yii::t('app', 'Plat Name'),
         ];
     }
 
@@ -57,11 +55,19 @@ class Task extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlatName()
+    {
+        return $this->hasOne(Platform::className(), ['name' => 'plat_name']);
+    }
+
+    /**
      * @inheritdoc
-     * @return TaskQuery the active query used by this AR class.
+     * @return CrackPlatQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new TaskQuery(get_called_class());
+        return new CrackPlatQuery(get_called_class());
     }
 }
