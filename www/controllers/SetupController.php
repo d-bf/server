@@ -392,7 +392,7 @@ class SetupController extends Controller
         }
         $values = substr($values, 1);
         
-        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%generator}} (id, name, config) VALUES $values", $params)->execute();
+        \Yii::$app->db->createCommand("INSERT INTO {{%generator}} (id, name, config) VALUES $values ON DUPLICATE KEY UPDATE config = VALUES(config)", $params)->execute();
         
         $this->initEndMsg(__FUNCTION__);
     }
@@ -458,7 +458,7 @@ class SetupController extends Controller
         }
         $values = substr($values, 1);
         
-        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%gen_plat}} (gen_id, plat_id, alt_plat_id, md5) VALUES $values", $params)->execute();
+        \Yii::$app->db->createCommand("INSERT INTO {{%gen_plat}} (gen_id, plat_id, alt_plat_id, md5) VALUES $values ON DUPLICATE KEY UPDATE md5 = VALUES(md5)", $params)->execute();
         
         $this->initEndMsg(__FUNCTION__);
     }
@@ -499,7 +499,7 @@ class SetupController extends Controller
         }
         $values = substr($values, 1);
         
-        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%cracker}} (id, name, config) VALUES $values", $params)->execute();
+        \Yii::$app->db->createCommand("INSERT INTO {{%cracker}} (id, name, config) VALUES $values ON DUPLICATE KEY UPDATE config = VALUES(config)", $params)->execute();
         
         $this->initEndMsg(__FUNCTION__);
     }
@@ -549,7 +549,7 @@ class SetupController extends Controller
         }
         $values = substr($values, 1);
         
-        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%cracker_plat}} (cracker_id, plat_id, md5) VALUES $values", $params)->execute();
+        \Yii::$app->db->createCommand("INSERT INTO {{%cracker_plat}} (cracker_id, plat_id, md5) VALUES $values ON DUPLICATE KEY UPDATE md5 = VALUES(md5)", $params)->execute();
         
         $this->initEndMsg(__FUNCTION__);
     }
@@ -587,7 +587,7 @@ class SetupController extends Controller
         }
         $values = substr($values, 1);
         
-        \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%cracker_gen}} (cracker_id, gen_id, config) VALUES $values", $params)->execute();
+        \Yii::$app->db->createCommand("INSERT INTO {{%cracker_gen}} (cracker_id, gen_id, config) VALUES $values ON DUPLICATE KEY UPDATE config = VALUES(config)", $params)->execute();
         
         $this->initEndMsg(__FUNCTION__);
     }
