@@ -59,7 +59,7 @@ class SetupController extends Controller
             $values .= ",(:i$i,:n$i)";
             $params[":i$i"] = $platform[0];
             $params[":n$i"] = $platform[1];
-            $i++;
+            $i ++;
         }
         $values = substr($values, 1);
         
