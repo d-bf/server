@@ -13,12 +13,16 @@ class GetController extends Controller
     {
         $reqData = \Yii::$app->request->post();
         
-        if (! empty($reqData['platform'])) {
-            return \Yii::$app->db->createCommand("SELECT pac.algo_id, c.name AS cracker FROM {{%plat_algo_cracker}} pac JOIN {{%platform}} p ON (p.name = :platName AND pac.plat_id = p.id) JOIN {{%cracker}} c ON c.id = pac.cracker_id", [
-                ':platName' => $reqData['platform']
-            ])->queryAll();
-        } else {
-            return [];
+        $response = [];
+        
+        foreach ($reqData as $platform) {
+            if (! empty($platform)) {
+                $response[$platform] = \Yii::$app->db->createCommand("SELECT pac.algo_id, c.name AS cracker FROM {{%plat_algo_cracker}} pac JOIN {{%platform}} p ON (p.name = :platName AND pac.plat_id = p.id) JOIN {{%cracker}} c ON c.id = pac.cracker_id", [
+                    ':platName' => $platform
+                ])->queryAll();
+            }
         }
+        
+        return $response;
     }
 }
