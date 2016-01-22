@@ -328,24 +328,29 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         $data = [
-            [0,     'cpu_linux_64'],
-            [1,     'cpu_linux_32'],
-            [2,     'cpu_win_64'],
-            [3,     'cpu_win_32'],
-            [4,     'cpu_mac_64'],
-            [5,     'cpu_mac_32'],
-            [6,     'gpu_linux_64_amd'],
-            [7,     'gpu_linux_64_nv'],
-            [8,     'gpu_linux_32_amd'],
-            [9,     'gpu_linux_32_nv'],
-            [10,    'gpu_win_64_amd'],
-            [11,    'gpu_win_64_nv'],
-            [12,    'gpu_win_32_amd'],
-            [13,    'gpu_win_32_nv'],
-            [14,    'gpu_mac_64_amd'],
-            [15,    'gpu_mac_64_nv'],
-            [16,    'gpu_mac_32_amd'],
-            [17,    'gpu_mac_32_nv']
+            // Windows
+            [0,     'cpu_win_64'],
+            [1,     'cpu_win_32'],
+            [20,    'gpu_win_64_amd'],
+            [21,    'gpu_win_32_amd'],
+            [22,    'gpu_win_64_nv'],
+            [23,    'gpu_win_32_nv'],
+            
+            // Linux
+            [100,   'cpu_linux_64'],
+            [101,   'cpu_linux_32'],
+            [120,   'gpu_linux_64_amd'],
+            [121,   'gpu_linux_32_amd'],
+            [122,   'gpu_linux_64_nv'],
+            [123,   'gpu_linux_32_nv'],
+            
+            // Mac
+            [200,   'cpu_mac_64'],
+            [201,   'cpu_mac_32'],
+            [210,   'gpu_mac_64_amd'],
+            [211,   'gpu_mac_32_amd'],
+            [212,   'gpu_mac_64_nv'],
+            [213,   'gpu_mac_32_nv'],
         ];
         
         $fields = 2;
@@ -372,9 +377,19 @@ class SetupController extends Controller
     {
         $this->initStartMsg(__FUNCTION__);
         
+        $config_general = [
+            'args' => '-i LEN_MIN:LEN_MAX -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 MASK',
+            'args_opt' => [
+                ['CHAR1' => '-1 CHAR1'],
+                ['CHAR2' => '-2 CHAR2'],
+                ['CHAR3' => '-3 CHAR3'],
+                ['CHAR4' => '-4 CHAR4']
+            ]
+        ];
+        
         $data = [
-            [0, 'General',  ''],
-//             [1, 'Markov', ''],
+            [0, 'general',  null],
+//             [1, 'markov',   null],
         ];
         
         $fields = 3;
@@ -403,44 +418,44 @@ class SetupController extends Controller
         
         $data = [
             /* general */
-            [0, 0,  null,    null],
-            [0, 1,  null,    null],
-            [0, 2,  null,    null],
-            [0, 3,  null,    null],
-            [0, 4,  null,    null],
-            [0, 5,  null,    null],
-            [0, 6,  0,       null],
-            [0, 7,  0,       null],
-            [0, 8,  1,       null],
-            [0, 9,  1,       null],
-            [0, 10, 2,       null],
-            [0, 11, 2,       null],
-            [0, 12, 3,       null],
-            [0, 13, 3,       null],
-            [0, 14, 4,       null],
-            [0, 15, 4,       null],
-            [0, 16, 5,       null],
-            [0, 17, 5,       null],
+            [0, 0,      null,   null],
+            [0, 1,      null,   null],
+            [0, 100,    null,   null],
+            [0, 101,    null,   null],
+            [0, 200,    null,   null],
+            [0, 201,    null,   null],
+            [0, 20,     0,      null],
+            [0, 21,     1,      null],
+            [0, 22,     0,      null],
+            [0, 23,     1,      null],
+            [0, 120,    100,    null],
+            [0, 121,    101,    null],
+            [0, 122,    100,    null],
+            [0, 123,    101,    null],
+            [0, 210,    200,    null],
+            [0, 211,    201,    null],
+            [0, 212,    200,    null],
+            [0, 213,    201,    null],
             
 //             /* markov */
-//             [1, 0,  null,    null],
-//             [1, 1,  null,    null],
-//             [1, 2,  null,    null],
-//             [1, 3,  null,    null],
-//             [1, 4,  null,    null],
-//             [1, 5,  null,    null],
-//             [1, 6,  0,       null],
-//             [1, 7,  0,       null],
-//             [1, 8,  1,       null],
-//             [1, 9,  1,       null],
-//             [1, 10, 2,       null],
-//             [1, 11, 2,       null],
-//             [1, 12, 3,       null],
-//             [1, 13, 3,       null],
-//             [1, 14, 4,       null],
-//             [1, 15, 4,       null],
-//             [1, 16, 5,       null],
-//             [1, 17, 5,       null]
+//             [1, 0,      null,   null],
+//             [1, 1,      null,   null],
+//             [1, 100,    null,   null],
+//             [1, 101,    null,   null],
+//             [1, 200,    null,   null],
+//             [1, 201,    null,   null],
+//             [1, 20,     0,      null],
+//             [1, 21,     1,      null],
+//             [1, 22,     0,      null],
+//             [1, 23,     1,      null],
+//             [1, 120,    100,    null],
+//             [1, 121,    101,    null],
+//             [1, 122,    100,    null],
+//             [1, 123,    101,    null],
+//             [1, 210,    200,    null],
+//             [1, 211,    201,    null],
+//             [1, 212,    200,    null],
+//             [1, 213,    201,    null],
         ];
         
         $fields = 4;
@@ -468,22 +483,20 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         $config_hashcat = [
-            'args' => '-a 3 -m ALGO_ID -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 --increment --increment-min=LEN_MIN --potfile-disable --outfile-format=3 -o OUT_FILE HASH_FILE MASK',
-            'args_opt' => [
-                ['CHAR1' => '-1 CHAR1'],
-                ['CHAR2' => '-2 CHAR2'],
-                ['CHAR3' => '-3 CHAR3'],
-                ['CHAR4' => '-4 CHAR4']
+            'stdin' => [],
+            'infile' => [
+                'args' => '-a 0 -m ALGO_ID -a 3 -o OUT_FILE --outfile-format=3 --potfile-disable HASH_FILE IN_FILE',
+                'args_opt' => []
             ]
         ];
         
         $data = [
-            [0, 'hashcat', serialize($config_hashcat)],
-            [1, 'oclHashcat', null],
-            [2, 'cudaHashcat', null]
+            [0, 'hashcat',      1,  serialize($config_hashcat)],
+            [1, 'oclHashcat',   3,  null],
+            [2, 'cudaHashcat',  3,  null]
         ];
         
-        $fields = 3;
+        $fields = 4;
         $values = '';
         $params = [];
         $i = 0;
@@ -498,7 +511,7 @@ class SetupController extends Controller
         }
         $values = substr($values, 1);
         
-        \Yii::$app->db->createCommand("INSERT INTO {{%cracker}} (id, name, config) VALUES $values ON DUPLICATE KEY UPDATE config = VALUES(config)", $params)->execute();
+        \Yii::$app->db->createCommand("INSERT INTO {{%cracker}} (id, name, input_mode, config) VALUES $values ON DUPLICATE KEY UPDATE input_mode = VALUES(input_mode), config = VALUES(config)", $params)->execute();
         
         $this->initEndMsg(__FUNCTION__);
     }
@@ -509,28 +522,28 @@ class SetupController extends Controller
         
         $data = [
             /* hashcat */
-            [0, 0, null],
-            [0, 1, null],
-            [0, 2, null],
-            [0, 3, null],
-            [0, 4, null],
-            [0, 5, null],
+            [0, 0,      null],
+            [0, 1,      null],
+            [0, 100,    null],
+            [0, 101,    null],
+            [0, 200,    null],
+            [0, 201,    null],
             
             /* oclHashcat (AMD) */
-            [1, 6,  null],
-            [1, 8,  null],
-            [1, 10, null],
-            [1, 12, null],
-            [1, 14, null],
-            [1, 16, null],
+            [1, 20,     null],
+            [1, 21,     null],
+            [1, 120,    null],
+            [1, 121,    null],
+            [1, 210,    null],
+            [1, 211,    null],
             
             /* cudaHashcat (NVidia) */
-            [2, 7,  null],
-            [2, 9,  null],
-            [2, 11, null],
-            [2, 13, null],
-            [2, 15, null],
-            [2, 17, null]
+            [2, 22,     null],
+            [2, 23,     null],
+            [2, 122,    null],
+            [2, 123,    null],
+            [2, 212,    null],
+            [2, 213,    null]
         ];
         
         $fields = 3;
@@ -558,7 +571,7 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         $config_hashcat_general = [
-            'args' => '-a 3 -m ALGO_ID -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 --increment --increment-min=LEN_MIN --potfile-disable --outfile-format=3 -o OUT_FILE HASH_FILE MASK',
+            'args' => '-m ALGO_ID -a 3 -o OUT_FILE --outfile-format=3 --potfile-disable -s START -l OFFSET --increment --increment-min=LEN_MIN --increment-max=LEN_MAX CHAR1 CHAR2 CHAR3 CHAR4 HASH_FILE MASK',
             'args_opt' => [
                 ['CHAR1' => '-1 CHAR1'],
                 ['CHAR2' => '-2 CHAR2'],
@@ -691,30 +704,30 @@ class SetupController extends Controller
         
         foreach ($this->algoCpu as $algo) {
             // CPU
-            $data[] = [$algo[0], 0,     0]; // hashcat
-            $data[] = [$algo[0], 1,     0]; // hashcat
-            $data[] = [$algo[0], 2,     0]; // hashcat
-            $data[] = [$algo[0], 3,     0]; // hashcat
-            $data[] = [$algo[0], 4,     0]; // hashcat
-            $data[] = [$algo[0], 5,     0]; // hashcat
+            $data[] = [$algo[0],    0,      0]; // hashcat
+            $data[] = [$algo[0],    1,      0]; // hashcat
+            $data[] = [$algo[0],    100,    0]; // hashcat
+            $data[] = [$algo[0],    101,    0]; // hashcat
+            $data[] = [$algo[0],    200,    0]; // hashcat
+            $data[] = [$algo[0],    201,    0]; // hashcat
         }
         
         foreach ($this->algoGpu as $algo) {
             // GPU (AMD)
-            $data[] = [$algo[0], 6,     1]; // oclHashcat
-            $data[] = [$algo[0], 8,     1]; // oclHashcat
-            $data[] = [$algo[0], 10,    1]; // oclHashcat
-            $data[] = [$algo[0], 12,    1]; // oclHashcat
-            $data[] = [$algo[0], 14,    1]; // oclHashcat
-            $data[] = [$algo[0], 16,    1]; // oclHashcat
+            $data[] = [$algo[0],    20,     1]; // oclHashcat
+            $data[] = [$algo[0],    21,     1]; // oclHashcat
+            $data[] = [$algo[0],    120,    1]; // oclHashcat
+            $data[] = [$algo[0],    121,    1]; // oclHashcat
+            $data[] = [$algo[0],    210,    1]; // oclHashcat
+            $data[] = [$algo[0],    211,    1]; // oclHashcat
             
             // GPU (NVidia)
-            $data[] = [$algo[0], 7,     2]; // cudaHashcat
-            $data[] = [$algo[0], 9,     2]; // cudaHashcat
-            $data[] = [$algo[0], 11,    2]; // cudaHashcat
-            $data[] = [$algo[0], 13,    2]; // cudaHashcat
-            $data[] = [$algo[0], 15,    2]; // cudaHashcat
-            $data[] = [$algo[0], 17,    2]; // cudaHashcat
+            $data[] = [$algo[0],    22,     2]; // cudaHashcat
+            $data[] = [$algo[0],    23,     2]; // cudaHashcat
+            $data[] = [$algo[0],    122,    2]; // cudaHashcat
+            $data[] = [$algo[0],    123,    2]; // cudaHashcat
+            $data[] = [$algo[0],    212,    2]; // cudaHashcat
+            $data[] = [$algo[0],    213,    2]; // cudaHashcat
         }
         
         $fields = 3;

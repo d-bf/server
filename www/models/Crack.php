@@ -401,7 +401,7 @@ class Crack extends \yii\db\ActiveRecord
     {
         /* Fill the crack_plat table according to the crack attributes */
         $query = 'SELECT DISTINCT p.name FROM {{%gen_plat}} gp JOIN {{%cracker_plat}} cp ON (gp.gen_id = :genId AND cp.plat_id = gp.plat_id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND cp.cracker_id = ca.cracker_id) JOIN {{%platform}} p ON p.id = cp.plat_id UNION ';
-        $query .= 'SELECT DISTINCT p.name FROM {{%cracker_algo}} ca JOIN {{%cracker_gen}} cg ON (ca.algo_id = :algoId AND cg.gen_id = :genId AND cg.cracker_id = ca.cracker_id) JOIN {{%cracker_plat}} cp ON cp.cracker_id = cg.cracker_id JOIN {{%platform}} p ON p.id = cp.plat_id';
+        $query .= 'SELECT DISTINCT p.name FROM {{%cracker}} c JOIN {{%cracker_algo}} ca ON (c.input_mode > 0 AND ca.algo_id = :algoId AND c.id = ca.cracker_id) JOIN {{%cracker_plat}} cp ON (cp.cracker_id = c.id AND ((c.input_mode > 1) OR (c.input_mode = 1 AND cp.plat_id > 99))) JOIN {{%gen_plat}} gp ON (gp.gen_id = :genId AND gp.plat_id = cp.plat_id) JOIN {{%platform}} p ON (p.id = gp.plat_id)';
         $platforms = \Yii::$app->db->createCommand($query, [
             ':genId' => $this->gen_id,
             ':algoId' => $this->algo_id
@@ -411,7 +411,7 @@ class Crack extends \yii\db\ActiveRecord
         $values = '';
         $params = [];
         foreach ($platforms as $platform) {
-            $values .= ",(:c, :p$i)";
+            $values .= ",(:c,:p$i)";
             $params[":p$i"] = $platform;
             $i ++;
         }

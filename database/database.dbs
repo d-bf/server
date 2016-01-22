@@ -96,6 +96,9 @@
     "args_opt" : ""
 }]]]></comment>
 			</column>
+			<column name="input_mode" type="tinyint" jt="-6" unsigned="y" >
+				<comment><![CDATA[0: none; 1: infile; 2: stdin; 3: both;]]></comment>
+			</column>
 			<index name="pk_cracker" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
@@ -299,9 +302,9 @@
 		<entity schema="dbf_server" name="plat_algo_cracker" color="b7c8e3" x="480" y="45" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="330" />
 		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="450" />
-		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="195" y="105" />
-		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="210" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="195" y="210" />
 		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="330" />
+		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="195" y="105" />
+		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="210" />
 	</layout>
 </project>
