@@ -13,8 +13,8 @@
 CREATE TABLE `algorithm` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `rate_cpu` double UNSIGNED NOT NULL DEFAULT '1',
-  `rate_gpu` double UNSIGNED NOT NULL DEFAULT '1'
+  `rate_cpu` double UNSIGNED DEFAULT NULL,
+  `rate_gpu` double UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -29,20 +29,22 @@ CREATE TABLE `crack` (
   `algo_id` int(10) UNSIGNED NOT NULL,
   `len_min` tinyint(3) UNSIGNED NOT NULL,
   `len_max` tinyint(3) UNSIGNED NOT NULL,
+  `description` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `charset_1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `charset_2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `charset_3` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `charset_4` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `mask` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `target` mediumtext COLLATE utf8_unicode_ci,
-  `result` mediumtext COLLATE utf8_unicode_ci,
+  `target` varchar(5120) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `result` varchar(10240) COLLATE utf8_unicode_ci DEFAULT NULL,
   `key_total` bigint(20) UNSIGNED DEFAULT NULL,
   `key_assigned` bigint(20) UNSIGNED DEFAULT '0',
   `key_finished` bigint(20) UNSIGNED DEFAULT '0',
   `key_error` bigint(20) UNSIGNED DEFAULT '0',
   `res_assigned` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `status` tinyint(4) DEFAULT '0' COMMENT '0: Not assigned all keys; 1: Pending (All keys are assigned); 2: Finished;',
-  `ts_assign` int(10) UNSIGNED DEFAULT NULL
+  `ts_create` int(10) UNSIGNED DEFAULT NULL,
+  `ts_last_connect` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -53,7 +55,9 @@ CREATE TABLE `crack` (
 
 CREATE TABLE `cracker` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '[{\n    "args" : "",\n    "args_opt" : ""\n}]',
+  `input_mode` tinyint(3) UNSIGNED DEFAULT NULL COMMENT '0: none; 1: infile; 2: stdin; 3: both;'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -76,8 +80,8 @@ CREATE TABLE `cracker_algo` (
 CREATE TABLE `cracker_gen` (
   `cracker_id` int(10) UNSIGNED NOT NULL,
   `gen_id` tinyint(3) UNSIGNED NOT NULL,
-  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `config` varchar(500) DEFAULT NULL COMMENT '[{\n    "args" : "",\n    "args_opt" : ""\n}]'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -88,8 +92,7 @@ CREATE TABLE `cracker_gen` (
 CREATE TABLE `cracker_plat` (
   `cracker_id` int(10) UNSIGNED NOT NULL,
   `plat_id` tinyint(3) UNSIGNED NOT NULL,
-  `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '{\n    "args" : "",\n    "args_opt" : ""\n}'
+  `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -111,8 +114,8 @@ CREATE TABLE `crack_plat` (
 
 CREATE TABLE `generator` (
   `id` tinyint(3) UNSIGNED NOT NULL,
-  `name` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL
+  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '[{\n    "args" : "",\n    "args_opt" : ""\n}]'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -138,7 +141,7 @@ CREATE TABLE `info` (
   `info_name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `info_type` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `info_value` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='name:type:value';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -149,18 +152,6 @@ CREATE TABLE `info` (
 CREATE TABLE `platform` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT 'os_arch_processor[_brand]'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `plat_algo_cracker`
---
-
-CREATE TABLE `plat_algo_cracker` (
-  `plat_id` tinyint(3) UNSIGNED NOT NULL,
-  `algo_id` int(10) UNSIGNED NOT NULL,
-  `cracker_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -265,15 +256,6 @@ ALTER TABLE `platform`
   ADD UNIQUE KEY `unq_platform` (`name`);
 
 --
--- Indexes for table `plat_algo_cracker`
---
-ALTER TABLE `plat_algo_cracker`
-  ADD PRIMARY KEY (`plat_id`,`algo_id`,`cracker_id`),
-  ADD KEY `idx_plat_algo_cracker` (`plat_id`),
-  ADD KEY `idx_plat_algo_cracker_0` (`algo_id`),
-  ADD KEY `idx_plat_algo_cracker_1` (`cracker_id`);
-
---
 -- Indexes for table `task`
 --
 ALTER TABLE `task`
@@ -287,7 +269,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `crack`
 --
 ALTER TABLE `crack`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10016;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
@@ -336,15 +318,8 @@ ALTER TABLE `gen_plat`
   ADD CONSTRAINT `fk_gen_plat_1` FOREIGN KEY (`alt_plat_id`) REFERENCES `platform` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `plat_algo_cracker`
---
-ALTER TABLE `plat_algo_cracker`
-  ADD CONSTRAINT `fk_plat_algo_cracker` FOREIGN KEY (`plat_id`) REFERENCES `platform` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_plat_algo_cracker_0` FOREIGN KEY (`algo_id`) REFERENCES `algorithm` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_plat_algo_cracker_1` FOREIGN KEY (`cracker_id`) REFERENCES `cracker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `task`
 --
 ALTER TABLE `task`
   ADD CONSTRAINT `fk_task` FOREIGN KEY (`crack_id`) REFERENCES `crack` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
