@@ -54,7 +54,7 @@ $form = ActiveForm::begin([
 
     <?php // echo $form->field($model, 'status') ?>
 
-    <?php // echo $form->field($model, 'ts_assign') ?>
+    <?php // echo $form->field($model, 'ts_last_connect') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary'])?>

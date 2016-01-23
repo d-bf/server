@@ -24,7 +24,7 @@ use Yii;
  * @property string $key_finished
  * @property string $key_error
  * @property string $res_assigned
- * @property integer $ts_assign
+ * @property integer $ts_last_connect
  * @property integer $status
  *
  * @property Generator $gen
@@ -177,7 +177,7 @@ class Crack extends \yii\db\ActiveRecord
                     'key_error',
                     'res_assigned',
                     'status',
-                    'ts_assign'
+                    'ts_last_connect'
                 ],
                 'integer'
             ],
@@ -241,7 +241,7 @@ class Crack extends \yii\db\ActiveRecord
             'key_finished' => Yii::t('app', 'Finished'),
             'key_error' => Yii::t('app', 'Error'),
             'res_assigned' => Yii::t('app', 'Res Assigned'),
-            'ts_assign' => Yii::t('app', 'Last Assignment'),
+            'ts_last_connect' => Yii::t('app', 'Last Connect'),
             'status' => Yii::t('app', 'Status'),
             'mode' => Yii::t('app', 'Mode'),
             'charset' => Yii::t('app', 'Charset'),

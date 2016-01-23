@@ -41,7 +41,7 @@
 			<column name="res_assigned" type="bigint" jt="-5" mandatory="y" unsigned="y" >
 				<defo>0</defo>
 			</column>
-			<column name="ts_assign" type="int" jt="4" unsigned="y" />
+			<column name="ts_last_connect" type="int" jt="4" unsigned="y" />
 			<column name="status" type="tinyint" length="1" jt="-6" >
 				<defo>0</defo>
 				<comment><![CDATA[0: Not assigned all keys; 1: Pending (All keys are assigned); 2: Finished;]]></comment>
@@ -274,7 +274,7 @@
 		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="75" y="150" />
 		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="255" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="315" y="135" />
-		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="330" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="210" />
+		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="330" />
 	</layout>
 </project>

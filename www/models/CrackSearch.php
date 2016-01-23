@@ -31,7 +31,7 @@ class CrackSearch extends Crack
                     'key_error',
                     'res_assigned',
                     'status',
-                    'ts_assign'
+                    'ts_last_connect'
                 ],
                 'integer'
             ],
@@ -119,7 +119,7 @@ class CrackSearch extends Crack
             'key_finished' => $this->key_finished,
             'key_error' => $this->key_error,
             'res_assigned' => $this->res_assigned,
-            'ts_assign' => $this->ts_assign,
+            'ts_last_connect' => $this->ts_last_connect,
             'status' => $this->status
         ]);
         
