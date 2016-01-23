@@ -26,6 +26,18 @@ else
 ?>
     </title>
     <?php $this->head()?>
+    <style type="text/css">
+        .navbar-brand {
+            padding-bottom: 10px;
+            padding-top: 10px;
+            text-align: center;
+        }
+        .brand-version {
+            display: block;
+            font-size: 14px;
+            line-height: 15px;
+        }
+    </style>
 </head>
 <body>
 <?php $this->beginBody()?>
@@ -33,8 +45,8 @@ else
 <div class="wrap">
 <?php
 NavBar::begin([
-    // 'brandLabel' => 'Distributed Brute-Force',
-    // 'brandUrl' => 'http://www.d-bf.ir',
+    'brandLabel' => 'Distributed Brute-Force<span class="brand-version">ver: alpha</span>',
+    'brandUrl' => null,
     'options' => [
         'class' => 'navbar-inverse navbar-fixed-top'
     ]
