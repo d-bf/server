@@ -51,8 +51,8 @@ echo DetailView::widget([
             'value' => $model->getElapsed()
         ],
         'algoName',
-        'target',
-        'result',
+        'target:ntext',
+        'result:ntext',
         'genName',
         [
             'attribute' => 'len_min',

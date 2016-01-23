@@ -28,7 +28,7 @@ echo GridView::widget([
         'description',
         // 'gen_id',
         'algoName',
-        'result',
+        'result:ntext',
         [
             'attribute' => 'status',
             'filter' => $searchModel->getStatusMap(),
@@ -43,7 +43,7 @@ echo GridView::widget([
         // 'charset_3',
         // 'charset_4',
         // 'mask',
-        // 'target',
+        // 'target:ntext',
         'key_total',
         'key_assigned',
         // 'key_finished',
