@@ -72,17 +72,25 @@ class TaskController extends Controller
                 }
                 
                 if (($status === 0) && ! empty($taskInfo['result'])) { // Result exists and is valid
+                    $newResult = explode("\n", $taskInfo['result']);
+                    
                     $transaction = \Yii::$app->db->beginTransaction();
                     
-                    $lastResult = \Yii::$app->db->createCommand("SELECT result FROM {{crack}} WHERE id = :id", [
+                    $crack = \Yii::$app->db->createCommand("SELECT result, target FROM {{crack}} WHERE id = :id", [
                         ':id' => $taskInfo['crack_id']
-                    ])->queryScalar();
+                    ])->queryOne(\PDO::FETCH_ASSOC);
                     
-                    // TODO: Validate new results and remove duplicates
-                    $result = $lastResult . $taskInfo['result'];
+                    // Remove duplicate results
+                    $crackResult = explode("\n", $crack['result']);
+                    $result = array_unique(array_merge($crackResult, $newResult));
                     
-                    \Yii::$app->db->createCommand("UPDATE {{crack}} SET result = :result WHERE id = :id", [
-                        ':result' => $result,
+                    // Check if crack is finished
+                    $setStatus = '';
+                    if (count(explode("\n", $crack['target'])) == count($result))
+                        $setStatus = ', status = 2'; // Crack is finished
+                    
+                    \Yii::$app->db->createCommand("UPDATE {{crack}} SET result = :result $setStatus WHERE id = :id", [
+                        ':result' => implode("\n", $result),
                         ':id' => $taskInfo['crack_id']
                     ])->execute();
                     
