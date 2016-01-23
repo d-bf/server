@@ -115,7 +115,7 @@ class TaskController extends Controller
         $crack = \Yii::$app->db->createCommand("SELECT c.id AS crack_id, c.status AS status, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, a.$rateSelector AS algo_rate FROM {{%crack}} c JOIN {{%crack_plat}} cp ON (cp.plat_name = :platformName AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_assign < :timestamp))) JOIN {{%algorithm}} a ON a.id = c.algo_id ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
             ':platformName' => $info['platform'],
             ':timestamp' => gmdate('U') - 540, /* 9 min ago */
-		])->queryOne();
+		])->queryOne(\PDO::FETCH_ASSOC);
         
         // There is no task
         if (! $crack)
@@ -156,7 +156,7 @@ class TaskController extends Controller
             $task = \Yii::$app->db->createCommand("SELECT start, offset FROM {{%task}} WHERE crack_id = :crackId AND offset <= :assign ORDER BY offset DESC", [
                 ':crackId' => $crack['crack_id'],
                 ':assign' => $assign
-            ])->queryOne();
+            ])->queryOne(\PDO::FETCH_ASSOC);
             
             if ($task) {
                 $taskStart = $task['start'];

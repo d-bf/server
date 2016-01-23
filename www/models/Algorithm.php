@@ -14,8 +14,6 @@ use Yii;
  * @property Crack[] $cracks
  * @property CrackerAlgo[] $crackerAlgos
  * @property Cracker[] $crackers
- * @property PlatAlgoCracker[] $platAlgoCrackers
- * @property Platform[] $plats
  */
 class Algorithm extends \yii\db\ActiveRecord
 {
@@ -113,30 +111,6 @@ class Algorithm extends \yii\db\ActiveRecord
         return $this->hasMany(Cracker::className(), [
             'id' => 'cracker_id'
         ])->viaTable('{{%cracker_algo}}', [
-            'algo_id' => 'id'
-        ]);
-    }
-
-    /**
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatAlgoCrackers()
-    {
-        return $this->hasMany(PlatAlgoCracker::className(), [
-            'algo_id' => 'id'
-        ]);
-    }
-
-    /**
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlats()
-    {
-        return $this->hasMany(Platform::className(), [
-            'id' => 'plat_id'
-        ])->viaTable('{{%plat_algo_cracker}}', [
             'algo_id' => 'id'
         ]);
     }

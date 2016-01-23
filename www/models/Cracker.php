@@ -15,7 +15,6 @@ use Yii;
  * @property Generator[] $gens
  * @property CrackerPlat[] $crackerPlats
  * @property Platform[] $plats
- * @property PlatAlgoCracker[] $platAlgoCrackers
  */
 class Cracker extends \yii\db\ActiveRecord
 {
@@ -141,17 +140,6 @@ class Cracker extends \yii\db\ActiveRecord
         return $this->hasMany(Platform::className(), [
             'id' => 'plat_id'
         ])->viaTable('{{%cracker_plat}}', [
-            'cracker_id' => 'id'
-        ]);
-    }
-
-    /**
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatAlgoCrackers()
-    {
-        return $this->hasMany(PlatAlgoCracker::className(), [
             'cracker_id' => 'id'
         ]);
     }

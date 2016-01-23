@@ -16,8 +16,6 @@ use Yii;
  * @property GenPlat[] $genPlats
  * @property GenPlat[] $genPlats0
  * @property Generator[] $gens
- * @property PlatAlgoCracker[] $platAlgoCrackers
- * @property Algorithm[] $algos
  */
 class Platform extends \yii\db\ActiveRecord
 {
@@ -155,30 +153,6 @@ class Platform extends \yii\db\ActiveRecord
         return $this->hasMany(Generator::className(), [
             'id' => 'gen_id'
         ])->viaTable('{{%gen_plat}}', [
-            'plat_id' => 'id'
-        ]);
-    }
-
-    /**
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatAlgoCrackers()
-    {
-        return $this->hasMany(PlatAlgoCracker::className(), [
-            'plat_id' => 'id'
-        ]);
-    }
-
-    /**
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAlgos()
-    {
-        return $this->hasMany(Algorithm::className(), [
-            'id' => 'algo_id'
-        ])->viaTable('{{%plat_algo_cracker}}', [
             'plat_id' => 'id'
         ]);
     }

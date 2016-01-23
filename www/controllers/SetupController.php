@@ -20,7 +20,6 @@ class SetupController extends Controller
         $this->initTable_cracker_gen();
         $this->initTable_algorithm();
         $this->initTable_cracker_algo();
-        $this->initTable_plat_algo_cracker();
     }
 
     private function initStartMsg($function)
@@ -377,18 +376,10 @@ class SetupController extends Controller
     {
         $this->initStartMsg(__FUNCTION__);
         
-        $config_general = [
-            'args' => '-i LEN_MIN:LEN_MAX -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 MASK',
-            'args_opt' => [
-                ['CHAR1' => '-1 CHAR1'],
-                ['CHAR2' => '-2 CHAR2'],
-                ['CHAR3' => '-3 CHAR3'],
-                ['CHAR4' => '-4 CHAR4']
-            ]
-        ];
+        $config_general = 'GENERATOR -i LEN_MIN:LEN_MAX -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 MASK';
         
         $data = [
-            [0, 'general',  null],
+            [0, 'general',  $config_general],
 //             [1, 'markov',   null],
         ];
         
@@ -483,11 +474,8 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         $config_hashcat = [
-            'stdin' => [],
-            'infile' => [
-                'args' => '-a 0 -m ALGO_ID -a 3 -o OUT_FILE --outfile-format=3 --potfile-disable HASH_FILE IN_FILE',
-                'args_opt' => []
-            ]
+            'stdin' => '',
+            'infile' => 'CRACKER -a 0 -m ALGO_ID -a 3 -o OUT_FILE --outfile-format=3 --potfile-disable HASH_FILE IN_FILE'
         ];
         
         $data = [
@@ -570,19 +558,11 @@ class SetupController extends Controller
     {
         $this->initStartMsg(__FUNCTION__);
         
-        $config_hashcat_general = [
-            'args' => '-m ALGO_ID -a 3 -o OUT_FILE --outfile-format=3 --potfile-disable -s START -l OFFSET --increment --increment-min=LEN_MIN --increment-max=LEN_MAX CHAR1 CHAR2 CHAR3 CHAR4 HASH_FILE MASK',
-            'args_opt' => [
-                ['CHAR1' => '-1 CHAR1'],
-                ['CHAR2' => '-2 CHAR2'],
-                ['CHAR3' => '-3 CHAR3'],
-                ['CHAR4' => '-4 CHAR4']
-            ]
-        ];
+        $config_hashcat_general = 'CRACKER -m ALGO_ID -a 3 -o OUT_FILE --outfile-format=3 --potfile-disable -s START -l OFFSET --increment --increment-min=LEN_MIN --increment-max=LEN_MAX CHAR1 CHAR2 CHAR3 CHAR4 HASH_FILE MASK';
         
         $data = [
             /* hashcat */
-            [0, 0,  serialize($config_hashcat_general)],
+            [0, 0,  $config_hashcat_general],
 //             [0, 1,  null],
             
             /* oclHashcat (AMD) */
@@ -692,60 +672,6 @@ class SetupController extends Controller
         $values = substr($values, 1);
         
         \Yii::$app->db->createCommand("INSERT IGNORE INTO {{%cracker_algo}} (cracker_id, algo_id) VALUES $values", $params)->execute();
-        
-        $this->initEndMsg(__FUNCTION__);
-    }
-
-    private function initTable_plat_algo_cracker()
-    {
-        $this->initStartMsg(__FUNCTION__);
-        
-        $data = [];
-        
-        foreach ($this->algoCpu as $algo) {
-            // CPU
-            $data[] = [$algo[0],    0,      0]; // hashcat
-            $data[] = [$algo[0],    1,      0]; // hashcat
-            $data[] = [$algo[0],    100,    0]; // hashcat
-            $data[] = [$algo[0],    101,    0]; // hashcat
-            $data[] = [$algo[0],    200,    0]; // hashcat
-            $data[] = [$algo[0],    201,    0]; // hashcat
-        }
-        
-        foreach ($this->algoGpu as $algo) {
-            // GPU (AMD)
-            $data[] = [$algo[0],    20,     1]; // oclHashcat
-            $data[] = [$algo[0],    21,     1]; // oclHashcat
-            $data[] = [$algo[0],    120,    1]; // oclHashcat
-            $data[] = [$algo[0],    121,    1]; // oclHashcat
-            $data[] = [$algo[0],    210,    1]; // oclHashcat
-            $data[] = [$algo[0],    211,    1]; // oclHashcat
-            
-            // GPU (NVidia)
-            $data[] = [$algo[0],    22,     2]; // cudaHashcat
-            $data[] = [$algo[0],    23,     2]; // cudaHashcat
-            $data[] = [$algo[0],    122,    2]; // cudaHashcat
-            $data[] = [$algo[0],    123,    2]; // cudaHashcat
-            $data[] = [$algo[0],    212,    2]; // cudaHashcat
-            $data[] = [$algo[0],    213,    2]; // cudaHashcat
-        }
-        
-        $fields = 3;
-        $values = '';
-        $params = [];
-        $i = 0;
-        foreach ($data as $dataItem) {
-            $vals = '';
-            for ($f = 0; $f < $fields; $f ++) {
-                $vals .= ",:f$f$i";
-                $params[":f$f$i"] = $dataItem[$f];
-            }
-            $values .= ',(' . substr($vals, 1) . ')';
-            $i ++;
-        }
-        $values = substr($values, 1);
-        
-        \Yii::$app->db->createCommand("INSERT INTO {{%plat_algo_cracker}} (algo_id, plat_id, cracker_id) VALUES $values ON DUPLICATE KEY UPDATE cracker_id = VALUES(cracker_id)", $params)->execute();
         
         $this->initEndMsg(__FUNCTION__);
     }
