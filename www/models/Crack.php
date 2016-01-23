@@ -211,6 +211,10 @@ class Crack extends \yii\db\ActiveRecord
                 ],
                 'string',
                 'max' => 10240
+            ],
+            [
+                'mode',
+                'safe'
             ]
         ];
     }
