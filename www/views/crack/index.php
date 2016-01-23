@@ -48,6 +48,7 @@ echo GridView::widget([
         // 'key_finished',
         // 'key_error',
         // 'res_assigned',
+        // 'ts_create',
         // 'ts_last_connect',
         'result',
         

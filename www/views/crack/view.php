@@ -54,6 +54,13 @@ echo DetailView::widget([
             'value' => $model->getStatusMap($model->status)
         ],
         [
+            'attribute' => 'ts_create',
+            'format' => [
+                'datetime',
+                'php:Y-m-d H:i:s'
+            ]
+        ],
+        [
             'attribute' => 'ts_last_connect',
             'format' => [
                 'datetime',

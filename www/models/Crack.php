@@ -24,8 +24,9 @@ use Yii;
  * @property string $key_finished
  * @property string $key_error
  * @property string $res_assigned
- * @property integer $ts_last_connect
  * @property integer $status
+ * @property integer $ts_create
+ * @property integer $ts_last_connect
  *
  * @property Generator $gen
  * @property Algorithm $algo
@@ -177,6 +178,7 @@ class Crack extends \yii\db\ActiveRecord
                     'key_error',
                     'res_assigned',
                     'status',
+                    'ts_create',
                     'ts_last_connect'
                 ],
                 'integer'
@@ -245,8 +247,9 @@ class Crack extends \yii\db\ActiveRecord
             'key_finished' => Yii::t('app', 'Finished'),
             'key_error' => Yii::t('app', 'Error'),
             'res_assigned' => Yii::t('app', 'Res Assigned'),
-            'ts_last_connect' => Yii::t('app', 'Last Connect'),
             'status' => Yii::t('app', 'Status'),
+            'ts_last_connect' => Yii::t('app', 'Last Connect'),
+            'ts_create' => Yii::t('app', 'Created At'),
             'mode' => Yii::t('app', 'Mode'),
             'charset' => Yii::t('app', 'Charset'),
             'maskChar' => Yii::t('app', 'Mask Char'),
@@ -347,6 +350,8 @@ class Crack extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
+            $this->ts_create = gmdate('U');
+            
             /* Prepare attributes according to crack mode */
             if (empty($this->mode)) { // Simple
                 $this->charset_1 = count_chars($this->charset, 3); // Get unique chars only

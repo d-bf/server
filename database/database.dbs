@@ -41,11 +41,12 @@
 			<column name="res_assigned" type="bigint" jt="-5" mandatory="y" unsigned="y" >
 				<defo>0</defo>
 			</column>
-			<column name="ts_last_connect" type="int" jt="4" unsigned="y" />
 			<column name="status" type="tinyint" length="1" jt="-6" >
 				<defo>0</defo>
 				<comment><![CDATA[0: Not assigned all keys; 1: Pending (All keys are assigned); 2: Finished;]]></comment>
 			</column>
+			<column name="ts_create" type="int" jt="4" unsigned="y" />
+			<column name="ts_last_connect" type="int" jt="4" unsigned="y" />
 			<index name="pk_crack" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>

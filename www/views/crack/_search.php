@@ -54,6 +54,8 @@ $form = ActiveForm::begin([
 
     <?php // echo $form->field($model, 'status') ?>
 
+	<?php // echo $form->field($model, 'ts_create') ?>
+
     <?php // echo $form->field($model, 'ts_last_connect') ?>
 
     <div class="form-group">

@@ -31,6 +31,7 @@ class CrackSearch extends Crack
                     'key_error',
                     'res_assigned',
                     'status',
+                    'ts_create',
                     'ts_last_connect'
                 ],
                 'integer'
@@ -79,7 +80,12 @@ class CrackSearch extends Crack
         ], false);
         
         $dataProvider = new ActiveDataProvider([
-            'query' => $query
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'ts_last_connect' => SORT_DESC
+                ]
+            ]
         ]);
         
         $dataProvider->sort->attributes['genName'] = [
@@ -119,8 +125,9 @@ class CrackSearch extends Crack
             'key_finished' => $this->key_finished,
             'key_error' => $this->key_error,
             'res_assigned' => $this->res_assigned,
-            'ts_last_connect' => $this->ts_last_connect,
-            'status' => $this->status
+            'status' => $this->status,
+            'ts_create' => $this->ts_create,
+            'ts_last_connect' => $this->ts_last_connect
         ]);
         
         $query->andFilterWhere([
