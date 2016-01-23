@@ -46,15 +46,15 @@ class CrackController extends Controller
                         'CHAR4',
                         'MASK'
                     ], [
-                        empty($crack['algo_id']) ? '' : $crack['algo_id'],
-                        empty($crack['algo_name']) ? '' : $crack['algo_name'],
-                        empty($crack['len_min']) ? '' : $crack['len_min'],
-                        empty($crack['len_max']) ? '' : $crack['len_max'],
-                        empty($crack['charset1']) ? '' : $crack['charset1'],
-                        empty($crack['charset2']) ? '' : $crack['charset2'],
-                        empty($crack['charset3']) ? '' : $crack['charset3'],
-                        empty($crack['charset4']) ? '' : $crack['charset4'],
-                        empty($crack['mask']) ? '' : $crack['mask']
+                        isset($crack['algo_id']) ? $crack['algo_id'] : '',
+                        isset($crack['algo_name']) ? $crack['algo_name'] : '',
+                        isset($crack['len_min']) ? $crack['len_min'] : '',
+                        isset($crack['len_max']) ? $crack['len_max'] : '',
+                        empty($crack['charset1']) ? '' : '-1 ' . $crack['charset1'],
+                        empty($crack['charset2']) ? '' : '-2 ' . $crack['charset2'],
+                        empty($crack['charset3']) ? '' : '-3 ' . $crack['charset3'],
+                        empty($crack['charset4']) ? '' : '-4 ' . $crack['charset4'],
+                        isset($crack['mask']) ? $crack['mask'] : ''
                     ], $cracker['config']);
                     $response['target'] = $crack['target'];
                 } else {
@@ -80,13 +80,13 @@ class CrackController extends Controller
                             'CHAR4',
                             'MASK'
                         ], [
-                            empty($crack['len_min']) ? '' : $crack['len_min'],
-                            empty($crack['len_max']) ? '' : $crack['len_max'],
-                            empty($crack['charset1']) ? '' : $crack['charset1'],
-                            empty($crack['charset2']) ? '' : $crack['charset2'],
-                            empty($crack['charset3']) ? '' : $crack['charset3'],
-                            empty($crack['charset4']) ? '' : $crack['charset4'],
-                            empty($crack['mask']) ? '' : $crack['mask']
+                            isset($crack['len_min']) ? '' : $crack['len_min'],
+                            isset($crack['len_max']) ? '' : $crack['len_max'],
+                            empty($crack['charset1']) ? '' : '-1 ' . $crack['charset1'],
+                            empty($crack['charset2']) ? '' : '-2 ' . $crack['charset2'],
+                            empty($crack['charset3']) ? '' : '-3 ' . $crack['charset3'],
+                            empty($crack['charset4']) ? '' : '-4 ' . $crack['charset4'],
+                            isset($crack['mask']) ? '' : $crack['mask']
                         ], $crackerGenerator['g_config']);
                         
                         $crackerConfig = unserialize($crackerGenerator['c_config']);
@@ -96,8 +96,8 @@ class CrackController extends Controller
                                 'ALGO_ID',
                                 'ALGO_NAME'
                             ], [
-                                empty($crack['algo_id']) ? '' : $crack['algo_id'],
-                                empty($crack['algo_name']) ? '' : $crack['algo_name']
+                                isset($crack['algo_id']) ? $crack['algo_id'] : '',
+                                isset($crack['algo_name']) ? $crack['algo_name'] : ''
                             ], $crackerConfig['infile']);
                             
                             $response['cmd_generator'] = $cmdGenerator . ' > IN_FILE';
@@ -107,8 +107,8 @@ class CrackController extends Controller
                                 'ALGO_ID',
                                 'ALGO_NAME'
                             ], [
-                                empty($crack['algo_id']) ? '' : $crack['algo_id'],
-                                empty($crack['algo_name']) ? '' : $crack['algo_name']
+                                isset($crack['algo_id']) ? $crack['algo_id'] : '',
+                                isset($crack['algo_name']) ? $crack['algo_name'] : ''
                             ], $crackerConfig['stdin']);
                             
                             $response['cmd_generator'] = '';
