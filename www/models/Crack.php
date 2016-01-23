@@ -317,9 +317,9 @@ class Crack extends \yii\db\ActiveRecord
     public function getStatusMap($status = false)
     {
         $statusMap = [
-            '0' => 'Not assigned all',
-            '1' => 'Assigned all',
-            '2' => 'Finished'
+            '0' => \Yii::t('app', 'Assigning...'),
+            '1' => \Yii::t('app', 'Assigned All'),
+            '2' => \Yii::t('app', 'Finished')
         ];
         
         if ($status === false) {
@@ -329,6 +329,106 @@ class Crack extends \yii\db\ActiveRecord
         } else {
             return \Yii::t('app', 'Unknown');
         }
+    }
+
+    public function getElapsed()
+    {
+        $ts_from = $this->ts_create;
+        $ts_to = $this->ts_last_connect;
+        $diff = $ts_to - $ts_from;
+        
+        if ($diff < 1) {
+            return '-';
+        }
+        
+        // year = 365 * 24 * 60 * 60 = 31536000 seconds
+        if ($diff >= 31536000) {
+            $y = floor($diff / 31536000);
+            $diff = $diff % 31536000;
+        } else {
+            $y = 0;
+        }
+        
+        // mount = 30 * 24 * 60 * 60 = 2592000 seconds
+        if ($diff >= 2592000) {
+            $m = floor($diff / 2592000);
+            $diff = $diff % 2592000;
+        } else {
+            $m = 0;
+        }
+        
+        // // week = 7 * 24 * 60 * 60 = 604800 seconds
+        // if ($diff >= 604800) {
+        // $w = floor($diff / 604800);
+        // $diff = $diff % 604800;
+        // } else {
+        // $w = 0;
+        // }
+        
+        // day = 24 * 60 * 60 = 86400 seconds
+        if ($diff >= 86400) {
+            $d = floor($diff / 86400);
+            $diff = $diff % 86400;
+        } else {
+            $d = 0;
+        }
+        
+        // hour = 60 * 60 = 3600 seconds
+        if ($diff >= 3600) {
+            $h = floor($diff / 3600);
+            $diff = $diff % 3600;
+        } else {
+            $h = 0;
+        }
+        
+        // minute = 60 seconds
+        if ($diff >= 60) {
+            $i = floor($diff / 60);
+            $diff = $diff % 60;
+        } else {
+            $i = 0;
+        }
+        
+        // seconds
+        if ($diff > 0) {
+            $s = $diff;
+        } else {
+            $s = 0;
+        }
+        
+        $elapsed = [];
+        
+        if ($y > 1)
+            $elapsed[] = "$y years";
+        elseif ($y > 0)
+            $elapsed[] = "1 year";
+        
+        if ($m > 1)
+            $elapsed[] = "$m mounts";
+        elseif ($m > 0)
+            $elapsed[] = "1 mount";
+        
+        if ($d > 1)
+            $elapsed[] = "$d days";
+        elseif ($d > 0)
+            $elapsed[] = "1 day";
+        
+        if ($h > 1)
+            $elapsed[] = "$h hours";
+        elseif ($h > 0)
+            $elapsed[] = "1 hour";
+        
+        if ($i > 1)
+            $elapsed[] = "$i minutes";
+        elseif ($i > 0)
+            $elapsed[] = "1 minute";
+        
+        if ($s > 1)
+            $elapsed[] = "$s seconds";
+        elseif ($s > 0)
+            $elapsed[] = "1 second";
+        
+        return implode(', ', $elapsed);
     }
 
     /**

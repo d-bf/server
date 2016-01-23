@@ -28,6 +28,7 @@ echo GridView::widget([
         'description',
         // 'gen_id',
         'algoName',
+        'result',
         [
             'attribute' => 'status',
             'filter' => $searchModel->getStatusMap(),
@@ -49,8 +50,14 @@ echo GridView::widget([
         // 'key_error',
         // 'res_assigned',
         // 'ts_create',
-        // 'ts_last_connect',
-        'result',
+        [
+            'attribute' => 'ts_last_connect',
+            'filter' => false,
+            'format' => [
+                'datetime',
+                'php:Y-m-d H:i:s'
+            ]
+        ],
         
         [
             'class' => 'yii\grid\ActionColumn',

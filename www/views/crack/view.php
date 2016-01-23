@@ -28,27 +28,6 @@ echo DetailView::widget([
     'attributes' => [
         'id',
         'description',
-        'genName',
-        'algoName',
-        [
-            'attribute' => 'len_min',
-            'label' => 'Minimum Length'
-        ],
-        [
-            'attribute' => 'len_max',
-            'label' => 'Maximum Length'
-        ],
-        'charset_1',
-        'charset_2',
-        'charset_3',
-        'charset_4',
-        'mask',
-        'target',
-        'result',
-        'key_total',
-        'key_assigned',
-        'key_finished',
-        'key_error',
         [
             'attribute' => 'status',
             'value' => $model->getStatusMap($model->status)
@@ -66,7 +45,32 @@ echo DetailView::widget([
                 'datetime',
                 'php:Y-m-d H:i:s'
             ]
-        ]
+        ],
+        [
+            'label' => 'Elapsed',
+            'value' => $model->getElapsed()
+        ],
+        'algoName',
+        'target',
+        'result',
+        'genName',
+        [
+            'attribute' => 'len_min',
+            'label' => 'Minimum Length'
+        ],
+        [
+            'attribute' => 'len_max',
+            'label' => 'Maximum Length'
+        ],
+        'charset_1',
+        'charset_2',
+        'charset_3',
+        'charset_4',
+        'mask',
+        'key_total',
+        'key_assigned',
+        'key_finished',
+        'key_error'
     ]
 ]);
 ?>
