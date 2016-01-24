@@ -47,8 +47,8 @@ echo DetailView::widget([
             ]
         ],
         [
-            'label' => 'Elapsed',
-            'value' => $model->getElapsed()
+            'label' => 'Duration',
+            'value' => $model->getDuration()
         ],
         'algoName',
         'target:ntext',

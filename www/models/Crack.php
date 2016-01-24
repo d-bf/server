@@ -331,7 +331,7 @@ class Crack extends \yii\db\ActiveRecord
         }
     }
 
-    public function getElapsed()
+    public function getDuration()
     {
         $ts_from = $this->ts_create;
         $ts_to = $this->ts_last_connect;
@@ -396,39 +396,39 @@ class Crack extends \yii\db\ActiveRecord
             $s = 0;
         }
         
-        $elapsed = [];
+        $duration = [];
         
         if ($y > 1)
-            $elapsed[] = "$y years";
+            $duration[] = "$y years";
         elseif ($y > 0)
-            $elapsed[] = "1 year";
+            $duration[] = "1 year";
         
         if ($m > 1)
-            $elapsed[] = "$m mounts";
+            $duration[] = "$m mounts";
         elseif ($m > 0)
-            $elapsed[] = "1 mount";
+            $duration[] = "1 mount";
         
         if ($d > 1)
-            $elapsed[] = "$d days";
+            $duration[] = "$d days";
         elseif ($d > 0)
-            $elapsed[] = "1 day";
+            $duration[] = "1 day";
         
         if ($h > 1)
-            $elapsed[] = "$h hours";
+            $duration[] = "$h hours";
         elseif ($h > 0)
-            $elapsed[] = "1 hour";
+            $duration[] = "1 hour";
         
         if ($i > 1)
-            $elapsed[] = "$i minutes";
+            $duration[] = "$i minutes";
         elseif ($i > 0)
-            $elapsed[] = "1 minute";
+            $duration[] = "1 minute";
         
         if ($s > 1)
-            $elapsed[] = "$s seconds";
+            $duration[] = "$s seconds";
         elseif ($s > 0)
-            $elapsed[] = "1 second";
+            $duration[] = "1 second";
         
-        return implode(', ', $elapsed);
+        return implode(', ', $duration);
     }
 
     /**
