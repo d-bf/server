@@ -80,13 +80,13 @@ class CrackController extends Controller
                             'CHAR4',
                             'MASK'
                         ], [
-                            isset($crack['len_min']) ? '' : $crack['len_min'],
-                            isset($crack['len_max']) ? '' : $crack['len_max'],
+                            isset($crack['len_min']) ? $crack['len_min'] : '',
+                            isset($crack['len_max']) ? $crack['len_max'] : '',
                             empty($crack['charset1']) ? '' : '-1 ' . $crack['charset1'],
                             empty($crack['charset2']) ? '' : '-2 ' . $crack['charset2'],
                             empty($crack['charset3']) ? '' : '-3 ' . $crack['charset3'],
                             empty($crack['charset4']) ? '' : '-4 ' . $crack['charset4'],
-                            isset($crack['mask']) ? '' : $crack['mask']
+                            isset($crack['mask']) ? $crack['mask'] : ''
                         ], $crackerGenerator['g_config']);
                         
                         $crackerConfig = unserialize($crackerGenerator['c_config']);
