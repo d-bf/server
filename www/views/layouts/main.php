@@ -120,7 +120,7 @@ NavBar::end();
 
 	<footer class="footer">
 		<div class="container">
-			<p class="pull-left">&copy; D-BF Project <?= date('Y') ?></p>
+			<p class="pull-left">&copy; <a href="https://github.com/d-bf" target="_blank">D-BF Project</a> <?= date('Y') ?></p>
 
 			<p class="pull-right"><?= Yii::powered() ?></p>
 		</div>
