@@ -76,9 +76,16 @@ class TaskController extends Controller
                     
                     $transaction = \Yii::$app->db->beginTransaction();
                     
-                    $crack = \Yii::$app->db->createCommand("SELECT result, target FROM {{crack}} WHERE id = :id", [
+                    $crack = \Yii::$app->db->createCommand("SELECT result, target, status FROM {{crack}} WHERE id = :id", [
                         ':id' => $taskInfo['crack_id']
                     ])->queryOne(\PDO::FETCH_ASSOC);
+                    
+                    // Should update ts_last_connect
+                    if ($crack['status'] < 2) { // It's not a finished crack
+                        $setTsLastConnect = ', ts_last_connect = ' . gmdate('U');
+                    } else {
+                        $setTsLastConnect = '';
+                    }
                     
                     // Remove duplicate results
                     if (! empty($crack['result'])) {
@@ -86,12 +93,14 @@ class TaskController extends Controller
                         $result = array_unique(array_merge($crackResult, $result));
                     }
                     
-                    // Check if crack is finished
-                    $setStatus = '';
-                    if (count(explode("\n", $crack['target'])) <= count($result))
+                    // Check if crack is finished now
+                    if (count(explode("\n", $crack['target'])) <= count($result)) {
                         $setStatus = ', status = 2'; // Crack is finished
+                    } else {
+                        $setStatus = '';
+                    }
                     
-                    \Yii::$app->db->createCommand("UPDATE {{crack}} SET result = :result $setStatus WHERE id = :id", [
+                    \Yii::$app->db->createCommand("UPDATE {{crack}} SET result = :result $setTsLastConnect $setStatus WHERE id = :id", [
                         ':result' => implode("\n", $result),
                         ':id' => $taskInfo['crack_id']
                     ])->execute();
