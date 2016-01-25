@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
-    'emptyText' => 'No cracks found.',
+    'emptyText' => 'No crack found.',
     'columns' => [
         'id',
         'description',
