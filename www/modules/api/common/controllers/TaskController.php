@@ -51,7 +51,7 @@ class TaskController extends Controller
     {
         $reqData = \Yii::$app->request->post();
         foreach ($reqData as $taskInfo) { // taskInfo: {"crack_id":"","start":"","offset":"","result":"","status":""}
-            $task = \Yii::$app->db->createCommand("SELECT crack_id FROM {{task}} WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
+            $task = \Yii::$app->db->createCommand("SELECT crack_id FROM {{%task}} WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
                 ':crackId' => $taskInfo['crack_id'],
                 ':start' => $taskInfo['start'],
                 ':offset' => $taskInfo['offset']
@@ -76,7 +76,7 @@ class TaskController extends Controller
                     
                     $transaction = \Yii::$app->db->beginTransaction();
                     
-                    $crack = \Yii::$app->db->createCommand("SELECT result, target, status FROM {{crack}} WHERE id = :id", [
+                    $crack = \Yii::$app->db->createCommand("SELECT result, target, status FROM {{%crack}} WHERE id = :id", [
                         ':id' => $taskInfo['crack_id']
                     ])->queryOne(\PDO::FETCH_ASSOC);
                     
@@ -100,7 +100,7 @@ class TaskController extends Controller
                         $setStatus = '';
                     }
                     
-                    \Yii::$app->db->createCommand("UPDATE {{crack}} SET result = :result $setTsLastConnect $setStatus WHERE id = :id", [
+                    \Yii::$app->db->createCommand("UPDATE {{%crack}} SET result = :result $setTsLastConnect $setStatus WHERE id = :id", [
                         ':result' => implode("\n", $result),
                         ':id' => $taskInfo['crack_id']
                     ])->execute();
@@ -109,7 +109,7 @@ class TaskController extends Controller
                 }
                 
                 // Update task status
-                \Yii::$app->db->createCommand("UPDATE {{task}} SET status = :status WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
+                \Yii::$app->db->createCommand("UPDATE {{%task}} SET status = :status WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
                     ':status' => $status,
                     ':crackId' => $taskInfo['crack_id'],
                     ':start' => $taskInfo['start'],
