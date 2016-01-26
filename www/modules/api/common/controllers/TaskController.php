@@ -109,8 +109,9 @@ class TaskController extends Controller
                 }
                 
                 // Update task status
-                \Yii::$app->db->createCommand("UPDATE {{%task}} SET status = :status WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
+                \Yii::$app->db->createCommand("UPDATE {{%task}} SET status = :status, ts_save = :tsSave WHERE crack_id = :crackId AND start = :start AND offset = :offset", [
                     ':status' => $status,
+                    ':tsSave' => gmdate('U'),
                     ':crackId' => $taskInfo['crack_id'],
                     ':start' => $taskInfo['start'],
                     ':offset' => $taskInfo['offset']
@@ -131,10 +132,12 @@ class TaskController extends Controller
         else
             $rateSelector = 'rate_cpu';
         
-        $crack = \Yii::$app->db->createCommand("SELECT c.id AS crack_id, c.status AS status, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, a.$rateSelector AS algo_rate FROM {{%crack}} c JOIN {{%crack_plat}} cp ON (cp.plat_name = :platformName AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_last_connect < :timestamp))) JOIN {{%algorithm}} a ON a.id = c.algo_id ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
+        $timeout = gmdate('U') - 540; /* 9 min ago */
+        
+        $crack = \Yii::$app->db->createCommand("SELECT c.id AS crack_id, c.status AS status, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, a.$rateSelector AS algo_rate FROM {{%crack}} c JOIN {{%crack_plat}} cp ON (cp.plat_name = :platformName AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_last_connect < :timeout))) JOIN {{%algorithm}} a ON a.id = c.algo_id ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
             ':platformName' => $info['platform'],
-            ':timestamp' => gmdate('U') - 540, /* 9 min ago */
-		])->queryOne(\PDO::FETCH_ASSOC);
+            ':timeout' => $timeout
+        ])->queryOne(\PDO::FETCH_ASSOC);
         
         // There is no task
         if (! $crack)
@@ -164,25 +167,31 @@ class TaskController extends Controller
         if ($crack['status'] == 0) {
             $taskStart = $crack['keyAssigned'];
             
-            \Yii::$app->db->createCommand("INSERT INTO {{%task}} (crack_id, start, offset, status) VALUES (:crackId, :start, :offset, :status)", [
+            \Yii::$app->db->createCommand("INSERT INTO {{%task}} (crack_id, start, offset, status, ts_save) VALUES (:crackId, :start, :offset, :status, :tsSave)", [
                 ':crackId' => $crack['crack_id'],
                 ':start' => $taskStart,
                 ':offset' => $assign,
-                ':status' => null
+                ':status' => null,
+                ':tsSave' => gmdate('U')
             ])->execute();
         } else {
             // TODO: Handle situations where task is bigger or is too small
-            $task = \Yii::$app->db->createCommand("SELECT start, offset FROM {{%task}} WHERE crack_id = :crackId AND offset <= :assign ORDER BY offset DESC", [
+            $task = \Yii::$app->db->createCommand("SELECT start, offset FROM {{%task}} WHERE crack_id = :crackId AND (status IS NULL OR status <> 0) AND ts_save < :timeout AND offset <= :assign ORDER BY retry ASC, ts_save ASC, offset DESC", [
                 ':crackId' => $crack['crack_id'],
+                ':timeout' => $timeout,
                 ':assign' => $assign
             ])->queryOne(\PDO::FETCH_ASSOC);
             
             if ($task) {
                 $taskStart = $task['start'];
                 $assign = $task['offset'];
+                
+                // TODO: Update task
             } else {
                 return false;
             }
+            
+            $updateRetry = ', retry = retry + 1';
         }
         
         if ($assign < $power) // Less resource is assigned to this crack

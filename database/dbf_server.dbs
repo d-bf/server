@@ -254,6 +254,12 @@
 			<column name="status" type="tinyint" length="1" jt="-6" >
 				<comment><![CDATA[<0: not executed successfully; 0: executed successfully; >0: executed with error;]]></comment>
 			</column>
+			<column name="retry" type="tinyint" jt="-6" unsigned="y" >
+				<defo>0</defo>
+			</column>
+			<column name="ts_save" type="int" jt="4" unsigned="y" >
+				<defo>0</defo>
+			</column>
 			<index name="idx_task" unique="NORMAL" >
 				<column name="crack_id" />
 			</index>
@@ -268,7 +274,6 @@
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="330" />
 		<entity schema="dbf_server" name="crack_plat" color="b7c8e3" x="165" y="435" />
 		<entity schema="dbf_server" name="info" color="b7c8e3" x="690" y="420" />
-		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="210" />
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="45" />
 		<entity schema="dbf_server" name="cracker_plat" color="b7c8e3" x="90" y="45" />
 		<entity schema="dbf_server" name="cracker_algo" color="b2cdf7" x="705" y="45" />
@@ -277,5 +282,6 @@
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="315" y="135" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="210" />
 		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="330" />
+		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="195" />
 	</layout>
 </project>

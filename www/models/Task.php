@@ -10,6 +10,8 @@ use Yii;
  * @property string $start
  * @property string $offset
  * @property integer $status
+ * @property integer $ts_save
+ * @property integer $retry
  *
  * @property Crack $crack
  */
@@ -42,7 +44,9 @@ class Task extends \yii\db\ActiveRecord
                     'crack_id',
                     'start',
                     'offset',
-                    'status'
+                    'status',
+                    'ts_save',
+                    'retry'
                 ],
                 'integer'
             ]
@@ -58,7 +62,9 @@ class Task extends \yii\db\ActiveRecord
             'crack_id' => Yii::t('app', 'Crack ID'),
             'start' => Yii::t('app', 'Start'),
             'offset' => Yii::t('app', 'Offset'),
-            'status' => Yii::t('app', 'Status')
+            'status' => Yii::t('app', 'Status'),
+            'ts_save' => Yii::t('app', 'Last Save'),
+            'retry' => Yii::t('app', 'Retry')
         ];
     }
 
