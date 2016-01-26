@@ -176,7 +176,7 @@ class TaskController extends Controller
             ])->execute();
         } else {
             // TODO: Handle situations where task is bigger or is too small
-            $task = \Yii::$app->db->createCommand("SELECT start, offset FROM {{%task}} WHERE crack_id = :crackId AND (status IS NULL OR status <> 0) AND ts_save < :timeout AND offset <= :assign ORDER BY retry ASC, ts_save ASC, offset DESC", [
+            $task = \Yii::$app->db->createCommand("SELECT start, offset, ts_save FROM {{%task}} WHERE crack_id = :crackId AND (status IS NULL OR status <> 0) AND ts_save < :timeout AND offset <= :assign ORDER BY retry ASC, ts_save ASC", [
                 ':crackId' => $crack['crack_id'],
                 ':timeout' => $timeout,
                 ':assign' => $assign
@@ -186,7 +186,13 @@ class TaskController extends Controller
                 $taskStart = $task['start'];
                 $assign = $task['offset'];
                 
-                // TODO: Update task
+                \Yii::$app->db->createCommand("UPDATE {{%task}} SET retry = retry + 1, ts_save =:updateTsSave WHERE crack_id = :crackId AND start = :start AND offset = :offset AND ts_save = :tsSave", [
+                    ':updateTsSave' => gmdate('U'),
+                    ':crackId' => $crack['crack_id'],
+                    ':start' => $task['start'],
+                    ':offset' => $task['offset'],
+                    ':tsSave' => $task['ts_save'],
+                ])->execute();
             } else {
                 return false;
             }
