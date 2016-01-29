@@ -525,7 +525,7 @@ class SetupController extends Controller
             [1, 210,    null],
             [1, 211,    null],
             
-            /* cudaHashcat (NVidia) */
+            /* cudaHashcat (Nvidia) */
             [2, 22,     null],
             [2, 23,     null],
             [2, 122,    null],
@@ -569,7 +569,7 @@ class SetupController extends Controller
             [1, 0,  null],
 //             [1, 1,  null],
                     
-            /* cudaHashcat (NVidia) */
+            /* cudaHashcat (Nvidia) */
             [2, 0,  null],
 //             [2, 1,  null],
         ];
