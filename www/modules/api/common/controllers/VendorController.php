@@ -3,7 +3,6 @@ namespace app\modules\api\common\controllers;
 
 use app\modules\api\common\controllers;
 use app\modules\api\common\components\ApiComp;
-use app\components\AppComp;
 
 class VendorController extends Controller
 {
@@ -26,7 +25,7 @@ class VendorController extends Controller
         if (isset($reqData['vendor_type']) && isset($reqData['name']) && isset($reqData['platform_id'])) {
             $filePath = ApiComp::getVendorPath() . strtolower($reqData['vendor_type']) . DIRECTORY_SEPARATOR . strtolower($reqData['name']) . DIRECTORY_SEPARATOR . strtolower($reqData['platform_id']);
             if (file_exists($filePath)) {
-                return AppComp::sendFile(md5_file($filePath), $filePath);
+                return \Yii::$app->getResponse()->sendFile($filePath, md5_file($filePath));
             }
         }
         
