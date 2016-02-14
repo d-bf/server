@@ -376,10 +376,23 @@ class SetupController extends Controller
     {
         $this->initStartMsg(__FUNCTION__);
         
-        $config_general = 'GENERATOR -i LEN_MIN:LEN_MAX -s START -l OFFSET CHAR1 CHAR2 CHAR3 CHAR4 MASK';
+        $config_general = [
+//             'GENERATOR',
+            '-i',
+            'LEN_MIN:LEN_MAX',
+            '-s',
+            'START',
+            '-l',
+            'OFFSET',
+            'CHAR1',
+            'CHAR2',
+            'CHAR3',
+            'CHAR4',
+            'MASK'
+        ];
         
         $data = [
-            [0, 'general',  $config_general],
+            [0, 'general', json_encode($config_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
 //             [1, 'markov',   null],
         ];
         
@@ -474,12 +487,26 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         $config_hashcat = [
-            'stdin' => '',
-            'infile' => 'CRACKER -a 0 -m ALGO_ID -a 3 -o OUT_FILE --outfile-format=3 --potfile-disable HASH_FILE IN_FILE'
+            'stdin' => [],
+            'infile' => [
+//                 'CRACKER',
+                '-a',
+                '0',
+                '-m',
+                'ALGO_ID',
+                '-a',
+                '3',
+                '-o',
+                'OUT_FILE',
+                '--outfile-format=3',
+                '--potfile-disable',
+                'HASH_FILE',
+                'IN_FILE'
+            ]
         ];
         
         $data = [
-            [0, 'hashcat',      1,  serialize($config_hashcat)],
+            [0, 'hashcat',      1,  json_encode($config_hashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
             [1, 'oclHashcat',   3,  null],
             [2, 'cudaHashcat',  3,  null]
         ];
@@ -558,11 +585,34 @@ class SetupController extends Controller
     {
         $this->initStartMsg(__FUNCTION__);
         
-        $config_hashcat_general = 'CRACKER -m ALGO_ID -a 3 -o OUT_FILE --outfile-format=3 --potfile-disable -s START -l OFFSET --increment --increment-min=LEN_MIN --increment-max=LEN_MAX CHAR1 CHAR2 CHAR3 CHAR4 HASH_FILE MASK';
+        $config_hashcat_general = [
+//             'CRACKER',
+            '-m',
+            'ALGO_ID',
+            '-a',
+            '3',
+            '-o',
+            'OUT_FILE',
+            '--outfile-format=3',
+            '--potfile-disable',
+            '-s',
+            'START',
+            '-l',
+            'OFFSET',
+            '--increment',
+            '--increment-min=LEN_MIN',
+            '--increment-max=LEN_MAX',
+            'CHAR1',
+            'CHAR2',
+            'CHAR3',
+            'CHAR4',
+            'HASH_FILE',
+            'MASK'
+        ];
         
         $data = [
             /* hashcat */
-            [0, 0,  $config_hashcat_general],
+            [0, 0,  json_encode($config_hashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
 //             [0, 1,  null],
             
             /* oclHashcat (AMD) */

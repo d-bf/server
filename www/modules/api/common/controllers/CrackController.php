@@ -40,20 +40,20 @@ class CrackController extends Controller
                         'ALGO_NAME',
                         'LEN_MIN',
                         'LEN_MAX',
-                        'CHAR1',
-                        'CHAR2',
-                        'CHAR3',
-                        'CHAR4',
+                        ',"CHAR1"',
+                        ',"CHAR2"',
+                        ',"CHAR3"',
+                        ',"CHAR4"',
                         'MASK'
                     ], [
                         isset($crack['algo_id']) ? $crack['algo_id'] : '',
                         isset($crack['algo_name']) ? $crack['algo_name'] : '',
                         isset($crack['len_min']) ? $crack['len_min'] : '',
                         isset($crack['len_max']) ? $crack['len_max'] : '',
-                        empty($crack['charset1']) ? '' : '-1 "' . addslashes($crack['charset1']) . '"',
-                        empty($crack['charset2']) ? '' : '-2 "' . addslashes($crack['charset2']) . '"',
-                        empty($crack['charset3']) ? '' : '-3 "' . addslashes($crack['charset3']) . '"',
-                        empty($crack['charset4']) ? '' : '-4 "' . addslashes($crack['charset4']) . '"',
+                        empty($crack['charset1']) ? '' : ',"-1","' . self::scapeChars($crack['charset1']) . '"',
+                        empty($crack['charset2']) ? '' : ',"-2","' . self::scapeChars($crack['charset2']) . '"',
+                        empty($crack['charset3']) ? '' : ',"-3","' . self::scapeChars($crack['charset3']) . '"',
+                        empty($crack['charset4']) ? '' : ',"-4","' . self::scapeChars($crack['charset4']) . '"',
                         isset($crack['mask']) ? $crack['mask'] : ''
                     ], $cracker['config']);
                     $response['target'] = $crack['target'];
@@ -71,49 +71,31 @@ class CrackController extends Controller
                         $response['generator'] = $crackerGenerator['g_name'];
                         $response['cracker'] = $crackerGenerator['c_name'];
                         
-                        $cmdGenerator = str_replace([
+                        $response['cmd_generator'] = str_replace([
                             'LEN_MIN',
                             'LEN_MAX',
-                            'CHAR1',
-                            'CHAR2',
-                            'CHAR3',
-                            'CHAR4',
+                            ',"CHAR1"',
+                            ',"CHAR2"',
+                            ',"CHAR3"',
+                            ',"CHAR4"',
                             'MASK'
                         ], [
                             isset($crack['len_min']) ? $crack['len_min'] : '',
                             isset($crack['len_max']) ? $crack['len_max'] : '',
-                            empty($crack['charset1']) ? '' : '-1 "' . addslashes($crack['charset1']) . '"',
-                            empty($crack['charset2']) ? '' : '-2 "' . addslashes($crack['charset2']) . '"',
-                            empty($crack['charset3']) ? '' : '-3 "' . addslashes($crack['charset3']) . '"',
-                            empty($crack['charset4']) ? '' : '-4 "' . addslashes($crack['charset4']) . '"',
+                            empty($crack['charset1']) ? '' : ',"-1","' . self::scapeChars($crack['charset1']) . '"',
+                            empty($crack['charset2']) ? '' : ',"-2","' . self::scapeChars($crack['charset2']) . '"',
+                            empty($crack['charset3']) ? '' : ',"-3","' . self::scapeChars($crack['charset3']) . '"',
+                            empty($crack['charset4']) ? '' : ',"-4","' . self::scapeChars($crack['charset4']) . '"',
                             isset($crack['mask']) ? $crack['mask'] : ''
                         ], $crackerGenerator['g_config']);
                         
-                        $crackerConfig = unserialize($crackerGenerator['c_config']);
-                        
-                        if (empty($crackerConfig['stdin'])) { // Supports infile
-                            $cmdCracker = str_replace([
-                                'ALGO_ID',
-                                'ALGO_NAME'
-                            ], [
-                                isset($crack['algo_id']) ? $crack['algo_id'] : '',
-                                isset($crack['algo_name']) ? $crack['algo_name'] : ''
-                            ], $crackerConfig['infile']);
-                            
-                            $response['cmd_generator'] = $cmdGenerator . ' > IN_FILE';
-                            $response['cmd_cracker'] = $cmdCracker;
-                        } else { // Supports stdin
-                            $cmdCracker = str_replace([
-                                'ALGO_ID',
-                                'ALGO_NAME'
-                            ], [
-                                isset($crack['algo_id']) ? $crack['algo_id'] : '',
-                                isset($crack['algo_name']) ? $crack['algo_name'] : ''
-                            ], $crackerConfig['stdin']);
-                            
-                            $response['cmd_generator'] = '';
-                            $response['cmd_cracker'] = $cmdGenerator . ' | ' . $cmdCracker;
-                        }
+                        $response['cmd_cracker'] = str_replace([
+                            'ALGO_ID',
+                            'ALGO_NAME'
+                        ], [
+                            isset($crack['algo_id']) ? $crack['algo_id'] : '',
+                            isset($crack['algo_name']) ? $crack['algo_name'] : ''
+                        ], $crackerGenerator['c_config']);
                         
                         $response['target'] = $crack['target'];
                     }
@@ -122,5 +104,24 @@ class CrackController extends Controller
             
             return $response;
         }
+    }
+
+    /**
+     * Scape crack's special characters
+     *
+     * @param string $chars            
+     * @return string
+     */
+    private function scapeChars($chars)
+    {
+        return str_replace([
+            '\\',
+            '"',
+            '?'
+        ], [
+            '\\\\',
+            '\\"',
+            '??'
+        ], $chars);
     }
 }

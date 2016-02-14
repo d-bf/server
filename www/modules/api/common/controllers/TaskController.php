@@ -11,33 +11,33 @@ class TaskController extends Controller
      * request data:
      * {
      * "client_info" : {
-     * "platform" : {
+     * "platform" : [
+     * {
      * "id" : "",
      * "benchmark"
      * }
+     * ]
      * }
      */
     public function actionGet()
     {
-        $task = [];
-        
         $reqData = \Yii::$app->request->post();
-        if (! empty($reqData['client_info']) && ! empty($reqData['client_info']['platform'])) {
-            foreach ($reqData['client_info']['platform'] as $platform) {
-                $getTaskInfo['platform'] = '';
-                $getTaskInfo['benchmark'] = '';
-                
-                if (! empty($platform['id']))
-                    $getTaskInfo['platform'] = $platform['id'];
-                
-                if (! empty($platform['benchmark']))
-                    $getTaskInfo['benchmark'] = $platform['benchmark'];
-                
-                $newTask = $this->getTask($getTaskInfo);
-                if ($newTask) {
-                    $newTask['platform'] = $platform['id'];
-                    $task[] = $newTask;
-                }
+        
+        $task = [];
+        if (empty($reqData['client_info']) || empty($reqData['client_info']['platform']))
+            return $task;
+        
+        foreach ($reqData['client_info']['platform'] as $platform) {
+            if (empty($platform['id']) || empty($platform['benchmark']))
+                continue;
+            
+            $getTaskInfo['platform'] = $platform['id'];
+            $getTaskInfo['benchmark'] = $platform['benchmark'];
+            
+            $newTask = $this->getTask($getTaskInfo);
+            if ($newTask) {
+                $newTask['platform'] = $platform['id'];
+                $task[] = $newTask;
             }
         }
         
@@ -125,7 +125,7 @@ class TaskController extends Controller
      *
      * @param array $info            
      */
-    protected function getTask($info)
+    protected function getTask(&$info)
     {
         if (explode('_', $info['platform'])[0] == 'gpu')
             $rateSelector = 'rate_gpu';
@@ -191,7 +191,7 @@ class TaskController extends Controller
                     ':crackId' => $crack['crack_id'],
                     ':start' => $task['start'],
                     ':offset' => $task['offset'],
-                    ':tsSave' => $task['ts_save'],
+                    ':tsSave' => $task['ts_save']
                 ])->execute();
             } else {
                 return false;
