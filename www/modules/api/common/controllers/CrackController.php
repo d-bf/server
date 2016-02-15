@@ -32,6 +32,7 @@ class CrackController extends Controller
                 
                 if ($cracker) { // Cracker with embedded generator
                     $response['id'] = $crack['id'];
+                    $response['type'] = 'embed';
                     $response['generator'] = '';
                     $response['cracker'] = $cracker['name'];
                     $response['cmd_generator'] = '';
@@ -59,7 +60,7 @@ class CrackController extends Controller
                     $response['target'] = $crack['target'];
                 } else {
                     // Get cracker with external generator
-                    $crackerGenerator = \Yii::$app->db->createCommand("SELECT c.name AS c_name, c.config AS c_config, g.name AS g_name, g.config AS g_config FROM {{%platform}} p JOIN {{%cracker_plat}} cp ON (p.name = :platform AND cp.plat_id = p.id) JOIN {{%cracker}} c ON (c.input_mode > :inputMode AND c.id = cp.cracker_id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND ca.cracker_id = c.id) JOIN {{%gen_plat}} gp ON (gp.plat_id = cp.plat_id AND gp.gen_id = :genId) JOIN {{%generator}} g ON (g.id = gp.gen_id)", [
+                    $crackerGenerator = \Yii::$app->db->createCommand("SELECT c.name AS c_name, c.config AS c_config, c.input_mode AS input_mode, g.name AS g_name, g.config AS g_config FROM {{%platform}} p JOIN {{%cracker_plat}} cp ON (p.name = :platform AND cp.plat_id = p.id) JOIN {{%cracker}} c ON (c.input_mode > :inputMode AND c.id = cp.cracker_id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND ca.cracker_id = c.id) JOIN {{%gen_plat}} gp ON (gp.plat_id = cp.plat_id AND gp.gen_id = :genId) JOIN {{%generator}} g ON (g.id = gp.gen_id)", [
                         ':platform' => $reqData['platform'],
                         ':inputMode' => ((stripos($reqData['platform'], '_win') === false) ? 0 : 1), // Win OS supports stdin but not infile with mkfifo
                         ':algoId' => $crack['algo_id'],
@@ -68,6 +69,14 @@ class CrackController extends Controller
                     
                     if ($crackerGenerator) { // Cracker with external generator
                         $response['id'] = $crack['id'];
+                        
+                        if ($crackerGenerator['input_mode'] == 3) // Infile & stdin
+                            $response['type'] = 'stdin'; // Use stdin as default
+                        elseif ($crackerGenerator['input_mode'] == 2) // Stdin
+                            $response['type'] = 'stdin';
+                        elseif ($crackerGenerator['input_mode'] == 1) // Infile
+                            $response['type'] = 'infile';
+                        
                         $response['generator'] = $crackerGenerator['g_name'];
                         $response['cracker'] = $crackerGenerator['c_name'];
                         
