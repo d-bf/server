@@ -377,23 +377,70 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         $config_general = [
-//             'GENERATOR',
-            '-i',
-            'LEN_MIN:LEN_MAX',
-            '-s',
-            'START',
-            '-l',
-            'OFFSET',
-            'CHAR1',
-            'CHAR2',
-            'CHAR3',
-            'CHAR4',
-            'MASK'
+            'stdout' => [
+                '-i',
+                'LEN_MIN:LEN_MAX',
+                '-s',
+                'START',
+                '-l',
+                'OFFSET',
+                'CHAR1',
+                'CHAR2',
+                'CHAR3',
+                'CHAR4',
+                'MASK'
+            ],
+            'infile' => [
+                '-i',
+                'LEN_MIN:LEN_MAX',
+                '-s',
+                'START',
+                '-l',
+                'OFFSET',
+                '-o',
+                'IN_FILE',
+                'CHAR1',
+                'CHAR2',
+                'CHAR3',
+                'CHAR4',
+                'MASK'
+            ]
+        ];
+        
+        $config_markov = [
+            'stdout' => [
+                '--pw-min=LEN_MIN',
+                '--pw-max=LEN_MAX',
+                '-s',
+                'START',
+                '-l',
+                'OFFSET',
+                'CHAR1',
+                'CHAR2',
+                'CHAR3',
+                'CHAR4',
+                'MASK'
+            ],
+            'infile' => [
+                '--pw-min=LEN_MIN',
+                '--pw-max=LEN_MAX',
+                '-s',
+                'START',
+                '-l',
+                'OFFSET',
+                '-o',
+                'IN_FILE',
+                'CHAR1',
+                'CHAR2',
+                'CHAR3',
+                'CHAR4',
+                'MASK'
+            ],
         ];
         
         $data = [
             [0, 'general', json_encode($config_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
-//             [1, 'markov',   null],
+            [1, 'markov',  json_encode($config_markov, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
         ];
         
         $fields = 3;
@@ -489,7 +536,6 @@ class SetupController extends Controller
         $config_hashcat = [
             'stdin' => [],
             'infile' => [
-//                 'CRACKER',
                 '-a',
                 '0',
                 '-m',
@@ -586,7 +632,6 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         $config_hashcat_general = [
-//             'CRACKER',
             '-m',
             'ALGO_ID',
             '-a',
