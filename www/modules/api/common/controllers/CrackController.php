@@ -2,6 +2,7 @@
 namespace app\modules\api\common\controllers;
 
 use app\modules\api\common\controllers;
+use yii\helpers\Json;
 
 class CrackController extends Controller
 {
@@ -79,6 +80,11 @@ class CrackController extends Controller
                         
                         $response['generator'] = $crackerGenerator['g_name'];
                         $response['cracker'] = $crackerGenerator['c_name'];
+                        
+                        $crackerGenerator['g_config'] = Json::decode($crackerGenerator['g_config'], true);
+                        $crackerGenerator['g_config'] = Json::encode($crackerGenerator['g_config'][$response['type']]);
+                        $crackerGenerator['c_config'] = Json::decode($crackerGenerator['c_config'], true);
+                        $crackerGenerator['c_config'] = Json::encode($crackerGenerator['c_config'][$response['type']]);
                         
                         $response['cmd_generator'] = str_replace([
                             'LEN_MIN',

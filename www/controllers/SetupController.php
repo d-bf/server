@@ -377,7 +377,7 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         $config_general = [
-            'stdout' => [
+            'stdin' => [
                 '-i',
                 'LEN_MIN:LEN_MAX',
                 '-s',
@@ -408,7 +408,7 @@ class SetupController extends Controller
         ];
         
         $config_markov = [
-            'stdout' => [
+            'stdin' => [
                 '--pw-min=LEN_MIN',
                 '--pw-max=LEN_MAX',
                 '-s',
@@ -488,25 +488,25 @@ class SetupController extends Controller
             [0, 212,    200,    null],
             [0, 213,    201,    null],
             
-//             /* markov */
-//             [1, 0,      null,   null],
-//             [1, 1,      null,   null],
-//             [1, 100,    null,   null],
-//             [1, 101,    null,   null],
-//             [1, 200,    null,   null],
-//             [1, 201,    null,   null],
-//             [1, 20,     0,      null],
-//             [1, 21,     1,      null],
-//             [1, 22,     0,      null],
-//             [1, 23,     1,      null],
-//             [1, 120,    100,    null],
-//             [1, 121,    101,    null],
-//             [1, 122,    100,    null],
-//             [1, 123,    101,    null],
-//             [1, 210,    200,    null],
-//             [1, 211,    201,    null],
-//             [1, 212,    200,    null],
-//             [1, 213,    201,    null],
+            /* markov */
+            [1, 0,      null,   null],
+            [1, 1,      null,   null],
+            [1, 100,    null,   null],
+            [1, 101,    null,   null],
+            [1, 200,    null,   null],
+            [1, 201,    null,   null],
+            [1, 20,     0,      null],
+            [1, 21,     1,      null],
+            [1, 22,     0,      null],
+            [1, 23,     1,      null],
+            [1, 120,    100,    null],
+            [1, 121,    101,    null],
+            [1, 122,    100,    null],
+            [1, 123,    101,    null],
+            [1, 210,    200,    null],
+            [1, 211,    201,    null],
+            [1, 212,    200,    null],
+            [1, 213,    201,    null],
         ];
         
         $fields = 4;
@@ -540,8 +540,6 @@ class SetupController extends Controller
                 '0',
                 '-m',
                 'ALGO_ID',
-                '-a',
-                '3',
                 '-o',
                 'OUT_FILE',
                 '--outfile-format=3',
