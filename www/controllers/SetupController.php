@@ -586,23 +586,23 @@ class SetupController extends Controller
             [0, 100,    null],
             [0, 101,    null],
             [0, 200,    null],
-            [0, 201,    null],
+//             [0, 201,    null],
             
             /* oclHashcat (AMD) */
             [1, 20,     null],
             [1, 21,     null],
             [1, 120,    null],
             [1, 121,    null],
-            [1, 210,    null],
-            [1, 211,    null],
+//             [1, 210,    null],
+//             [1, 211,    null],
             
             /* cudaHashcat (Nvidia) */
             [2, 22,     null],
             [2, 23,     null],
             [2, 122,    null],
             [2, 123,    null],
-            [2, 212,    null],
-            [2, 213,    null]
+//             [2, 212,    null],
+//             [2, 213,    null]
         ];
         
         $fields = 3;
