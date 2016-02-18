@@ -3,6 +3,7 @@ namespace app\modules\api\common\controllers;
 
 use app\modules\api\common\controllers;
 use yii\helpers\Json;
+use app\modules\api\common\components\ApiComp;
 
 class CrackController extends Controller
 {
@@ -17,7 +18,7 @@ class CrackController extends Controller
         if (empty($reqData['id']) || empty($reqData['platform'])) {
             return [];
         } else {
-            $crack = \Yii::$app->db->createCommand("SELECT c.id AS id, c.gen_id AS gen_id, c.algo_id AS algo_id, a.name AS algo_name, c.len_min AS len_min, c.len_max AS len_max, c.charset_1 AS charset1, c.charset_2 AS charset2, c.charset_3 AS charset3, c.charset_4 AS charset4, c.mask AS mask, c.target AS target FROM {{%crack}} c JOIN {{%algorithm}} a ON (c.id = :crackId AND a.id = c.algo_id)", [
+            $crack = \Yii::$app->db->createCommand("SELECT c.id AS id, c.gen_id AS gen_id, c.algo_id AS algo_id, a.name AS algo_name, c.len_min AS len_min, c.len_max AS len_max, c.charset_1 AS charset1, c.charset_2 AS charset2, c.charset_3 AS charset3, c.charset_4 AS charset4, c.mask AS mask, c.target AS target, c.has_dep AS has_dep  FROM {{%crack}} c JOIN {{%algorithm}} a ON (c.id = :crackId AND a.id = c.algo_id)", [
                 ':crackId' => $reqData['id']
             ])->queryOne(\PDO::FETCH_ASSOC);
             
@@ -59,6 +60,7 @@ class CrackController extends Controller
                         isset($crack['mask']) ? $crack['mask'] : ''
                     ], $cracker['config']);
                     $response['target'] = $crack['target'];
+                    $response['has_dep'] = ! empty($crack['has_dep']);
                 } else {
                     // Get cracker with external generator
                     $crackerGenerator = \Yii::$app->db->createCommand("SELECT c.name AS c_name, c.config AS c_config, c.input_mode AS input_mode, g.name AS g_name, g.config AS g_config FROM {{%platform}} p JOIN {{%cracker_plat}} cp ON (p.name = :platform AND cp.plat_id = p.id) JOIN {{%cracker}} c ON (c.input_mode > :inputMode AND c.id = cp.cracker_id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND ca.cracker_id = c.id) JOIN {{%gen_plat}} gp ON (gp.plat_id = cp.plat_id AND gp.gen_id = :genId) JOIN {{%generator}} g ON (g.id = gp.gen_id)", [
@@ -113,12 +115,27 @@ class CrackController extends Controller
                         ], $crackerGenerator['c_config']);
                         
                         $response['target'] = $crack['target'];
+                        $response['has_dep'] = ! empty($crack['has_dep']);
                     }
                 }
             }
             
             return $response;
         }
+    }
+
+    public function actionDep()
+    {
+        $reqData = \Yii::$app->request->post();
+        
+        if (! empty($reqData['id'])) {
+            $filePath = ApiComp::getDepPath() . $reqData['id'] . '.zip';
+            if (file_exists($filePath)) {
+                return \Yii::$app->getResponse()->sendFile($filePath, md5_file($filePath));
+            }
+        }
+        
+        return '';
     }
 
     /**

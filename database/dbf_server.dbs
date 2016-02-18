@@ -27,6 +27,9 @@
 			<column name="charset_4" type="varchar" length="255" jt="12" />
 			<column name="mask" type="varchar" length="255" jt="12" mandatory="y" />
 			<column name="target" type="varchar" length="5120" jt="12" />
+			<column name="has_dep" type="tinyint" jt="-6" >
+				<defo>0</defo>
+			</column>
 			<column name="result" type="varchar" length="10240" jt="12" />
 			<column name="key_total" type="bigint" jt="-5" unsigned="y" />
 			<column name="key_assigned" type="bigint" jt="-5" unsigned="y" >
@@ -274,11 +277,11 @@
 		<entity schema="dbf_server" name="cracker_algo" color="b2cdf7" x="705" y="45" />
 		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="75" y="150" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="210" />
-		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="330" />
 		<entity schema="dbf_server" name="crack_plat" color="b7c8e3" x="165" y="435" />
 		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="195" />
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="45" />
 		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="255" />
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="315" y="135" />
+		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="330" />
 	</layout>
 </project>

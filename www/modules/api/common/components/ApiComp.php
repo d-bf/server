@@ -14,4 +14,13 @@ class ApiComp extends \yii\base\Component
     {
         return AppComp::getVendorPath();
     }
+
+    /**
+     *
+     * @return string
+     */
+    public static function getDepPath()
+    {
+        return AppComp::getDepPath();
+    }
 }
