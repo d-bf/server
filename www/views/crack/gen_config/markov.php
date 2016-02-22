@@ -1,8 +1,38 @@
+<?php
+use yii\web\View;
+?>
 <style type="text/css">
 .markov-mode-label {
 	font-weight: normal;
 }
 </style>
+
+<script type="text/javascript">
+<?php
+    Yii::$app->view->registerJs(
+<<<eoJs
+	$(function() {
+		$('form').submit(function(event) {
+		    var config = '';
+		    
+		    if ($('#markov-mode').is(':checked'))
+		        config += '--markov-classic'
+		    
+		    var markovThreshold = $('#markov-threshold').val();
+		    if (markovThreshold && markovThreshold.length > 0)
+		        config += ' --threshold=' + markovThreshold
+		    else
+		        config += ' --threshold=0'
+		    
+		    $('#crack-gen_config').val(config);
+		    
+		    return true;
+		});
+	});
+eoJs
+, View::POS_READY)
+?>
+</script>
 
 <?php
 use kartik\touchspin\TouchSpin;
@@ -18,6 +48,7 @@ use kartik\switchinput\SwitchInput;
         	<?php
                 echo SwitchInput::widget([
                     'name' => 'markov-mode',
+                    'id' => 'markov-mode',
                     'containerOptions' => [
                         'class' => ''
                     ],
@@ -38,6 +69,7 @@ use kartik\switchinput\SwitchInput;
             <?php
                 echo TouchSpin::widget([
                     'name' => 'markov-threshold',
+                    'id' => 'markov-threshold',
                     'pluginOptions' => [
                         'verticalbuttons' => true,
                         'initval' => 0,

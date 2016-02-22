@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 use app\models\Algorithm;
 use yii\helpers\ArrayHelper;
@@ -41,7 +41,7 @@ FormAsset::register($this);
 
 <div class="crack-form">
 
-	<?php
+<?php
 $form = ActiveForm::begin([
     'id' => 'crack-create-form',
     'layout' => 'horizontal',
@@ -78,7 +78,11 @@ echo $form->field($model, 'gen_id')->widget(Select2::classname(), [
 ]);
 ?>
 
-<div class="form-group gen-config" id="gen_config">
+<?php echo Html::activeHiddenInput($model, 'gen_config', [
+    'id' => 'crack-gen_config'
+]); ?>
+
+<div class="form-group gen-config field-crack-gen_config" id="gen_config">
     <label class="control-label col-sm-2">Generator Config</label>
     <div class="col-sm-8">
     	<div class="config-container col-sm-12">
