@@ -25,6 +25,7 @@ class CrackSearch extends Crack
                     'algo_id',
                     'len_min',
                     'len_max',
+                    'has_dep',
                     'key_total',
                     'key_assigned',
                     'key_finished',
@@ -40,6 +41,7 @@ class CrackSearch extends Crack
                 [
                     'genName',
                     'algoName',
+                    'gen_config',
                     'description',
                     'charset_1',
                     'charset_2',
@@ -120,6 +122,7 @@ class CrackSearch extends Crack
             'algo_id' => $this->algo_id,
             'len_min' => $this->len_min,
             'len_max' => $this->len_max,
+            'has_dep' => $this->has_dep,
             'key_total' => $this->key_total,
             'key_assigned' => $this->key_assigned,
             'key_finished' => $this->key_finished,
@@ -139,6 +142,11 @@ class CrackSearch extends Crack
             'like',
             '{{%algorithm}}.name',
             $this->algoName
+        ])
+            ->andFilterWhere([
+            'like',
+            'gen_config',
+            $this->gen_config
         ])
             ->andFilterWhere([
             'like',

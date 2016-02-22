@@ -9,6 +9,7 @@ use Yii;
  * @property string $id
  * @property integer $gen_id
  * @property integer $algo_id
+ * @property string $gen_config
  * @property integer $len_min
  * @property integer $len_max
  * @property string $description
@@ -18,6 +19,7 @@ use Yii;
  * @property string $charset_4
  * @property string $mask
  * @property string $target
+ * @property integer $has_dep
  * @property string $result
  * @property string $key_total
  * @property string $key_assigned
@@ -62,6 +64,13 @@ class Crack extends \yii\db\ActiveRecord
                     'target'
                 ],
                 'required'
+            ],
+            [
+                [
+                    'gen_config'
+                ],
+                'string',
+                'max' => 64
             ],
             [
                 [
@@ -172,6 +181,7 @@ class Crack extends \yii\db\ActiveRecord
                     'algo_id',
                     'len_min',
                     'len_max',
+                    'has_dep',
                     'key_total',
                     'key_assigned',
                     'key_finished',
@@ -230,6 +240,7 @@ class Crack extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'gen_id' => Yii::t('app', 'Word Generator'),
             'genName' => Yii::t('app', 'Word Generator'),
+            'gen_config' => Yii::t('app', 'Generator Config'),
             'algo_id' => Yii::t('app', 'Algorithm'),
             'algoName' => Yii::t('app', 'Algorithm'),
             'len_min' => Yii::t('app', 'Min'),
@@ -241,6 +252,7 @@ class Crack extends \yii\db\ActiveRecord
             'charset_4' => Yii::t('app', 'Custom Charset 4'),
             'mask' => Yii::t('app', 'Mask'),
             'target' => Yii::t('app', 'Target Hashes'),
+            'has_dep' => Yii::t('app', 'Has Dependency'),
             'result' => Yii::t('app', 'Result'),
             'key_total' => Yii::t('app', 'Total'),
             'key_assigned' => Yii::t('app', 'Assigned'),

@@ -9,14 +9,15 @@ use yii\widgets\ActiveForm;
 
 <div class="crack-search">
 
-<?php
-$form = ActiveForm::begin([
-    'action' => [
-        'index'
-    ],
-    'method' => 'get'
-]);
-?>
+    <?php
+    
+    $form = ActiveForm::begin([
+        'action' => [
+            'index'
+        ],
+        'method' => 'get'
+    ]);
+    ?>
 
     <?= $form->field($model, 'id')?>
 
@@ -24,9 +25,13 @@ $form = ActiveForm::begin([
 
     <?= $form->field($model, 'algo_id')?>
 
+    <?= $form->field($model, 'gen_config')?>
+
     <?= $form->field($model, 'len_min')?>
 
-    <?= $form->field($model, 'len_max')?>
+    <?php // echo $form->field($model, 'len_max') ?>
+
+    <?php // echo $form->field($model, 'description') ?>
 
     <?php // echo $form->field($model, 'charset_1') ?>
 
@@ -39,6 +44,8 @@ $form = ActiveForm::begin([
     <?php // echo $form->field($model, 'mask') ?>
 
     <?php // echo $form->field($model, 'target') ?>
+
+    <?php // echo $form->field($model, 'has_dep') ?>
 
     <?php // echo $form->field($model, 'result') ?>
 
@@ -54,7 +61,7 @@ $form = ActiveForm::begin([
 
     <?php // echo $form->field($model, 'status') ?>
 
-	<?php // echo $form->field($model, 'ts_create') ?>
+    <?php // echo $form->field($model, 'ts_create') ?>
 
     <?php // echo $form->field($model, 'ts_last_connect') ?>
 
