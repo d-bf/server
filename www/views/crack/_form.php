@@ -32,8 +32,9 @@ FormAsset::register($this);
 }
 
 #gen_config .config-container {
-    border: #999 solid 1px;
-    padding: 5px;
+    border: #ccc solid 1px;
+    border-radius: 4px;
+    padding-top: 5px;
     vertical-align: middle;
 }
 </style>

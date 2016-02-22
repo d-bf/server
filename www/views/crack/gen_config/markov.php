@@ -6,33 +6,68 @@
 
 <?php
 use kartik\touchspin\TouchSpin;
+use kartik\file\FileInput;
+use kartik\switchinput\SwitchInput;
 ?>
 
-<div class="col-sm-12">
-	<label>Markov Mode: </label>
-	&nbsp;
-	<label class="markov-mode-label">
-		<input type="radio" value="0" name="markov-mode" checked="checked"> Pre-Position
-	</label>
-	&nbsp;
-	<label class="markov-mode-label">
-		<input type="radio" value="1" name="markov-mode"> Classic
-	</label>
-</div>
-
-<div class="col-sm-3">
-<?php
-echo TouchSpin::widget([
-    'name' => 'markov-threshold',
-    'pluginOptions' => [
-        'prefix' => 'Threshold',
-        'verticalbuttons' => true,
-        'min' => 1,
-        'max' => 95
-    ]
-]);
-?>
-</div>
-<div class="help-block col-sm-9">
-Maximum number of chars to use
-</div>
+<fieldset>
+	<legend>Markov</legend>
+	<div class="form-group">
+		<label class="control-label col-sm-2">Mode</label>
+        <div class="col-sm-10">
+        	<?php
+                echo SwitchInput::widget([
+                    'name' => 'markov-mode',
+                    'containerOptions' => [
+                        'class' => ''
+                    ],
+                    'pluginOptions' => [
+                        'offText' => 'Pre-position',
+                        'onText' => '&nbsp;Classic&nbsp;',
+                        'offColor' => 'default',
+                        'onColor' => 'default'
+                    ]
+                ]);
+        	?>
+        </div>
+    </div>
+    
+    <div class="form-group">
+    	<label class="control-label col-sm-2">Threshold</label>
+        <div class="col-sm-2">
+            <?php
+                echo TouchSpin::widget([
+                    'name' => 'markov-threshold',
+                    'pluginOptions' => [
+                        'verticalbuttons' => true,
+                        'initval' => 0,
+                        'min' => 0,
+                        'max' => 256,
+                        'boostat' => 5
+                    ]
+                ]);
+            ?>
+        </div>
+        <div class="col-sm-8 help-block">
+        	Maximum number of characters to choose, set to 0 to disable
+        </div>
+    </div>
+    
+    <div class="form-group">
+    	<label class="control-label col-sm-2">Stat File</label>
+        <div class="col-sm-5">
+        	<?php
+        	   echo FileInput::widget([
+        	       'name' => 'markov-file',
+        	       'pluginOptions' => [
+        	           'showPreview' => false,
+        	           'showUpload' => false
+        	       ]
+        	   ]);
+        	?>
+        </div>
+        <div class="col-sm-5 help-block">
+        	Leave empty to use default stat file
+        </div>
+    </div>
+</fieldset>
