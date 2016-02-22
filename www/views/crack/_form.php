@@ -30,6 +30,12 @@ FormAsset::register($this);
 	padding: 6px 0px;
 	text-align: center;
 }
+
+#gen_config .config-container {
+    border: #999 solid 1px;
+    padding: 5px;
+    vertical-align: middle;
+}
 </style>
 
 <div class="crack-form">
@@ -71,7 +77,16 @@ echo $form->field($model, 'gen_id')->widget(Select2::classname(), [
 ]);
 ?>
 
-		<?php
+<div class="form-group gen-config" id="gen_config">
+    <label class="control-label col-sm-2">Generator Config</label>
+    <div class="col-sm-8">
+    	<div class="config-container col-sm-12">
+    		<?php echo $this->render('gen_config/markov') ?>
+    	</div>
+    </div>
+</div>
+
+<?php
 echo $form->field($model, 'algo_id')->widget(Select2::classname(), [
     'data' => ArrayHelper::map(Algorithm::find()->all(), 'id', 'name'),
     'options' => [
