@@ -93,7 +93,8 @@ use kartik\switchinput\SwitchInput;
         	       'name' => 'markov-file',
         	       'pluginOptions' => [
         	           'showPreview' => false,
-        	           'showUpload' => false
+        	           'showUpload' => false,
+        	           'removeLabel' => ''
         	       ]
         	   ]);
         	?>
