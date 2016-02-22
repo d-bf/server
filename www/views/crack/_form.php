@@ -67,12 +67,14 @@ $form = ActiveForm::begin([
 if (empty($model->gen_id))
     $model->gen_id = 0;
 
-echo $form->field($model, 'gen_id')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Generator::find()->orderBy([
+$generators = ArrayHelper::map(Generator::find()->orderBy([
         'name' => SORT_ASC
-    ])
-        ->all(), 'id', 'name'),
+    ])->all(), 'id', 'name');
+
+echo $form->field($model, 'gen_id')->widget(Select2::classname(), [
+    'data' => $generators,
     'options' => [
+        'id' => 'crack-gen_id',
         'placeholder' => 'Select...'
     ]
 ]);
@@ -82,12 +84,18 @@ echo $form->field($model, 'gen_id')->widget(Select2::classname(), [
     'id' => 'crack-gen_config'
 ]); ?>
 
-<div class="form-group gen-config field-crack-gen_config" id="gen_config">
+<div class="form-group gen-config field-crack-gen_config" style="display: none;" id="gen_config">
     <label class="control-label col-sm-2">Generator Config</label>
     <div class="col-sm-8">
-    	<div class="config-container col-sm-12">
-    		<?php echo $this->render('gen_config/markov') ?>
-    	</div>
+		<?php
+		  foreach ($generators as $genId => $genName) {
+		      if (is_readable(__DIR__ . DIRECTORY_SEPARATOR . 'gen_config' . DIRECTORY_SEPARATOR . $genName . '.php')) {
+		          echo '<div id="gen_config_' . $genId . '" class="config-container col-sm-12" style="display: none;">';
+		          echo $this->render("gen_config/$genName");
+		          echo '</div>';
+		      }
+		  }
+        ?>
     </div>
 </div>
 

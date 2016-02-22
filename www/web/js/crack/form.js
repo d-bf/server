@@ -5,6 +5,28 @@ $(function() {
 	var chars_s = ' !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
 	var chars_a = chars_l + chars_u + chars_d + chars_s;
 	
+	/* Show/hide generator's config */
+	$('#crack-gen_id').on('select2:select', function() {
+		var genId = $(this).val();
+		if ($('#gen_config_' + genId).length) { // Has config, so show it
+			if ($('#gen_config').is( ":hidden" )) { // No current config
+				$('#gen_config_' + genId).show(0, function() {
+					$('#gen_config').show(400);
+				});
+			} else { // Previous config is visible
+				$('.config-container').hide(400);
+				$('#gen_config').show(0, function() {
+					$('#gen_config_' + genId).show(400);
+				});
+			}
+		} else { // Does not have config, so hide it
+			$('#gen_config').hide(400, function() {
+				$('.config-container').hide(0);
+			});
+		}
+	});
+	$('#crack-gen_id').trigger('select2:select'); // Initialize
+	
 	/* Change mode */
 	function applyMode() {
 		if ($('#crack-mode').is(':checked')) { // Mask
