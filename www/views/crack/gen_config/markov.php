@@ -26,9 +26,9 @@ use yii\web\View;
             
             var markovThreshold = $('#markov-threshold').val();
             if (markovThreshold && markovThreshold.length > 0)
-                config += ' --threshold=' + markovThreshold
+                config += ' --markov-threshold=' + markovThreshold
             else
-                config += ' --threshold=0'
+                config += ' --markov-threshold=0'
             
             $('#crack-gen_config').val(config);
             
