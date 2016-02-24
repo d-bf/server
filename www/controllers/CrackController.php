@@ -7,6 +7,7 @@ use app\models\CrackSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\components\AppComp;
 
 /**
  * CrackController implements the CRUD actions for Crack model.
@@ -89,6 +90,10 @@ class CrackController extends Controller
      */
     public function actionDelete($id)
     {
+        $depFile = AppComp::getDepPath() . $id;
+        if (file_exists($depFile))
+            unlink($depFile);
+        
         $this->findModel($id)->delete();
         
         return $this->redirect([

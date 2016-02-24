@@ -11,24 +11,30 @@ use yii\web\View;
 <?php
     Yii::$app->view->registerJs(
 <<<eoJs
-	$(function() {
-		$('form').submit(function(event) {
-		    var config = '';
-		    
-		    if ($('#markov-mode').is(':checked'))
-		        config += '--markov-classic'
-		    
-		    var markovThreshold = $('#markov-threshold').val();
-		    if (markovThreshold && markovThreshold.length > 0)
-		        config += ' --threshold=' + markovThreshold
-		    else
-		        config += ' --threshold=0'
-		    
-		    $('#crack-gen_config').val(config);
-		    
-		    return true;
-		});
-	});
+    $(function() {
+        $('form').submit(function(event) {
+            if ($('#gen-dep').parents('.file-input').hasClass('has-error')) {
+                event.preventDefault();
+                
+                return false;
+            }
+            
+            var config = '';
+            
+            if ($('#markov-mode').is(':checked'))
+                config += '--markov-classic'
+            
+            var markovThreshold = $('#markov-threshold').val();
+            if (markovThreshold && markovThreshold.length > 0)
+                config += ' --threshold=' + markovThreshold
+            else
+                config += ' --threshold=0'
+            
+            $('#crack-gen_config').val(config);
+            
+            return true;
+        });
+    });
 eoJs
 , View::POS_READY)
 ?>
@@ -86,21 +92,25 @@ use kartik\switchinput\SwitchInput;
     </div>
     
     <div class="form-group">
-    	<label class="control-label col-sm-2">Stat File</label>
+    	<label class="control-label col-sm-2">Stat File (zip)</label>
         <div class="col-sm-5">
         	<?php
         	   echo FileInput::widget([
-        	       'name' => 'markov-file',
+        	       'name' => 'gen-dep',
+        	       'id' => 'gen-dep',
         	       'pluginOptions' => [
+        	           'allowedFileExtensions' => ['zip'],
+        	           'msgInvalidFileExtension' => 'Not a zip file!',
         	           'showPreview' => false,
         	           'showUpload' => false,
-        	           'removeLabel' => ''
+        	           'removeLabel' => '',
+        	           'browseLabel' => ''
         	       ]
         	   ]);
         	?>
         </div>
         <div class="col-sm-5 help-block">
-        	Leave empty to use default stat file
+        	Compress as zip file, Leave empty to use default stat file
         </div>
     </div>
 </fieldset>

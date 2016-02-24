@@ -2,6 +2,8 @@
 namespace app\models;
 
 use Yii;
+use app\components\AppComp;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%crack}}".
@@ -271,6 +273,19 @@ class Crack extends \yii\db\ActiveRecord
 
     /**
      *
+     * {@inheritDoc}
+     *
+     * @see \yii\db\ActiveRecord::transactions()
+     */
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_INSERT
+        ];
+    }
+
+    /**
+     *
      * @return \yii\db\ActiveQuery
      */
     public function getGen()
@@ -506,6 +521,11 @@ class Crack extends \yii\db\ActiveRecord
                 }
             }
             
+            if (($u = UploadedFile::getInstanceByName('gen-dep')) && (! $u->hasError))
+                $this->has_dep = 1;
+            else
+                $this->has_dep = 0;
+            
             return true;
         } else {
             return false;
@@ -540,6 +560,11 @@ class Crack extends \yii\db\ActiveRecord
             $values = substr($values, 1);
             $params[':c'] = $this->id;
             \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_name) VALUES $values", $params)->execute();
+        }
+        
+        /* Save dep file */
+        if ($u = UploadedFile::getInstanceByName('gen-dep')) {
+            $u->saveAs(AppComp::getDepPath() . $this->id);
         }
         
         parent::afterSave($insert, $changedAttributes);
