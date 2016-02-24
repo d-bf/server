@@ -424,6 +424,7 @@ class SetupController extends Controller
             'infile' => [
                 '--pw-min=LEN_MIN',
                 '--pw-max=LEN_MAX',
+                'GEN_CONF',
                 '-s',
                 'START',
                 '-l',

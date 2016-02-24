@@ -18,7 +18,7 @@ class CrackController extends Controller
         if (empty($reqData['id']) || empty($reqData['platform'])) {
             return [];
         } else {
-            $crack = \Yii::$app->db->createCommand("SELECT c.id AS id, c.gen_id AS gen_id, c.algo_id AS algo_id, a.name AS algo_name, c.len_min AS len_min, c.len_max AS len_max, c.charset_1 AS charset1, c.charset_2 AS charset2, c.charset_3 AS charset3, c.charset_4 AS charset4, c.mask AS mask, c.target AS target, c.has_dep AS has_dep  FROM {{%crack}} c JOIN {{%algorithm}} a ON (c.id = :crackId AND a.id = c.algo_id)", [
+            $crack = \Yii::$app->db->createCommand("SELECT c.id AS id, c.gen_id AS gen_id, c.gen_config AS gen_config, c.algo_id AS algo_id, a.name AS algo_name, c.len_min AS len_min, c.len_max AS len_max, c.charset_1 AS charset1, c.charset_2 AS charset2, c.charset_3 AS charset3, c.charset_4 AS charset4, c.mask AS mask, c.target AS target, c.has_dep AS has_dep  FROM {{%crack}} c JOIN {{%algorithm}} a ON (c.id = :crackId AND a.id = c.algo_id)", [
                 ':crackId' => $reqData['id']
             ])->queryOne(\PDO::FETCH_ASSOC);
             
@@ -41,6 +41,7 @@ class CrackController extends Controller
                     $response['cmd_cracker'] = str_replace([
                         'ALGO_ID',
                         'ALGO_NAME',
+                        'GEN_CONF',
                         'LEN_MIN',
                         'LEN_MAX',
                         ',"CHAR1"',
@@ -51,6 +52,7 @@ class CrackController extends Controller
                     ], [
                         isset($crack['algo_id']) ? $crack['algo_id'] : '',
                         isset($crack['algo_name']) ? $crack['algo_name'] : '',
+                        isset($crack['gen_config']) ? $crack['gen_config'] : '',
                         isset($crack['len_min']) ? $crack['len_min'] : '',
                         isset($crack['len_max']) ? $crack['len_max'] : '',
                         empty($crack['charset1']) ? '' : ',"-1","' . self::scapeChars($crack['charset1']) . '"',
@@ -89,6 +91,7 @@ class CrackController extends Controller
                         $crackerGenerator['c_config'] = Json::encode($crackerGenerator['c_config'][$response['type']]);
                         
                         $response['cmd_generator'] = str_replace([
+                            'GEN_CONF',
                             'LEN_MIN',
                             'LEN_MAX',
                             ',"CHAR1"',
@@ -97,6 +100,7 @@ class CrackController extends Controller
                             ',"CHAR4"',
                             'MASK'
                         ], [
+                            isset($crack['gen_config']) ? $crack['gen_config'] : '',
                             isset($crack['len_min']) ? $crack['len_min'] : '',
                             isset($crack['len_max']) ? $crack['len_max'] : '',
                             empty($crack['charset1']) ? '' : ',"-1","' . self::scapeChars($crack['charset1']) . '"',
