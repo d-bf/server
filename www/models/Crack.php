@@ -546,9 +546,9 @@ class Crack extends \yii\db\ActiveRecord
                     $i = 0;
                     while (($stat = $zip->statIndex($i))) {
                         if (empty($stat['crc'])) {
-                            $zip->deleteIndex($i++);
+                            $zip->deleteIndex($i ++);
                         } else {
-                            $zip->renameIndex($i++, 'dep.gen');
+                            $zip->renameIndex($i ++, 'dep-gen');
                             break;
                         }
                     }
@@ -590,6 +590,25 @@ class Crack extends \yii\db\ActiveRecord
         }
         
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \yii\db\BaseActiveRecord::beforeDelete()
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            $depFile = AppComp::getDepPath() . $this->id;
+            if (file_exists($depFile))
+                unlink($depFile);
+            
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

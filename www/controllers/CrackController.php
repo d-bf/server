@@ -90,10 +90,6 @@ class CrackController extends Controller
      */
     public function actionDelete($id)
     {
-        $depFile = AppComp::getDepPath() . $id;
-        if (file_exists($depFile))
-            unlink($depFile);
-        
         $this->findModel($id)->delete();
         
         return $this->redirect([

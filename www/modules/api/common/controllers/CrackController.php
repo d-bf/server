@@ -133,7 +133,7 @@ class CrackController extends Controller
         $reqData = \Yii::$app->request->post();
         
         if (! empty($reqData['id'])) {
-            $filePath = ApiComp::getDepPath() . $reqData['id'] . '.zip';
+            $filePath = ApiComp::getDepPath() . $reqData['id'];
             if (file_exists($filePath)) {
                 return \Yii::$app->getResponse()->sendFile($filePath, md5_file($filePath));
             }
