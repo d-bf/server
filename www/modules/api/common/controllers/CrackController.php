@@ -41,9 +41,9 @@ class CrackController extends Controller
                     $response['cmd_cracker'] = str_replace([
                         'ALGO_ID',
                         'ALGO_NAME',
-                        'GEN_CONF',
                         'LEN_MIN',
                         'LEN_MAX',
+                        ',"CONF_GEN"',
                         ',"CHAR1"',
                         ',"CHAR2"',
                         ',"CHAR3"',
@@ -52,9 +52,9 @@ class CrackController extends Controller
                     ], [
                         isset($crack['algo_id']) ? $crack['algo_id'] : '',
                         isset($crack['algo_name']) ? $crack['algo_name'] : '',
-                        isset($crack['gen_config']) ? $crack['gen_config'] : '',
                         isset($crack['len_min']) ? $crack['len_min'] : '',
                         isset($crack['len_max']) ? $crack['len_max'] : '',
+                        empty($crack['gen_config']) ? '' : ',"' . implode(Json::decode($crack['gen_config'], true), '","') . '"',
                         empty($crack['charset1']) ? '' : ',"-1","' . self::scapeChars($crack['charset1']) . '"',
                         empty($crack['charset2']) ? '' : ',"-2","' . self::scapeChars($crack['charset2']) . '"',
                         empty($crack['charset3']) ? '' : ',"-3","' . self::scapeChars($crack['charset3']) . '"',
@@ -91,18 +91,18 @@ class CrackController extends Controller
                         $crackerGenerator['c_config'] = Json::encode($crackerGenerator['c_config'][$response['type']]);
                         
                         $response['cmd_generator'] = str_replace([
-                            'GEN_CONF',
                             'LEN_MIN',
                             'LEN_MAX',
+                            ',"CONF_GEN"',
                             ',"CHAR1"',
                             ',"CHAR2"',
                             ',"CHAR3"',
                             ',"CHAR4"',
                             'MASK'
                         ], [
-                            isset($crack['gen_config']) ? $crack['gen_config'] : '',
                             isset($crack['len_min']) ? $crack['len_min'] : '',
                             isset($crack['len_max']) ? $crack['len_max'] : '',
+                            empty($crack['gen_config']) ? '' : ',"' . implode(Json::decode($crack['gen_config'], true), '","') . '"',
                             empty($crack['charset1']) ? '' : ',"-1","' . self::scapeChars($crack['charset1']) . '"',
                             empty($crack['charset2']) ? '' : ',"-2","' . self::scapeChars($crack['charset2']) . '"',
                             empty($crack['charset3']) ? '' : ',"-3","' . self::scapeChars($crack['charset3']) . '"',

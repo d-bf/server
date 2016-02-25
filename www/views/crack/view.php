@@ -54,6 +54,7 @@ echo DetailView::widget([
         'target:ntext',
         'result:ntext',
         'genName',
+        'gen_config',
         [
             'attribute' => 'has_dep',
             'value' => empty($model->has_dep) ? 'No' : 'Yes'

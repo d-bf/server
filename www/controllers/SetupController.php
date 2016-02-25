@@ -411,6 +411,7 @@ class SetupController extends Controller
             'stdin' => [
                 '--pw-min=LEN_MIN',
                 '--pw-max=LEN_MAX',
+                'CONF_GEN',
                 '-s',
                 'START',
                 '-l',
@@ -419,12 +420,13 @@ class SetupController extends Controller
                 'CHAR2',
                 'CHAR3',
                 'CHAR4',
+                'GEN_DEP',
                 'MASK'
             ],
             'infile' => [
                 '--pw-min=LEN_MIN',
                 '--pw-max=LEN_MAX',
-                'GEN_CONF',
+                'CONF_GEN',
                 '-s',
                 'START',
                 '-l',
@@ -435,6 +437,7 @@ class SetupController extends Controller
                 'CHAR2',
                 'CHAR3',
                 'CHAR4',
+                'DEP_GEN',
                 'MASK'
             ],
         ];

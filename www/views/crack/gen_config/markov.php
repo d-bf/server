@@ -19,18 +19,18 @@ use yii\web\View;
                 return false;
             }
             
-            var config = '';
+            var config = new Array();
             
             if ($('#markov-mode').is(':checked'))
-                config += '--markov-classic'
+                config.push('--markov-classic');
             
             var markovThreshold = $('#markov-threshold').val();
             if (markovThreshold && markovThreshold.length > 0)
-                config += ' --markov-threshold=' + markovThreshold
+                config.push('--markov-threshold=' + markovThreshold);
             else
-                config += ' --markov-threshold=0'
+                config.push('--markov-threshold=0');
             
-            $('#crack-gen_config').val(config);
+            $('#crack-gen_config').val(JSON.stringify(config));
             
             return true;
         });
