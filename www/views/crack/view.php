@@ -55,6 +55,10 @@ echo DetailView::widget([
         'result:ntext',
         'genName',
         [
+            'attribute' => 'has_dep',
+            'value' => empty($model->has_dep) ? 'No' : 'Yes'
+        ],
+        [
             'attribute' => 'len_min',
             'label' => 'Minimum Length'
         ],

@@ -521,10 +521,7 @@ class Crack extends \yii\db\ActiveRecord
                 }
             }
             
-            if (($u = UploadedFile::getInstanceByName('gen-dep')) && (! $u->hasError))
-                $this->has_dep = 1;
-            else
-                $this->has_dep = 0;
+            $this->has_dep = 0;
             
             return true;
         } else {
@@ -540,6 +537,36 @@ class Crack extends \yii\db\ActiveRecord
      */
     public function afterSave($insert, $changedAttributes)
     {
+        /* Save dep file */
+        if ($u = UploadedFile::getInstanceByName('gen-dep')) { // There was an upload
+            if ($this->gen->name == 'markov') {
+                $zip = new \ZipArchive();
+                if ($zip->open($u->tempName) === true) {
+                    /* Get the first valid file */
+                    $i = 0;
+                    while (($stat = $zip->statIndex($i))) {
+                        if (empty($stat['crc'])) {
+                            $zip->deleteIndex($i++);
+                        } else {
+                            $zip->renameIndex($i++, 'dep.gen');
+                            break;
+                        }
+                    }
+                    
+                    /* Delete all other entities */
+                    while ($zip->deleteIndex($i ++));
+                    
+                    $zip->close();
+                    
+                    if ($u->saveAs(AppComp::getDepPath() . $this->id)) {
+                        $this->updateAttributes([
+                            'has_dep' => 1
+                        ]);
+                    }
+                }
+            }
+        }
+        
         /* Fill the crack_plat table according to the crack attributes */
         $query = 'SELECT DISTINCT p.name FROM {{%gen_plat}} gp JOIN {{%cracker_plat}} cp ON (gp.gen_id = :genId AND cp.plat_id = gp.plat_id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND cp.cracker_id = ca.cracker_id) JOIN {{%platform}} p ON p.id = cp.plat_id UNION ';
         $query .= 'SELECT DISTINCT p.name FROM {{%cracker}} c JOIN {{%cracker_algo}} ca ON (c.input_mode > 0 AND ca.algo_id = :algoId AND c.id = ca.cracker_id) JOIN {{%cracker_plat}} cp ON (cp.cracker_id = c.id AND ((c.input_mode > 1) OR (c.input_mode = 1 AND cp.plat_id > 99))) JOIN {{%gen_plat}} gp ON (gp.gen_id = :genId AND gp.plat_id = cp.plat_id) JOIN {{%platform}} p ON (p.id = gp.plat_id)';
@@ -560,11 +587,6 @@ class Crack extends \yii\db\ActiveRecord
             $values = substr($values, 1);
             $params[':c'] = $this->id;
             \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_name) VALUES $values", $params)->execute();
-        }
-        
-        /* Save dep file */
-        if ($u = UploadedFile::getInstanceByName('gen-dep')) {
-            $u->saveAs(AppComp::getDepPath() . $this->id);
         }
         
         parent::afterSave($insert, $changedAttributes);
