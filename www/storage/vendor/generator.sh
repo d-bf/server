@@ -1,7 +1,9 @@
 #!/bin/bash
 
-PATH_REPO="./repo"
-PATH_BASE="./generator"
+PATH_ME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+PATH_REPO="$PATH_ME/repo"
+PATH_BASE="$PATH_ME/generator"
 
 PATH_GENERATOR="$PATH_REPO/vendor-generator-general"
 if [ -d "$PATH_GENERATOR/.git" ]; then
@@ -14,7 +16,7 @@ fi
 
 make
 
-rm -R $PATH_BASE/general/*
+rm -R "$PATH_BASE/general/*"
 
 for os_arch in cpu_linux_64.bin cpu_linux_32.bin cpu_win_64.exe cpu_win_32.exe cpu_mac_64.app cpu_mac_32.app
 do
