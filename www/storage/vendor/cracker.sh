@@ -10,7 +10,7 @@ PATH_REPO="$PATH_ME/repo"
 PATH_SERVER="$PATH_ME/cracker"
 
 # Loop through vendors
-for vendor_name in hashcat
+for vendor_name in hashcat oclHashcat cudaHashcat
 do
 	PATH_VENDOR_REPO="$PATH_REPO/vendor-cracker-$vendor_name"
 	PATH_VENDOR_SERVER="$PATH_SERVER/$vendor_name"
@@ -46,7 +46,7 @@ do
 			# Remove file extension
 			mv "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_SERVER/${os_arch%.*}"
 		else
-			echo "Error, vendor not found: $PATH_VENDOR_REPO/bin/$os_arch"
+			echo "Warning, vendor not found: $PATH_VENDOR_REPO/bin/$os_arch"
 		fi
 	done
 done
