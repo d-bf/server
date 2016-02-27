@@ -14,6 +14,7 @@ for vendor_name in hashcat oclHashcat cudaHashcat
 do
 	PATH_VENDOR_REPO="$PATH_REPO/vendor-cracker-$vendor_name"
 	PATH_VENDOR_SERVER="$PATH_SERVER/$vendor_name"
+	PATH_DEP_ZIP="$PATH_VENDOR_REPO/bin/dep.zip"
 
 	# Clone or update vendor
 	if [ -d "$PATH_VENDOR_REPO/.git" ]; then
@@ -31,6 +32,9 @@ do
 
 	# Remove current vendor from server
 	rm -f -R "$PATH_VENDOR_SERVER/"
+
+	# Remove dep.zip files
+	rm -f "$PATH_DEP_ZIP"
 
 	# Loop through os-arch
 	if [ "$vendor_name" == "hashcat" ]; then
@@ -50,14 +54,16 @@ do
 		if [ -f "$PATH_VENDOR_REPO/bin/$os_arch" ]; then
 			mkdir -p "$PATH_VENDOR_SERVER"
 
-			# Compress vendor from repo to server
-			cp -a "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/dep/"
-			cd "$PATH_VENDOR_REPO/bin/dep/"
-			zip -r "$PATH_VENDOR_SERVER/$os_arch.zip" "."
-			rm -f "$PATH_VENDOR_REPO/bin/dep/$os_arch"
+			# Check dep.zip and create it if needed
+			if [ ! -f "$PATH_DEP_ZIP" ]
+				cd "$PATH_VENDOR_REPO/bin/dep/"
+				zip -r "$PATH_DEP_ZIP" "."
+			fi
 
-			# Remove file extension
-			mv "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_SERVER/${os_arch%.*}"
+			# Compress vendor from repo to server
+			cp "$PATH_DEP_ZIP" "$PATH_VENDOR_REPO/bin/$os_arch.zip"
+			zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/$os_arch"
+			mv "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_SERVER/${os_arch%.*}" # Remove file extension
 		else
 			echo "Warning, vendor not found: $PATH_VENDOR_REPO/bin/$os_arch"
 		fi
