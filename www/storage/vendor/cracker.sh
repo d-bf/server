@@ -25,13 +25,26 @@ do
 	fi
 
 	# Make vendor file(s) in repo
-	make
+	if [ "$vendor_name" == "hashcat" ]; then
+		make
+	fi
 
 	# Remove current vendor from server
 	rm -f -R "$PATH_VENDOR_SERVER/"
 
 	# Loop through os-arch
-	for os_arch in cpu_linux_64.bin cpu_linux_32.bin cpu_win_64.exe cpu_win_32.exe cpu_mac_64.app cpu_mac_32.app
+	if [ "$vendor_name" == "hashcat" ]; then
+		os_arch_list="cpu_linux_64.bin cpu_linux_32.bin cpu_win_64.exe cpu_win_32.exe cpu_mac_64.app cpu_mac_32.app"
+	elif [ "$vendor_name" == "oclHashcat" ]; then
+		os_arch_list="gpu_linux_64_amd.bin gpu_linux_32_amd.bin gpu_win_64_amd.exe gpu_win_32_amd.exe gpu_mac_64_amd.app gpu_mac_32_amd.app"
+	elif [ "$vendor_name" == "cudaHashcat" ]; then
+		os_arch_list="gpu_linux_64_nv.bin gpu_linux_32_nv.bin gpu_win_64_nv.exe gpu_win_32_nv.exe gpu_mac_64_nv.app gpu_mac_32_nv.app"
+	else
+		echo "Unknown error!!!"
+		exit
+	fi
+
+	for os_arch in $os_arch_list
 	do
 		# Check if the os-arch exists in repo
 		if [ -f "$PATH_VENDOR_REPO/bin/$os_arch" ]; then
