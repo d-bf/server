@@ -55,7 +55,7 @@ do
 			mkdir -p "$PATH_VENDOR_SERVER"
 
 			# Check dep.zip and create it if needed
-			if [ ! -f "$PATH_DEP_ZIP" ]
+			if [ ! -f "$PATH_DEP_ZIP" ]; then
 				cd "$PATH_VENDOR_REPO/bin/dep/"
 				zip -r "$PATH_DEP_ZIP" "."
 			fi
