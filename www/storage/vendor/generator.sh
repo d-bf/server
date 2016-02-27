@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# This script needs zip binary: apt-get install zip
+#
 # The following packages are needed for cross compile. (Tested on debian amd64)
 #
-# apt-get install git make gcc libc6-dev libc6-dev-i386 mingw-w64 zip
+# Linux and windows:
+# apt-get install git make gcc libc6-dev libc6-dev-i386 mingw-w64
 #
 # Mac OS X (http://powdertoy.co.uk/Wiki/W/Compiling_for_Mac_on_Linux.html)
 # Download and install the following files from: https://launchpad.net/~flosoft/+archive/ubuntu/cross-apple/+packages
