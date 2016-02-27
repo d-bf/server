@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# The following packages are needed for cross compile. (Tested on debian amd64)
+#
+# apt-get install git make gcc libc6-dev libc6-dev-i386 mingw-w64 zip
+#
+# Mac OS X (http://powdertoy.co.uk/Wiki/W/Compiling_for_Mac_on_Linux.html)
+# Download and install the following files from: https://launchpad.net/~flosoft/+archive/ubuntu/cross-apple/+packages
+#	ccache-lipo
+#	apple-x86-odcctools
+#	apple-uni-sdk-10.5 (OR apple-uni-sdk-10.6 And then: ln -s /usr/lib/apple/SDKs/MacOSX10.6.sdk /usr/lib/apple/SDKs/MacOSX10.5.sdk)
+#	apple-x86-gcc
+#	apple-uni-framework-sdl
+
 PATH_ME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 PATH_REPO="$PATH_ME/repo"
