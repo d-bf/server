@@ -22,7 +22,7 @@ class VendorController extends Controller
         $reqData = \Yii::$app->request->post();
         
         if (isset($reqData['vendor_type']) && isset($reqData['name']) && isset($reqData['platform_id'])) {
-            $filePath = ApiComp::getVendorPath() . strtolower($reqData['vendor_type']) . DIRECTORY_SEPARATOR . strtolower($reqData['name']) . DIRECTORY_SEPARATOR . strtolower($reqData['platform_id']);
+            $filePath = ApiComp::getVendorPath() . strtolower($reqData['vendor_type']) . DIRECTORY_SEPARATOR . $reqData['name'] . DIRECTORY_SEPARATOR . strtolower($reqData['platform_id']);
             if (file_exists($filePath)) {
                 return \Yii::$app->getResponse()->sendFile($filePath, md5_file($filePath));
             }
