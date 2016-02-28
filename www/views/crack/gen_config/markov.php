@@ -7,30 +7,31 @@ use yii\web\View;
 }
 </style>
 
-<script type="text/javascript">
 <?php
     Yii::$app->view->registerJs(
 <<<eoJs
     $(function() {
         $('form').submit(function(event) {
-            if ($('#gen-dep').parents('.file-input').hasClass('has-error')) {
-                event.preventDefault();
+            if ($('#crack-gen_id').select2('data')[0].text == 'markov') {
+                if ($('#gen-dep').parents('.file-input').hasClass('has-error')) {
+                    event.preventDefault();
+                    
+                    return false;
+                }
                 
-                return false;
+                var config = new Array();
+                
+                if ($('#markov-mode').is(':checked'))
+                    config.push('--markov-classic');
+                
+                var markovThreshold = $('#markov-threshold').val();
+                if (markovThreshold && markovThreshold.length > 0)
+                    config.push('--markov-threshold=' + markovThreshold);
+                else
+                    config.push('--markov-threshold=0');
+                
+                $('#crack-gen_config').val(JSON.stringify(config));
             }
-            
-            var config = new Array();
-            
-            if ($('#markov-mode').is(':checked'))
-                config.push('--markov-classic');
-            
-            var markovThreshold = $('#markov-threshold').val();
-            if (markovThreshold && markovThreshold.length > 0)
-                config.push('--markov-threshold=' + markovThreshold);
-            else
-                config.push('--markov-threshold=0');
-            
-            $('#crack-gen_config').val(JSON.stringify(config));
             
             return true;
         });
@@ -38,7 +39,6 @@ use yii\web\View;
 eoJs
 , View::POS_READY)
 ?>
-</script>
 
 <?php
 use kartik\touchspin\TouchSpin;

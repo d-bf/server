@@ -20,6 +20,7 @@ $(function() {
 				});
 			}
 		} else { // Does not have config, so hide it
+			$('#crack-gen_config').val('');
 			$('#gen_config').hide(400, function() {
 				$('.config-container').hide(0);
 			});
