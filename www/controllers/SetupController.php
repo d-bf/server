@@ -553,10 +553,40 @@ class SetupController extends Controller
             ]
         ];
         
+        $config_oclHashcat = [
+            'stdin' => [
+                '-a',
+                '0',
+                '-m',
+                'ALGO_ID',
+                '--force',
+                '-o',
+                'OUT_FILE',
+                '--outfile-format=3',
+                '--potfile-disable',
+                'HASH_FILE'
+            ],
+            'infile' => [
+                '--force',
+                '-a',
+                '0',
+                '-m',
+                'ALGO_ID',
+                '-o',
+                'OUT_FILE',
+                '--outfile-format=3',
+                '--potfile-disable',
+                'HASH_FILE',
+                'IN_FILE'
+            ]
+        ];
+        
+        $config_cudaHashcat = $config_oclHashcat;
+        
         $data = [
             [0, 'hashcat',      1,  json_encode($config_hashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
-            [1, 'oclHashcat',   3,  null],
-            [2, 'cudaHashcat',  3,  null]
+            [1, 'oclHashcat',   3,  json_encode($config_oclHashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+            [2, 'cudaHashcat',  3,  json_encode($config_cudaHashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)]
         ];
         
         $fields = 4;
@@ -657,18 +687,75 @@ class SetupController extends Controller
             'MASK'
         ];
         
+        $config_oclHashcat_general = [
+            '-m',
+            'ALGO_ID',
+            '-a',
+            '3',
+            '--force',
+            '--markov-disable',
+            '-o',
+            'OUT_FILE',
+            '--outfile-format=3',
+            '--potfile-disable',
+            '-s',
+            'START',
+            '-l',
+            'OFFSET',
+            '-i',
+            '--increment-min=LEN_MIN',
+            '--increment-max=LEN_MAX',
+            'CHAR1',
+            'CHAR2',
+            'CHAR3',
+            'CHAR4',
+            'HASH_FILE',
+            'MASK'
+        ];
+        
+        $config_cudaHashcat_general = $config_oclHashcat_general;
+        
+        $config_oclHashcat_markov = [
+            '-m',
+            'ALGO_ID',
+            '-a',
+            '3',
+            '--force',
+            '--markov-hcstat=DEP_GEN',
+            'CONF_GEN',
+            '-o',
+            'OUT_FILE',
+            '--outfile-format=3',
+            '--potfile-disable',
+            '-s',
+            'START',
+            '-l',
+            'OFFSET',
+            '-i',
+            '--increment-min=LEN_MIN',
+            '--increment-max=LEN_MAX',
+            'CHAR1',
+            'CHAR2',
+            'CHAR3',
+            'CHAR4',
+            'HASH_FILE',
+            'MASK'
+        ];
+        
+        $config_cudaHashcat_markov = $config_oclHashcat_markov;
+        
         $data = [
             /* hashcat */
-            [0, 0,  json_encode($config_hashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
-//             [0, 1,  null],
+            [0, 0, json_encode($config_hashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+//             [0, 1, null],
             
             /* oclHashcat (AMD) */
-            [1, 0,  null],
-//             [1, 1,  null],
+            [1, 0, json_encode($config_oclHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+//             [1, 1, null],
                     
             /* cudaHashcat (Nvidia) */
-            [2, 0,  null],
-//             [2, 1,  null],
+            [2, 0, json_encode($config_cudaHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+//             [2, 1, null],
         ];
         
         $fields = 3;
