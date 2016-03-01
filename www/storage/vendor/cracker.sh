@@ -33,7 +33,7 @@ do
 	# Remove current vendor from server
 	rm -f -R "$PATH_VENDOR_SERVER/"
 
-	# Remove dep.zip files
+	# Remove dep.zip file
 	rm -f "$PATH_DEP_ZIP"
 
 	# Loop through os-arch
@@ -60,12 +60,21 @@ do
 				zip -r "$PATH_DEP_ZIP" "."
 			fi
 
-			# Compress vendor from repo to server
-			cp "$PATH_DEP_ZIP" "$PATH_VENDOR_REPO/bin/$os_arch.zip"
-			zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/$os_arch"
+			# Compress vendor
+			cp -f "$PATH_DEP_ZIP" "$PATH_VENDOR_REPO/bin/$os_arch.zip"
+			cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
+			zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
+
+			# Move to server
 			mv "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_SERVER/${os_arch%.*}" # Remove file extension
 		else
 			echo "Warning, vendor not found: $PATH_VENDOR_REPO/bin/$os_arch"
 		fi
 	done
 done
+
+# Remove cracker.*
+rm -f "$PATH_VENDOR_REPO"/bin/cracker.*
+
+# Remove dep.zip file
+rm -f "$PATH_DEP_ZIP"

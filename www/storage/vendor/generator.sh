@@ -48,17 +48,26 @@ do
 		if [ -f "$PATH_VENDOR_REPO/bin/$os_arch" ]; then
 			mkdir -p "$PATH_VENDOR_SERVER"
 
-			# Compress vendor from repo to server
+			# Compress vendor
+			cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/generator.${os_arch##*.}"
 			if [ "$vendor_name" == "markov" ]; then
-				zip -jr "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/dep-gen"
+				zip -jr "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_REPO/bin/generator.${os_arch##*.}" "$PATH_VENDOR_REPO/dep-gen"
 			else
-				zip -jr "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_REPO/bin/$os_arch"
+				zip -jr "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_REPO/bin/generator.${os_arch##*.}"
 			fi
 
-			# Remove file extension
-			mv "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_SERVER/${os_arch%.*}"
+			# Move to server
+			baseName="${os_arch%.*}"
+			mv "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_SERVER/$baseName" # Remove file extension
+
+			# Copy for alternative platforms
+			cp -af "$PATH_VENDOR_SERVER/$baseName" "$PATH_VENDOR_SERVER/gpu_${baseName#*_}_amd"
+			cp -af "$PATH_VENDOR_SERVER/$baseName" "$PATH_VENDOR_SERVER/gpu_${baseName#*_}_nv"
 		else
 			echo "Error, vendor not found: $PATH_VENDOR_REPO/bin/$os_arch"
 		fi
 	done
 done
+
+# Remove generator.*
+rm -f "$PATH_VENDOR_REPO"/bin/generator.*
