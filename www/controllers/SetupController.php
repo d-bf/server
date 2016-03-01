@@ -750,12 +750,12 @@ class SetupController extends Controller
 //             [0, 1, null],
             
             /* oclHashcat (AMD) */
-            [1, 0, json_encode($config_oclHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
-//             [1, 1, null],
+//             [1, 0, json_encode($config_oclHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+//             [1, 1, json_encode($config_oclHashcat_markov, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
                     
             /* cudaHashcat (Nvidia) */
-            [2, 0, json_encode($config_cudaHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
-//             [2, 1, null],
+//             [2, 0, json_encode($config_cudaHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+//             [2, 1, json_encode($config_cudaHashcat_markov, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
         ];
         
         $fields = 3;
