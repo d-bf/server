@@ -21,7 +21,7 @@ PATH_REPO="$PATH_ME/repo"
 PATH_SERVER="$PATH_ME/generator"
 
 # Loop through vendors
-for vendor_name in general markov
+for vendor_name in general
 do
 	PATH_VENDOR_REPO="$PATH_REPO/vendor-generator-$vendor_name"
 	PATH_VENDOR_SERVER="$PATH_SERVER/$vendor_name"
@@ -61,8 +61,8 @@ do
 			mv "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_SERVER/$baseName" # Remove file extension
 
 			# Copy for alternative platforms
-			cp -af "$PATH_VENDOR_SERVER/$baseName" "$PATH_VENDOR_SERVER/gpu_${baseName#*_}_amd"
-			cp -af "$PATH_VENDOR_SERVER/$baseName" "$PATH_VENDOR_SERVER/gpu_${baseName#*_}_nv"
+			#cp -af "$PATH_VENDOR_SERVER/$baseName" "$PATH_VENDOR_SERVER/gpu_${baseName#*_}_amd"
+			#cp -af "$PATH_VENDOR_SERVER/$baseName" "$PATH_VENDOR_SERVER/gpu_${baseName#*_}_nv"
 		else
 			echo "Error, vendor not found: $PATH_VENDOR_REPO/bin/$os_arch"
 		fi
