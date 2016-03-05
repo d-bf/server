@@ -444,7 +444,7 @@ class SetupController extends Controller
         
         $data = [
             [0, 'general', json_encode($config_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
-            [1, 'markov',  json_encode($config_markov, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+//             [1, 'markov',  json_encode($config_markov, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
         ];
         
         $fields = 3;
@@ -493,24 +493,24 @@ class SetupController extends Controller
             [0, 213,    201,    null],
             
             /* markov */
-            [1, 0,      null,   null],
-            [1, 1,      null,   null],
-            [1, 100,    null,   null],
-            [1, 101,    null,   null],
-            [1, 200,    null,   null],
-            [1, 201,    null,   null],
-            [1, 20,     0,      null],
-            [1, 21,     1,      null],
-            [1, 22,     0,      null],
-            [1, 23,     1,      null],
-            [1, 120,    100,    null],
-            [1, 121,    101,    null],
-            [1, 122,    100,    null],
-            [1, 123,    101,    null],
-            [1, 210,    200,    null],
-            [1, 211,    201,    null],
-            [1, 212,    200,    null],
-            [1, 213,    201,    null],
+//             [1, 0,      null,   null],
+//             [1, 1,      null,   null],
+//             [1, 100,    null,   null],
+//             [1, 101,    null,   null],
+//             [1, 200,    null,   null],
+//             [1, 201,    null,   null],
+//             [1, 20,     0,      null],
+//             [1, 21,     1,      null],
+//             [1, 22,     0,      null],
+//             [1, 23,     1,      null],
+//             [1, 120,    100,    null],
+//             [1, 121,    101,    null],
+//             [1, 122,    100,    null],
+//             [1, 123,    101,    null],
+//             [1, 210,    200,    null],
+//             [1, 211,    201,    null],
+//             [1, 212,    200,    null],
+//             [1, 213,    201,    null],
         ];
         
         $fields = 4;
