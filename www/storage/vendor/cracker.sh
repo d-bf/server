@@ -9,6 +9,15 @@ PATH_ME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PATH_REPO="$PATH_ME/repo"
 PATH_SERVER="$PATH_ME/cracker"
 
+# Clone or update dbf-vendor
+if [ -d "$PATH_REPO/generator-general-gpu/.git" ]; then
+	cd "$PATH_REPO/generator-general-gpu"
+	git pull origin
+else
+	git clone "https://github.com/dbf-vendor/generator-general-gpu" "-b" "bin" "$PATH_REPO/generator-general-gpu"
+	cd "$PATH_REPO/generator-general-gpu"
+fi
+
 # Loop through vendors
 for vendor_name in hashcat oclHashcat cudaHashcat
 do
@@ -62,8 +71,24 @@ do
 
 			# Compress vendor
 			cp -f "$PATH_DEP_ZIP" "$PATH_VENDOR_REPO/bin/$os_arch.zip"
-			cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
-			zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
+
+			if [ ${os_arch%%_*} == "gpu" ]; then # GPU
+				cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/hashcat.${os_arch##*.}"
+				zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/hashcat.${os_arch##*.}"
+
+				temp=${os_arch#gpu_}
+				osarch=${temp%%_*}
+				temp=${temp#*_}
+				osarch="$osarch"_${temp%%_*}
+
+				if [ -f "$PATH_REPO/generator-general-gpu/$osarch" ]; then
+					cp -af "$PATH_REPO/generator-general-gpu/$osarch" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
+					zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
+				fi
+			else # CPU
+				cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
+				zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
+			fi
 
 			# Move to server
 			mv "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_SERVER/${os_arch%.*}" # Remove file extension
@@ -73,7 +98,8 @@ do
 	done
 done
 
-# Remove cracker.*
+# Remove temp files
+rm -f "$PATH_VENDOR_REPO"/bin/hashcat.*
 rm -f "$PATH_VENDOR_REPO"/bin/cracker.*
 
 # Remove dep.zip file
