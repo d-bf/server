@@ -555,16 +555,18 @@ class SetupController extends Controller
         
         $config_oclHashcat = [
             'stdin' => [
-                '-a',
-                '0',
-                '-m',
-                'ALGO_ID',
-                '--force',
-                '-o',
-                'OUT_FILE',
-                '--outfile-format=3',
-                '--potfile-disable',
-                'HASH_FILE'
+//                 '-a',
+//                 '0',
+//                 '-m',
+//                 'ALGO_ID',
+//                 '--force',
+//                 '--markov-disable',
+//                 '--session=ocl',
+//                 '-o',
+//                 'OUT_FILE',
+//                 '--outfile-format=3',
+//                 '--potfile-disable',
+//                 'HASH_FILE'
             ],
             'infile' => [
                 '--force',
@@ -572,6 +574,8 @@ class SetupController extends Controller
                 '0',
                 '-m',
                 'ALGO_ID',
+                '--markov-disable',
+                '--session=ocl',
                 '-o',
                 'OUT_FILE',
                 '--outfile-format=3',
@@ -581,12 +585,12 @@ class SetupController extends Controller
             ]
         ];
         
-        $config_cudaHashcat = $config_oclHashcat;
+        $config_cudaHashcat = str_replace('--session=ocl', '--session=cuda', $config_oclHashcat);
         
         $data = [
             [0, 'hashcat',      1,  json_encode($config_hashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
-            [1, 'oclHashcat',   3,  json_encode($config_oclHashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
-            [2, 'cudaHashcat',  3,  json_encode($config_cudaHashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)]
+            [1, 'oclHashcat',   1,  json_encode($config_oclHashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+            [2, 'cudaHashcat',  1,  json_encode($config_cudaHashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)]
         ];
         
         $fields = 4;
@@ -694,6 +698,7 @@ class SetupController extends Controller
             '3',
             '--force',
             '--markov-disable',
+            '--session=ocl',
             '-o',
             'OUT_FILE',
             '--outfile-format=3',
@@ -713,7 +718,7 @@ class SetupController extends Controller
             'MASK'
         ];
         
-        $config_cudaHashcat_general = $config_oclHashcat_general;
+        $config_cudaHashcat_general = str_replace('--session=ocl', '--session=cuda', $config_oclHashcat_general);
         
         $config_oclHashcat_markov = [
             '-m',
@@ -723,6 +728,7 @@ class SetupController extends Controller
             '--force',
             '--markov-hcstat=DEP_GEN',
             'CONF_GEN',
+            '--session=ocl',
             '-o',
             'OUT_FILE',
             '--outfile-format=3',
@@ -742,7 +748,7 @@ class SetupController extends Controller
             'MASK'
         ];
         
-        $config_cudaHashcat_markov = $config_oclHashcat_markov;
+        $config_cudaHashcat_markov = str_replace('--session=ocl', '--session=cuda', $config_oclHashcat_markov);
         
         $data = [
             /* hashcat */
@@ -750,11 +756,11 @@ class SetupController extends Controller
 //             [0, 1, null],
             
             /* oclHashcat (AMD) */
-//             [1, 0, json_encode($config_oclHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+            [1, 0, json_encode($config_oclHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
 //             [1, 1, json_encode($config_oclHashcat_markov, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
                     
             /* cudaHashcat (Nvidia) */
-//             [2, 0, json_encode($config_cudaHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
+            [2, 0, json_encode($config_cudaHashcat_general, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
 //             [2, 1, json_encode($config_cudaHashcat_markov, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
         ];
         
