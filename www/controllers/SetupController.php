@@ -554,20 +554,7 @@ class SetupController extends Controller
         ];
         
         $config_oclHashcat = [
-            'stdin' => [
-//                 '-a',
-//                 '0',
-//                 '-m',
-//                 'ALGO_ID',
-//                 '--force',
-//                 '--markov-disable',
-//                 '--session=ocl',
-//                 '-o',
-//                 'OUT_FILE',
-//                 '--outfile-format=3',
-//                 '--potfile-disable',
-//                 'HASH_FILE'
-            ],
+            'stdin' => [],
             'infile' => [
                 '--force',
                 '-a',
@@ -585,7 +572,24 @@ class SetupController extends Controller
             ]
         ];
         
-        $config_cudaHashcat = str_replace('--session=ocl', '--session=cuda', $config_oclHashcat);
+        $config_cudaHashcat = [
+            'stdin' => [],
+            'infile' => [
+                '--force',
+                '-a',
+                '0',
+                '-m',
+                'ALGO_ID',
+                '--markov-disable',
+                '--session=cuda',
+                '-o',
+                'OUT_FILE',
+                '--outfile-format=3',
+                '--potfile-disable',
+                'HASH_FILE',
+                'IN_FILE'
+            ]
+        ];
         
         $data = [
             [0, 'hashcat',      1,  json_encode($config_hashcat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)],
@@ -718,7 +722,32 @@ class SetupController extends Controller
             'MASK'
         ];
         
-        $config_cudaHashcat_general = str_replace('--session=ocl', '--session=cuda', $config_oclHashcat_general);
+        $config_cudaHashcat_general = [
+            '-m',
+            'ALGO_ID',
+            '-a',
+            '3',
+            '--force',
+            '--markov-disable',
+            '--session=cuda',
+            '-o',
+            'OUT_FILE',
+            '--outfile-format=3',
+            '--potfile-disable',
+            '-s',
+            'START',
+            '-l',
+            'OFFSET',
+            '-i',
+            '--increment-min=LEN_MIN',
+            '--increment-max=LEN_MAX',
+            'CHAR1',
+            'CHAR2',
+            'CHAR3',
+            'CHAR4',
+            'HASH_FILE',
+            'MASK'
+        ];
         
         $config_oclHashcat_markov = [
             '-m',
@@ -748,7 +777,33 @@ class SetupController extends Controller
             'MASK'
         ];
         
-        $config_cudaHashcat_markov = str_replace('--session=ocl', '--session=cuda', $config_oclHashcat_markov);
+        $config_cudaHashcat_markov = [
+            '-m',
+            'ALGO_ID',
+            '-a',
+            '3',
+            '--force',
+            '--markov-hcstat=DEP_GEN',
+            'CONF_GEN',
+            '--session=cuda',
+            '-o',
+            'OUT_FILE',
+            '--outfile-format=3',
+            '--potfile-disable',
+            '-s',
+            'START',
+            '-l',
+            'OFFSET',
+            '-i',
+            '--increment-min=LEN_MIN',
+            '--increment-max=LEN_MAX',
+            'CHAR1',
+            'CHAR2',
+            'CHAR3',
+            'CHAR4',
+            'HASH_FILE',
+            'MASK'
+        ];
         
         $data = [
             /* hashcat */
