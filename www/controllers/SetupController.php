@@ -34,7 +34,33 @@ class SetupController extends Controller
         echo "\"$tableName\" table Initialized.<br><br>";
     }
 
-    private $algoCpu = [
+    private static $platforms = [
+        // Windows
+        'cpu_win_64' => 0,
+        'cpu_win_32' => 1,
+        'gpu_win_64_amd' => 20,
+        'gpu_win_32_amd' => 21,
+        'gpu_win_64_nv' => 22,
+        'gpu_win_32_nv' => 23,
+    
+        // Linux
+        'cpu_linux_64' => 100,
+        'cpu_linux_32' => 101,
+        'gpu_linux_64_amd' => 120,
+        'gpu_linux_32_amd' => 121,
+        'gpu_linux_64_nv' => 122,
+        'gpu_linux_32_nv' => 123,
+    
+        // Mac
+        'cpu_mac_64' => 200,
+        'cpu_mac_32' => 201,
+        'gpu_mac_64_amd' => 210,
+        'gpu_mac_32_amd' => 211,
+        'gpu_mac_64_nv' => 212,
+        'gpu_mac_32_nv' => 213,
+    ];
+
+    private static $algoCpu = [
         [0,     'MD5',                                                      null],
         [10,    'md5($pass.$salt)',                                         null],
         [20,    'md5($salt.$pass)',                                         null],
@@ -157,7 +183,7 @@ class SetupController extends Controller
         [7600,  'Redmine',                                                  null] // 'Redmine Project Management Web App'
     ];
 
-    private $algoGpu = [
+    private static $algoGpu = [
         [900,   'MD4',                                                      null],
         [0,     'MD5',                                                      null],
         [5100,  'Half MD5',                                                 null],
@@ -322,35 +348,19 @@ class SetupController extends Controller
         [12700, 'Blockchain, My Wallet',                                    null]
     ];
 
+    public static function getPlatId($platName)
+    {
+        return (isset(self::$platforms[$platName]) ? self::$platforms[$platName] : null);
+    }
+
     private function initTable_platform()
     {
         $this->initStartMsg(__FUNCTION__);
         
-        $data = [
-            // Windows
-            [0,     'cpu_win_64'],
-            [1,     'cpu_win_32'],
-            [20,    'gpu_win_64_amd'],
-            [21,    'gpu_win_32_amd'],
-            [22,    'gpu_win_64_nv'],
-            [23,    'gpu_win_32_nv'],
-            
-            // Linux
-            [100,   'cpu_linux_64'],
-            [101,   'cpu_linux_32'],
-            [120,   'gpu_linux_64_amd'],
-            [121,   'gpu_linux_32_amd'],
-            [122,   'gpu_linux_64_nv'],
-            [123,   'gpu_linux_32_nv'],
-            
-            // Mac
-            [200,   'cpu_mac_64'],
-            [201,   'cpu_mac_32'],
-            [210,   'gpu_mac_64_amd'],
-            [211,   'gpu_mac_32_amd'],
-            [212,   'gpu_mac_64_nv'],
-            [213,   'gpu_mac_32_nv'],
-        ];
+        $data=[];
+        foreach (self::$platforms as $platName => $platId) {
+            $data[] = [$platId, $platName];
+        }
         
         $fields = 2;
         $values = '';
@@ -844,7 +854,7 @@ class SetupController extends Controller
         $this->initStartMsg(__FUNCTION__);
         
         /* CPU */
-        $data = $this->algoCpu;
+        $data = self::$algoCpu;
         
         $fields = 3;
         $values = '';
@@ -864,7 +874,7 @@ class SetupController extends Controller
         \Yii::$app->db->createCommand("INSERT INTO {{%algorithm}} (id, name, rate_cpu) VALUES $values ON DUPLICATE KEY UPDATE rate_cpu = VALUES(rate_cpu)", $params)->execute();
         
         /* GPU */
-        $data = $this->algoGpu;
+        $data = self::$algoGpu;
         
         $fields = 3;
         $values = '';
@@ -892,11 +902,11 @@ class SetupController extends Controller
         
         $data = [];
         
-        foreach ($this->algoCpu as $algo) {
+        foreach (self::$algoCpu as $algo) {
             $data[] = [0, $algo[0]]; // hashcat
         }
         
-        foreach ($this->algoGpu as $algo) {
+        foreach (self::$algoGpu as $algo) {
             $data[] = [1, $algo[0]]; // oclHashcat
             $data[] = [2, $algo[0]]; // cudaHashcat
         }
