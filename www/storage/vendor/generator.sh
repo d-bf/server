@@ -56,6 +56,10 @@ do
 				zip -jr "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_REPO/bin/generator.${os_arch##*.}"
 			fi
 
+			if [ -f "$PATH_VENDOR_REPO/info.json" ]; then
+				zip -jr "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_REPO/info.json"
+			fi
+
 			# Move to server
 			baseName="${os_arch%.*}"
 			mv "$PATH_VENDOR_SERVER/$os_arch.zip" "$PATH_VENDOR_SERVER/$baseName" # Remove file extension
