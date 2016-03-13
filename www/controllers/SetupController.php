@@ -34,7 +34,7 @@ class SetupController extends Controller
         echo "\"$tableName\" table Initialized.<br><br>";
     }
 
-    private static $platforms = [
+    public static $platforms = [
         // Windows
         'cpu_win_64' => 0,
         'cpu_win_32' => 1,

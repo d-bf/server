@@ -4,6 +4,7 @@ namespace app\models;
 use Yii;
 use app\components\AppComp;
 use yii\web\UploadedFile;
+use app\controllers\SetupController;
 
 /**
  * This is the model class for table "{{%crack}}".
@@ -568,25 +569,56 @@ class Crack extends \yii\db\ActiveRecord
         }
         
         /* Fill the crack_plat table according to the crack attributes */
-        $query = 'SELECT DISTINCT p.name FROM {{%gen_plat}} gp JOIN {{%cracker_plat}} cp ON (gp.gen_id = :genId AND cp.plat_id = gp.plat_id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND cp.cracker_id = ca.cracker_id) JOIN {{%platform}} p ON p.id = cp.plat_id UNION ';
-        $query .= 'SELECT DISTINCT p.name FROM {{%cracker}} c JOIN {{%cracker_algo}} ca ON (c.input_mode > 0 AND ca.algo_id = :algoId AND c.id = ca.cracker_id) JOIN {{%cracker_plat}} cp ON (cp.cracker_id = c.id AND ((c.input_mode > 1) OR (c.input_mode = 1 AND cp.plat_id > 99))) JOIN {{%gen_plat}} gp ON (gp.gen_id = :genId AND gp.plat_id = cp.plat_id) JOIN {{%platform}} p ON (p.id = gp.plat_id)';
-        $platforms = \Yii::$app->db->createCommand($query, [
+        // Select crackers with embedded generator
+        $crackPlats = \Yii::$app->db->createCommand("SELECT DISTINCT cp.plat_id AS plat_id, cg.cracker_id AS cracker_id FROM {{%cracker_gen}} cg JOIN {{%cracker_algo}} ca ON (cg.gen_id = :genId AND ca.algo_id = :algoId AND cg.cracker_id = ca.cracker_id) JOIN {{%cracker_plat}} cp ON cp.cracker_id = cg.cracker_id", [
             ':genId' => $this->gen_id,
             ':algoId' => $this->algo_id
-        ])->queryColumn();
+        ])->queryAll();
         
-        $i = 0;
-        $values = '';
-        $params = [];
-        foreach ($platforms as $platform) {
-            $values .= ",(:c,:p$i)";
-            $params[":p$i"] = $platform;
-            $i ++;
-        }
-        if (count($params) > 0) {
+        $platforms = array_flip(SetupController::$platforms);
+        
+        if ($crackPlats) {
+            $values = '';
+            $params[':i'] = $this->id;
+            $params[':g'] = null;
+            for ($i = 0; $i < count($crackPlats); $i ++) {
+                $values .= ",(:i, :p$i, :g, :c$i)";
+                
+                $params[":p$i"] = $crackPlats[$i]['plat_id'];
+                $params[":c$i"] = $crackPlats[$i]['cracker_id'];
+                
+                unset($platforms[$crackPlats[$i]['plat_id']]);
+            }
             $values = substr($values, 1);
-            $params[':c'] = $this->id;
-            \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_name) VALUES $values", $params)->execute();
+            
+            \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_id, gen_id, cracker_id) VALUES $values", $params)->execute();
+        }
+        
+        // Select crackers without embedded generator
+        if (count($platforms) > 0) {
+            $platIdes = array_keys($platforms);
+            $platIdes = implode(',', $platIdes);
+            
+            $crackPlats = \Yii::$app->db->createCommand("SELECT DISTINCT gp.plat_id AS plat_id, gp.gen_id AS gen_id, cp.cracker_id AS cracker_id FROM {{%cracker_plat}} cp JOIN {{%cracker}} c ON (cp.plat_id IN ($platIdes) AND ((c.input_mode > 1 AND cp.plat_id < 100) OR (c.input_mode > 0 AND cp.plat_id > 99)) AND cp.cracker_id = c.id) JOIN {{%cracker_algo}} ca ON (ca.algo_id = :algoId AND cp.cracker_id = ca.cracker_id) JOIN {{%gen_plat}} gp ON (gp.gen_id = :genId AND gp.plat_id = cp.plat_id)", [
+                ':genId' => $this->gen_id,
+                ':algoId' => $this->algo_id
+            ])->queryAll();
+            
+            if ($crackPlats) {
+                $values = '';
+                unset($params);
+                $params[':i'] = $this->id;
+                for ($i = 0; $i < count($crackPlats); $i ++) {
+                    $values .= ",(:i, :p$i, :g$i, :c$i)";
+                    
+                    $params[":p$i"] = $crackPlats[$i]['plat_id'];
+                    $params[":g$i"] = $crackPlats[$i]['gen_id'];
+                    $params[":c$i"] = $crackPlats[$i]['cracker_id'];
+                }
+                $values = substr($values, 1);
+                
+                \Yii::$app->db->createCommand("INSERT INTO {{%crack_plat}} (crack_id, plat_id, gen_id, cracker_id) VALUES $values", $params)->execute();
+            }
         }
         
         parent::afterSave($insert, $changedAttributes);
