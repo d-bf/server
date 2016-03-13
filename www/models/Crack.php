@@ -35,7 +35,7 @@ use yii\web\UploadedFile;
  * @property Generator $gen
  * @property Algorithm $algo
  * @property CrackPlat[] $crackPlats
- * @property Platform[] $platNames
+ * @property Platform[] $plats
  * @property Task[] $tasks
  */
 class Crack extends \yii\db\ActiveRecord
@@ -321,10 +321,10 @@ class Crack extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPlatNames()
+    public function getPlats()
     {
         return $this->hasMany(Platform::className(), [
-            'name' => 'plat_name'
+            'id' => 'plat_id'
         ])->viaTable('{{%crack_plat}}', [
             'crack_id' => 'id'
         ]);

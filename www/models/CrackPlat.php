@@ -7,10 +7,14 @@ use Yii;
  * This is the model class for table "{{%crack_plat}}".
  *
  * @property string $crack_id
- * @property string $plat_name
+ * @property integer $plat_id
+ * @property integer $gen_id
+ * @property integer $cracker_id
  *
  * @property Crack $crack
- * @property Platform $platName
+ * @property Platform $plat
+ * @property Generator $gen
+ * @property Cracker $cracker
  */
 class CrackPlat extends \yii\db\ActiveRecord
 {
@@ -32,22 +36,18 @@ class CrackPlat extends \yii\db\ActiveRecord
             [
                 [
                     'crack_id',
-                    'plat_name'
+                    'plat_id'
                 ],
                 'required'
             ],
             [
                 [
-                    'crack_id'
+                    'crack_id',
+                    'plat_id',
+                    'gen_id',
+                    'cracker_id'
                 ],
                 'integer'
-            ],
-            [
-                [
-                    'plat_name'
-                ],
-                'string',
-                'max' => 32
             ]
         ];
     }
@@ -59,7 +59,9 @@ class CrackPlat extends \yii\db\ActiveRecord
     {
         return [
             'crack_id' => Yii::t('app', 'Crack ID'),
-            'plat_name' => Yii::t('app', 'Plat Name')
+            'plat_id' => Yii::t('app', 'Plat ID'),
+            'gen_id' => Yii::t('app', 'Gen ID'),
+            'cracker_id' => Yii::t('app', 'Cracker ID')
         ];
     }
 
@@ -78,10 +80,32 @@ class CrackPlat extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPlatName()
+    public function getPlat()
     {
         return $this->hasOne(Platform::className(), [
-            'name' => 'plat_name'
+            'id' => 'plat_id'
+        ]);
+    }
+
+    /**
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGen()
+    {
+        return $this->hasOne(Generator::className(), [
+            'id' => 'gen_id'
+        ]);
+    }
+
+    /**
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCracker()
+    {
+        return $this->hasOne(Cracker::className(), [
+            'id' => 'cracker_id'
         ]);
     }
 

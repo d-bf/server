@@ -11,6 +11,7 @@ use Yii;
  * @property string $config
  *
  * @property Crack[] $cracks
+ * @property CrackPlat[] $crackPlats
  * @property CrackerGen[] $crackerGens
  * @property Cracker[] $crackers
  * @property GenPlat[] $genPlats
@@ -87,6 +88,17 @@ class Generator extends \yii\db\ActiveRecord
     public function getCracks()
     {
         return $this->hasMany(Crack::className(), [
+            'gen_id' => 'id'
+        ]);
+    }
+
+    /**
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCrackPlats()
+    {
+        return $this->hasMany(CrackPlat::className(), [
             'gen_id' => 'id'
         ]);
     }

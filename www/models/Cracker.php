@@ -8,7 +8,10 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string $config
+ * @property integer $input_mode
  *
+ * @property CrackPlat[] $crackPlats
  * @property CrackerAlgo[] $crackerAlgos
  * @property Algorithm[] $algos
  * @property CrackerGen[] $crackerGens
@@ -41,7 +44,8 @@ class Cracker extends \yii\db\ActiveRecord
             ],
             [
                 [
-                    'id'
+                    'id',
+                    'input_mode'
                 ],
                 'integer'
             ],
@@ -51,6 +55,13 @@ class Cracker extends \yii\db\ActiveRecord
                 ],
                 'string',
                 'max' => 50
+            ],
+            [
+                [
+                    'config'
+                ],
+                'string',
+                'max' => 500
             ],
             [
                 [
@@ -68,8 +79,21 @@ class Cracker extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name')
+            'name' => Yii::t('app', 'Name'),
+            'config' => Yii::t('app', 'Config'),
+            'input_mode' => Yii::t('app', 'Input Mode')
         ];
+    }
+
+    /**
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCrackPlats()
+    {
+        return $this->hasMany(CrackPlat::className(), [
+            'cracker_id' => 'id'
+        ]);
     }
 
     /**

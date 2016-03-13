@@ -81,7 +81,7 @@ class Platform extends \yii\db\ActiveRecord
     public function getCrackPlats()
     {
         return $this->hasMany(CrackPlat::className(), [
-            'plat_name' => 'name'
+            'plat_id' => 'id'
         ]);
     }
 
@@ -94,7 +94,7 @@ class Platform extends \yii\db\ActiveRecord
         return $this->hasMany(Crack::className(), [
             'id' => 'crack_id'
         ])->viaTable('{{%crack_plat}}', [
-            'plat_name' => 'name'
+            'plat_id' => 'id'
         ]);
     }
 
