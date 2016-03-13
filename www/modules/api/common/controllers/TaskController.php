@@ -135,7 +135,7 @@ class TaskController extends Controller
         
         $timeout = gmdate('U') - 540; /* 9 min ago */
         
-        $crack = \Yii::$app->db->createCommand("SELECT c.id AS crack_id, c.status AS status, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, a.$rateSelector AS algo_rate FROM {{%crack}} c JOIN {{%crack_plat}} cp ON (cp.plat_id = :platformId AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_last_connect < :timeout))) JOIN {{%algorithm}} a ON a.id = c.algo_id ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
+        $crack = \Yii::$app->db->createCommand("SELECT c.id AS crack_id, c.status AS status, c.key_total AS keyTotal, c.key_assigned AS keyAssigned, a.$rateSelector AS algo_rate FROM {{%crack}} c JOIN {{%crack_info}} cp ON (cp.plat_id = :platformId AND c.id = cp.crack_id AND (c.status = 0 OR (c.status = 1 AND c.ts_last_connect < :timeout))) JOIN {{%algorithm}} a ON a.id = c.algo_id ORDER BY c.res_assigned ASC, c.key_total DESC LIMIT 1", [
             ':platformName' => SetupController::getPlatId($info['platform']),
             ':timeout' => $timeout
         ])->queryOne(\PDO::FETCH_ASSOC);

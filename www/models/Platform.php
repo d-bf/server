@@ -9,7 +9,7 @@ use Yii;
  * @property integer $id
  * @property string $name
  *
- * @property CrackPlat[] $crackPlats
+ * @property CrackInfo[] $crackInfos
  * @property Crack[] $cracks
  * @property CrackerPlat[] $crackerPlats
  * @property Cracker[] $crackers
@@ -78,9 +78,9 @@ class Platform extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCrackPlats()
+    public function getCrackInfos()
     {
-        return $this->hasMany(CrackPlat::className(), [
+        return $this->hasMany(CrackInfo::className(), [
             'plat_id' => 'id'
         ]);
     }
@@ -93,7 +93,7 @@ class Platform extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Crack::className(), [
             'id' => 'crack_id'
-        ])->viaTable('{{%crack_plat}}', [
+        ])->viaTable('{{%crack_info}}', [
             'plat_id' => 'id'
         ]);
     }

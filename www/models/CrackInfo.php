@@ -4,7 +4,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%crack_plat}}".
+ * This is the model class for table "{{%crack_info}}".
  *
  * @property string $crack_id
  * @property integer $plat_id
@@ -16,7 +16,7 @@ use Yii;
  * @property Generator $gen
  * @property Cracker $cracker
  */
-class CrackPlat extends \yii\db\ActiveRecord
+class CrackInfo extends \yii\db\ActiveRecord
 {
 
     /**
@@ -24,7 +24,7 @@ class CrackPlat extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%crack_plat}}';
+        return '{{%crack_info}}';
     }
 
     /**
@@ -112,10 +112,10 @@ class CrackPlat extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      *
-     * @return CrackPlatQuery the active query used by this AR class.
+     * @return CrackInfoQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CrackPlatQuery(get_called_class());
+        return new CrackInfoQuery(get_called_class());
     }
 }

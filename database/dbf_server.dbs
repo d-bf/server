@@ -71,37 +71,37 @@
 			</fk>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
-		<table name="crack_plat" >
+		<table name="crack_info" >
 			<column name="crack_id" type="bigint" jt="-5" mandatory="y" unsigned="y" />
 			<column name="plat_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
 			<column name="gen_id" type="tinyint" jt="-6" unsigned="y" />
 			<column name="cracker_id" type="int" jt="4" unsigned="y" />
-			<index name="pk_crack_plat" unique="PRIMARY_KEY" >
+			<index name="pk_crack_info" unique="PRIMARY_KEY" >
 				<column name="crack_id" />
 				<column name="plat_id" />
 			</index>
-			<index name="idx_crack_plat" unique="NORMAL" >
+			<index name="idx_crack_info" unique="NORMAL" >
 				<column name="crack_id" />
 			</index>
-			<index name="idx_crack_plat_0" unique="NORMAL" >
+			<index name="idx_crack_info_0" unique="NORMAL" >
 				<column name="plat_id" />
 			</index>
-			<index name="idx_crack_plat_1" unique="NORMAL" >
+			<index name="idx_crack_info_1" unique="NORMAL" >
 				<column name="gen_id" />
 			</index>
-			<index name="idx_crack_plat_2" unique="NORMAL" >
+			<index name="idx_crack_info_2" unique="NORMAL" >
 				<column name="cracker_id" />
 			</index>
-			<fk name="fk_crack_plat" to_schema="dbf_server" to_table="crack" delete_action="cascade" update_action="cascade" >
+			<fk name="fk_crack_info" to_schema="dbf_server" to_table="crack" delete_action="cascade" update_action="cascade" >
 				<fk_column name="crack_id" pk="id" />
 			</fk>
-			<fk name="fk_crack_plat_0" to_schema="dbf_server" to_table="platform" delete_action="cascade" update_action="cascade" >
+			<fk name="fk_crack_info_0" to_schema="dbf_server" to_table="platform" delete_action="cascade" update_action="cascade" >
 				<fk_column name="plat_id" pk="id" />
 			</fk>
-			<fk name="fk_crack_plat_1" to_schema="dbf_server" to_table="generator" delete_action="cascade" update_action="cascade" >
+			<fk name="fk_crack_info_1" to_schema="dbf_server" to_table="generator" delete_action="cascade" update_action="cascade" >
 				<fk_column name="gen_id" pk="id" />
 			</fk>
-			<fk name="fk_crack_plat_2" to_schema="dbf_server" to_table="cracker" delete_action="cascade" update_action="cascade" >
+			<fk name="fk_crack_info_2" to_schema="dbf_server" to_table="cracker" delete_action="cascade" update_action="cascade" >
 				<fk_column name="cracker_id" pk="id" />
 			</fk>
 			<storage><![CDATA[engine=InnoDB]]></storage>
@@ -293,10 +293,10 @@
 		<entity schema="dbf_server" name="gen_plat" color="b2cdf7" x="75" y="150" />
 		<entity schema="dbf_server" name="algorithm" color="b2cdf7" x="690" y="210" />
 		<entity schema="dbf_server" name="task" color="b2cdf7" x="495" y="195" />
-		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="315" y="135" />
 		<entity schema="dbf_server" name="crack" color="b2cdf7" x="450" y="330" />
 		<entity schema="dbf_server" name="generator" color="b2cdf7" x="285" y="255" />
+		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="315" y="135" />
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="45" />
-		<entity schema="dbf_server" name="crack_plat" color="b7c8e3" x="165" y="435" />
+		<entity schema="dbf_server" name="crack_info" color="b7c8e3" x="165" y="435" />
 	</layout>
 </project>

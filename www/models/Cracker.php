@@ -11,7 +11,7 @@ use Yii;
  * @property string $config
  * @property integer $input_mode
  *
- * @property CrackPlat[] $crackPlats
+ * @property CrackInfo[] $crackInfos
  * @property CrackerAlgo[] $crackerAlgos
  * @property Algorithm[] $algos
  * @property CrackerGen[] $crackerGens
@@ -89,9 +89,9 @@ class Cracker extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCrackPlats()
+    public function getCrackInfos()
     {
-        return $this->hasMany(CrackPlat::className(), [
+        return $this->hasMany(CrackInfo::className(), [
             'cracker_id' => 'id'
         ]);
     }
