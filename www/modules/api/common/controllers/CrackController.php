@@ -32,8 +32,8 @@ class CrackController extends Controller
                 foreach ($crackInfos as $crackInfo) {
                     $crack['info'][] = [
                         'platform' => $crackInfo['plat_name'],
-                        'embedded' => ($crackInfo['gen_id'] == null),
-                        'cracker' => $crackInfo['cracker_name']
+                        'cracker' => $crackInfo['cracker_name'],
+                        'internal_gen' => ($crackInfo['gen_id'] == null)
                     ];
                 }
                 
