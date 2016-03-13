@@ -3,6 +3,7 @@ namespace app\modules\api\common\controllers;
 
 use app\modules\api\common\controllers;
 use app\modules\api\common\components\ApiComp;
+use yii\helpers\Json;
 
 class CrackController extends Controller
 {
@@ -22,7 +23,8 @@ class CrackController extends Controller
             ])->queryOne(\PDO::FETCH_ASSOC);
             
             if ($crack) {
-                $crack['has_dep'] = empty($crack['has_dep']); // Should be boolean
+                $crack['gen_config'] = Json::decode($crack['gen_config'], true); // Should be array
+                $crack['has_dep'] = (! empty($crack['has_dep'])); // Should be boolean
                 
                 $crackInfos = \Yii::$app->db->createCommand("SELECT p.name AS plat_name, ci.gen_id AS gen_id, c.name AS cracker_name FROM {{%crack_info}} ci JOIN {{%platform}} p ON (ci.crack_id = :crackId AND p.id = ci.plat_id) JOIN {{cracker}} c ON (c.id = ci.cracker_id)", [
                     ':crackId' => $crack['id']
