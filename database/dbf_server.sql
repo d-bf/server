@@ -17,6 +17,10 @@ CREATE TABLE `algorithm` (
   `rate_gpu` double UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- RELATIONS FOR TABLE `algorithm`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -27,6 +31,7 @@ CREATE TABLE `crack` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `gen_id` tinyint(3) UNSIGNED NOT NULL,
   `algo_id` int(10) UNSIGNED NOT NULL,
+  `gen_config` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `len_min` tinyint(3) UNSIGNED NOT NULL,
   `len_max` tinyint(3) UNSIGNED NOT NULL,
   `description` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -36,6 +41,7 @@ CREATE TABLE `crack` (
   `charset_4` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `mask` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `target` varchar(5120) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `has_dep` tinyint(4) DEFAULT '0',
   `result` varchar(10240) COLLATE utf8_unicode_ci DEFAULT NULL,
   `key_total` bigint(20) UNSIGNED DEFAULT NULL,
   `key_assigned` bigint(20) UNSIGNED DEFAULT '0',
@@ -47,6 +53,14 @@ CREATE TABLE `crack` (
   `ts_last_connect` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- RELATIONS FOR TABLE `crack`:
+--   `gen_id`
+--       `generator` -> `id`
+--   `algo_id`
+--       `algorithm` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -56,9 +70,13 @@ CREATE TABLE `crack` (
 CREATE TABLE `cracker` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '[{\n    "args" : "",\n    "args_opt" : ""\n}]',
+  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '{\n    "stdin":"",\n    "infile":""\n}',
   `input_mode` tinyint(3) UNSIGNED DEFAULT NULL COMMENT '0: none; 1: infile; 2: stdin; 3: both;'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- RELATIONS FOR TABLE `cracker`:
+--
 
 -- --------------------------------------------------------
 
@@ -71,6 +89,14 @@ CREATE TABLE `cracker_algo` (
   `algo_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- RELATIONS FOR TABLE `cracker_algo`:
+--   `cracker_id`
+--       `cracker` -> `id`
+--   `algo_id`
+--       `algorithm` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -80,8 +106,16 @@ CREATE TABLE `cracker_algo` (
 CREATE TABLE `cracker_gen` (
   `cracker_id` int(10) UNSIGNED NOT NULL,
   `gen_id` tinyint(3) UNSIGNED NOT NULL,
-  `config` varchar(500) DEFAULT NULL COMMENT '[{\n    "args" : "",\n    "args_opt" : ""\n}]'
+  `config` varchar(500) DEFAULT NULL COMMENT '{}'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- RELATIONS FOR TABLE `cracker_gen`:
+--   `cracker_id`
+--       `cracker` -> `id`
+--   `gen_id`
+--       `generator` -> `id`
+--
 
 -- --------------------------------------------------------
 
@@ -95,16 +129,38 @@ CREATE TABLE `cracker_plat` (
   `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- RELATIONS FOR TABLE `cracker_plat`:
+--   `cracker_id`
+--       `cracker` -> `id`
+--   `plat_id`
+--       `platform` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `crack_plat`
+-- Table structure for table `crack_info`
 --
 
-CREATE TABLE `crack_plat` (
+CREATE TABLE `crack_info` (
   `crack_id` bigint(20) UNSIGNED NOT NULL,
-  `plat_name` varchar(32) COLLATE utf8_unicode_ci NOT NULL
+  `plat_id` tinyint(3) UNSIGNED NOT NULL,
+  `gen_id` tinyint(3) UNSIGNED DEFAULT NULL,
+  `cracker_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- RELATIONS FOR TABLE `crack_info`:
+--   `crack_id`
+--       `crack` -> `id`
+--   `plat_id`
+--       `platform` -> `id`
+--   `gen_id`
+--       `generator` -> `id`
+--   `cracker_id`
+--       `cracker` -> `id`
+--
 
 -- --------------------------------------------------------
 
@@ -115,8 +171,12 @@ CREATE TABLE `crack_plat` (
 CREATE TABLE `generator` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '[{\n    "args" : "",\n    "args_opt" : ""\n}]'
+  `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '{\n    "stdout":"",\n    "infile":""\n}'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- RELATIONS FOR TABLE `generator`:
+--
 
 -- --------------------------------------------------------
 
@@ -131,6 +191,16 @@ CREATE TABLE `gen_plat` (
   `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- RELATIONS FOR TABLE `gen_plat`:
+--   `gen_id`
+--       `generator` -> `id`
+--   `plat_id`
+--       `platform` -> `id`
+--   `alt_plat_id`
+--       `platform` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -143,6 +213,10 @@ CREATE TABLE `info` (
   `info_value` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- RELATIONS FOR TABLE `info`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -154,6 +228,10 @@ CREATE TABLE `platform` (
   `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT 'os_arch_processor[_brand]'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- RELATIONS FOR TABLE `platform`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -164,8 +242,16 @@ CREATE TABLE `task` (
   `crack_id` bigint(20) UNSIGNED NOT NULL,
   `start` bigint(20) UNSIGNED NOT NULL,
   `offset` bigint(20) UNSIGNED DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL COMMENT '<0: not executed successfully; 0: executed successfully; >0: executed with error;'
+  `status` tinyint(4) DEFAULT NULL,
+  `ts_save` int(10) UNSIGNED DEFAULT '0',
+  `retry` tinyint(3) UNSIGNED DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- RELATIONS FOR TABLE `task`:
+--   `crack_id`
+--       `crack` -> `id`
+--
 
 --
 -- Indexes for dumped tables
@@ -219,12 +305,14 @@ ALTER TABLE `cracker_plat`
   ADD KEY `idx_cracker_plat_0` (`plat_id`);
 
 --
--- Indexes for table `crack_plat`
+-- Indexes for table `crack_info`
 --
-ALTER TABLE `crack_plat`
-  ADD PRIMARY KEY (`crack_id`,`plat_name`),
-  ADD KEY `idx_crack_platform` (`crack_id`),
-  ADD KEY `idx_crack_platform_0` (`plat_name`);
+ALTER TABLE `crack_info`
+  ADD PRIMARY KEY (`crack_id`,`plat_id`),
+  ADD KEY `idx_crack_info` (`crack_id`),
+  ADD KEY `idx_crack_info_0` (`plat_id`),
+  ADD KEY `idx_crack_info_1` (`gen_id`),
+  ADD KEY `idx_crack_info_2` (`cracker_id`);
 
 --
 -- Indexes for table `generator`
@@ -303,11 +391,13 @@ ALTER TABLE `cracker_plat`
   ADD CONSTRAINT `fk_cracker_plat_0` FOREIGN KEY (`plat_id`) REFERENCES `platform` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `crack_plat`
+-- Constraints for table `crack_info`
 --
-ALTER TABLE `crack_plat`
-  ADD CONSTRAINT `fk_crack_platform` FOREIGN KEY (`crack_id`) REFERENCES `crack` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_crack_platform_0` FOREIGN KEY (`plat_name`) REFERENCES `platform` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `crack_info`
+  ADD CONSTRAINT `fk_crack_info` FOREIGN KEY (`crack_id`) REFERENCES `crack` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_crack_info_0` FOREIGN KEY (`plat_id`) REFERENCES `platform` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_crack_info_1` FOREIGN KEY (`gen_id`) REFERENCES `generator` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_crack_info_2` FOREIGN KEY (`cracker_id`) REFERENCES `cracker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `gen_plat`
@@ -322,4 +412,3 @@ ALTER TABLE `gen_plat`
 --
 ALTER TABLE `task`
   ADD CONSTRAINT `fk_task` FOREIGN KEY (`crack_id`) REFERENCES `crack` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-  
