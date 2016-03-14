@@ -284,7 +284,7 @@
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
 	</schema>
-	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.36-bin.jar" host="127.0.0.1" port="3306" instance="dbf_server" user="root" passwd="cm9vdA==" />
+	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.36-bin.jar" host="localhost" port="3306" instance="dbf_server" user="root" />
 	<layout id="Layout2583989" name="dbf_server" joined_routing="y" show_column_type="y" show_relation_columns="y" >
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="330" />
 		<entity schema="dbf_server" name="info" color="b7c8e3" x="690" y="420" />
