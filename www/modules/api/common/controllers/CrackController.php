@@ -18,7 +18,7 @@ class CrackController extends Controller
         if (empty($reqData['id']) || empty($reqData['platform'])) {
             return [];
         } else {
-            $crack = \Yii::$app->db->createCommand("SELECT c.id AS id, c.gen_config AS gen_config, c.algo_id AS algo_id, a.name AS algo_name, c.len_min AS len_min, c.len_max AS len_max, c.charset_1 AS charset1, c.charset_2 AS charset2, c.charset_3 AS charset3, c.charset_4 AS charset4, c.mask AS mask, c.target AS target, c.has_dep AS has_dep FROM {{%crack}} c JOIN {{%algorithm}} a ON (c.id = :crackId AND a.id = c.algo_id)", [
+            $crack = \Yii::$app->db->createCommand("SELECT c.id AS id, g.name AS generator, c.gen_config AS gen_config, c.algo_id AS algo_id, a.name AS algo_name, c.len_min AS len_min, c.len_max AS len_max, c.charset_1 AS charset1, c.charset_2 AS charset2, c.charset_3 AS charset3, c.charset_4 AS charset4, c.mask AS mask, c.target AS target, c.has_dep AS has_dep FROM {{%crack}} c JOIN {{%generator}} g ON (c.id = :crackId AND g.id = c.gen_id) JOIN {{%algorithm}} a ON (a.id = c.algo_id)", [
                 ':crackId' => $reqData['id']
             ])->queryOne(\PDO::FETCH_ASSOC);
             
