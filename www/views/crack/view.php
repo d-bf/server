@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -52,7 +52,13 @@ echo DetailView::widget([
         ],
         'algoName',
         'target:ntext',
-        'result:ntext',
+        [
+            'attribute' => 'result',
+            'format' => 'html',
+            'value' => Html::tag('span', nl2br(htmlentities($model->result)), [
+                'style' => 'white-space: nowrap;'
+            ])
+        ],
         'genName',
         'gen_config',
         [

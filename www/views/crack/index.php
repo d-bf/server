@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -28,11 +28,19 @@ echo GridView::widget([
         'description',
         // 'gen_id',
         'algoName',
-        'result:ntext',
+        [
+            'attribute' => 'result',
+            'format' => 'html',
+            'value' => function ($model) {
+                return Html::tag('span', nl2br(htmlentities($model->result)), [
+                    'style' => 'white-space: nowrap;'
+                ]);
+            }
+        ],
         [
             'attribute' => 'status',
             'filter' => $searchModel->getStatusMap(),
-            'value' => function ($model, $key, $index, $column) {
+            'value' => function ($model) {
                 return $model->getStatusMap($model->status);
             }
         ],
