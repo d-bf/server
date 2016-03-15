@@ -32,9 +32,12 @@ echo GridView::widget([
             'attribute' => 'result',
             'format' => 'html',
             'value' => function ($model) {
-                return Html::tag('span', nl2br(htmlentities($model->result)), [
-                    'style' => 'white-space: nowrap;'
-                ]);
+                if (empty($model->result))
+                    return null;
+                else
+                    return Html::tag('span', nl2br(htmlentities($model->result)), [
+                        'style' => 'white-space: nowrap;'
+                    ]);
             }
         ],
         [
