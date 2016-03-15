@@ -193,6 +193,26 @@
 			</fk>
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
+		<table name="download" >
+			<column name="sort" type="tinyint" jt="-6" />
+			<column name="file_type" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="os" type="varchar" length="15" jt="12" mandatory="y" />
+			<column name="arch" type="varchar" length="5" jt="12" mandatory="y" />
+			<column name="processor" type="char" length="3" jt="1" mandatory="y" />
+			<column name="brand" type="varchar" length="25" jt="12" mandatory="y" />
+			<column name="size" type="int" jt="4" unsigned="y" />
+			<column name="md5" type="char" length="32" jt="1" />
+			<index name="pk_download" unique="PRIMARY_KEY" >
+				<column name="file_type" />
+				<column name="name" />
+				<column name="os" />
+				<column name="arch" />
+				<column name="processor" />
+				<column name="brand" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
 		<table name="gen_plat" >
 			<column name="gen_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
 			<column name="plat_id" type="tinyint" jt="-6" mandatory="y" unsigned="y" />
@@ -284,7 +304,7 @@
 			<storage><![CDATA[engine=InnoDB]]></storage>
 		</table>
 	</schema>
-	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.36-bin.jar" host="localhost" port="3306" instance="dbf_server" user="root" />
+	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.36-bin.jar" host="localhost" port="3306" instance="dbf_server" user="root" passwd="cm9vdA==" />
 	<layout id="Layout2583989" name="dbf_server" joined_routing="y" show_column_type="y" show_relation_columns="y" >
 		<entity schema="dbf_server" name="platform" color="b2cdf7" x="45" y="330" />
 		<entity schema="dbf_server" name="info" color="b7c8e3" x="690" y="420" />
@@ -298,5 +318,6 @@
 		<entity schema="dbf_server" name="cracker_gen" color="a8c4ef" x="315" y="135" />
 		<entity schema="dbf_server" name="cracker" color="b2cdf7" x="480" y="45" />
 		<entity schema="dbf_server" name="crack_info" color="b7c8e3" x="165" y="435" />
+		<entity schema="dbf_server" name="download" color="b7c8e3" x="690" y="540" />
 	</layout>
 </project>

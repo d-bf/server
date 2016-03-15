@@ -27,17 +27,18 @@ else
     </title>
     <?php $this->head()?>
     <style type="text/css">
-        .navbar-brand {
-            padding-bottom: 10px;
-            padding-top: 10px;
-            text-align: center;
-        }
-        .brand-version {
-            display: block;
-            font-size: 14px;
-            line-height: 15px;
-        }
-    </style>
+.navbar-brand {
+	padding-bottom: 10px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+.brand-version {
+	display: block;
+	font-size: 14px;
+	line-height: 15px;
+}
+</style>
 </head>
 <body>
 <?php $this->beginBody()?>
@@ -78,6 +79,15 @@ echo Nav::widget([
             ],
             'options' => [
                 'title' => 'Create a new crack'
+            ]
+        ],
+        [
+            'label' => 'Downloads',
+            'url' => [
+                '/download/index'
+            ],
+            'options' => [
+                'title' => 'List downloads'
             ]
         ]
     ]
@@ -120,7 +130,9 @@ NavBar::end();
 
 	<footer class="footer">
 		<div class="container">
-			<p class="pull-left">&copy; <a href="https://github.com/d-bf" target="_blank">D-BF Project</a> <?= date('Y') ?></p>
+			<p class="pull-left">
+				&copy; <a href="https://github.com/d-bf" target="_blank">D-BF
+					Project</a> <?= date('Y') ?></p>
 
 			<p class="pull-right"><?= Yii::powered() ?></p>
 		</div>
