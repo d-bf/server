@@ -45,7 +45,7 @@ else
 <div class="wrap">
 <?php
 NavBar::begin([
-    'brandLabel' => 'Distributed Brute-Force<span class="brand-version">ver: alpha</span>',
+    'brandLabel' => 'Distributed Brute-Force<span class="brand-version">ver: beta</span>',
     'brandUrl' => null,
     'options' => [
         'class' => 'navbar-inverse navbar-fixed-top'
