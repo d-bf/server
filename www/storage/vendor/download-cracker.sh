@@ -94,6 +94,5 @@ do
 	done
 done
 
-# Remove temp files
-rm -f "$PATH_VENDOR_REPO"/bin/hashcat.*
-rm -f "$PATH_VENDOR_REPO"/bin/cracker.*
+# Remove 7z dir
+rm -f "$PATH_TARGET"
