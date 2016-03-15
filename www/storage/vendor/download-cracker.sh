@@ -20,7 +20,7 @@ else
 fi
 
 # Loop through vendors
-for vendor_name in cudaHashcat oclHashcat
+for vendor_name in hashcat oclHashcat cudaHashcat
 do
 	PATH_VENDOR_REPO="$PATH_REPO/vendor-cracker-$vendor_name"
 	PATH_VENDOR="$PATH_TARGET/cracker/$vendor_name"
