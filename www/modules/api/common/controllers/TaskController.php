@@ -66,10 +66,10 @@ class TaskController extends Controller
                     } else {
                         $status = intval($status);
                         if ($status == 0) // intval() failed
-                            $status = - 3;
+                            $status = - 127;
                     }
                 } else {
-                    $status = - 3;
+                    $status = - 127;
                 }
                 
                 if (($status === 0) && (! empty($taskInfo['result']))) { // Result exists and is valid
@@ -77,8 +77,8 @@ class TaskController extends Controller
                     
                     $transaction = \Yii::$app->db->beginTransaction();
                     
-                    $crack = \Yii::$app->db->createCommand("SELECT result, target, status FROM {{%crack}} WHERE id = :id", [
-                        ':id' => $taskInfo['crack_id']
+                    $crack = \Yii::$app->db->createCommand("SELECT result, target, status FROM {{%crack}} WHERE id = :crackId", [
+                        ':crackId' => $taskInfo['crack_id']
                     ])->queryOne(\PDO::FETCH_ASSOC);
                     
                     // Should update ts_last_connect
@@ -117,6 +117,27 @@ class TaskController extends Controller
                     ':start' => $taskInfo['start'],
                     ':offset' => $taskInfo['offset']
                 ])->execute();
+                
+                // Should mark the crack as finished
+                if ($status === 0) { // At least the current task was ok
+                    if (isset($crack['status'])) {
+                        $crackStatus = $crack['status'];
+                    } else {
+                        $crackStatus = \Yii::$app->db->createCommand("SELECT status from {{%crack}} WHERE id = :crackId", [
+                            ':crackId' => $taskInfo['crack_id']
+                        ])->queryScalar();
+                    }
+                    
+                    if ($crackStatus == 1) { // All keys were assigned
+                        if (\Yii::$app->db->createCommand("SELECT crack_id FROM {{%task}} WHERE crack_id = :crackId AND (status IS NULL OR status <> 0) LIMIT 1", [
+                            ':crackId' => $taskInfo['crack_id']
+                        ])->queryOne() === false) { // No invalid task found, so mark the crack as finished
+                            \Yii::$app->db->createCommand("UPDATE {{%crack}} SET status = 2 WHERE id = :crackId", [
+                                ':crackId' => $taskInfo['crack_id']
+                            ])->execute();
+                        }
+                    }
+                }
             }
         }
     }
