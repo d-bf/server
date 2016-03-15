@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script needs 7z binary: apt-get install p7zip
+# This script needs 7z binary: apt-get install p7zip-full
 #
 # To resolve dependencies of hashcat execute ./tools/deps.sh from hashcat repo
 

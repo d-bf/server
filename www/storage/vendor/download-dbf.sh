@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script needs go and 7z binaris: apt-get install golang p7zip
+# This script needs go and 7z binaris: apt-get install golang p7zip-full
 #
 # To resolve dependencies of hashcat execute ./tools/deps.sh from hashcat repo
 
