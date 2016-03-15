@@ -32,4 +32,13 @@ class AppComp extends \yii\base\Component
     {
         return self::getStoragePath() . 'crack' . DIRECTORY_SEPARATOR . 'dep' . DIRECTORY_SEPARATOR;
     }
+
+    /**
+     *
+     * @return string
+     */
+    public static function getPublicPath()
+    {
+        return self::getStoragePath() . 'public' . DIRECTORY_SEPARATOR;
+    }
 }
