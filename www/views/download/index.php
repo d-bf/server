@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use app\commands\FilesController;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DownloadSearch */
@@ -20,20 +21,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'export' => false,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'name',
+                'group' => true
+            ],
+            [
+                'attribute' => 'os',
+                'filter' => FilesController::$os,
+                'group' => true
+            ],
+            [
+                'attribute' => 'arch',
+                'filter' => FilesController::$arch
+            ],
+            [
+                'attribute' => 'processor',
+                'filter' => FilesController::$processor
+            ],
+            'brand',
+            'size:shortsize',
+            'md5',
 
-            'sort',
-            'file_type',
-            'name',
-            'os',
-            'arch',
-            // 'size',
-            // 'md5',
-            // 'processor',
-            // 'brand',
-            // 'path',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}'
+            ],
         ],
     ]); ?>
 

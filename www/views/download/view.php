@@ -17,16 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'sort',
             'file_type',
             'name',
             'os',
             'arch',
             'processor',
             'brand',
-            'size',
-            'md5',
-            'path',
+            'size:shortsize',
+            'md5'
         ],
     ]) ?>
 

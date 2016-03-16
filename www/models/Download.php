@@ -54,14 +54,14 @@ class Download extends \yii\db\ActiveRecord
     {
         return [
             'sort' => Yii::t('app', 'Sort'),
-            'file_type' => Yii::t('app', 'File Type'),
+            'file_type' => Yii::t('app', 'Type'),
             'name' => Yii::t('app', 'Name'),
-            'os' => Yii::t('app', 'Os'),
+            'os' => Yii::t('app', 'OS'),
             'arch' => Yii::t('app', 'Arch'),
             'processor' => Yii::t('app', 'Processor'),
             'brand' => Yii::t('app', 'Brand'),
             'size' => Yii::t('app', 'Size'),
-            'md5' => Yii::t('app', 'Md5'),
+            'md5' => Yii::t('app', 'MD5'),
             'path' => Yii::t('app', 'Path'),
         ];
     }
