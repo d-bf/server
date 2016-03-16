@@ -10,7 +10,10 @@ $config = [
     ],
     'modules' => [
         'gii' => 'yii\gii\Module',
-        'api' => 'app\modules\api\Api'
+        'api' => 'app\modules\api\Api',
+        'gridview' => [
+            'class' => '\kartik\grid\Module'
+        ]
     ],
     'components' => [
         'urlManager' => [
