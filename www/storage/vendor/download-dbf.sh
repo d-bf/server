@@ -33,3 +33,6 @@ export GOPATH="$PATH_GO"
 
 7z a "$PATH_DOWNLOAD/mac_32.7z"		"$PATH_GO/bin/darwin_386/dbf"
 7z a "$PATH_DOWNLOAD/mac_64.7z"		"$PATH_GO/bin/darwin_amd64/dbf"
+
+# Sync download table
+./../../yii files/sync

@@ -96,3 +96,6 @@ done
 
 # Remove 7z dir
 rm -f "$PATH_TARGET"
+
+# Sync download table
+./../../yii files/sync
