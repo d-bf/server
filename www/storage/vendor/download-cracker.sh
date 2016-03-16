@@ -96,7 +96,7 @@ do
 done
 
 # Remove 7z dir
-rm -f "$PATH_TARGET"
+rm -f -R "$PATH_TARGET"
 
 # Sync download table
 $PATH_YII files/sync
