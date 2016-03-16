@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -20,6 +19,7 @@ use Yii;
  */
 class Download extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -34,16 +34,80 @@ class Download extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sort', 'size'], 'integer'],
-            [['file_type', 'name', 'os', 'arch', 'processor', 'brand'], 'required'],
-            [['file_type'], 'string', 'max' => 30],
-            [['name'], 'string', 'max' => 100],
-            [['os'], 'string', 'max' => 15],
-            [['arch'], 'string', 'max' => 5],
-            [['processor'], 'string', 'max' => 3],
-            [['brand'], 'string', 'max' => 25],
-            [['md5'], 'string', 'max' => 32],
-            [['path'], 'string', 'max' => 1024]
+            [
+                [
+                    'sort',
+                    'size'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'file_type',
+                    'name',
+                    'os',
+                    'arch',
+                    'processor',
+                    'brand'
+                ],
+                'required'
+            ],
+            [
+                [
+                    'file_type'
+                ],
+                'string',
+                'max' => 30
+            ],
+            [
+                [
+                    'name'
+                ],
+                'string',
+                'max' => 100
+            ],
+            [
+                [
+                    'os'
+                ],
+                'string',
+                'max' => 15
+            ],
+            [
+                [
+                    'arch'
+                ],
+                'string',
+                'max' => 5
+            ],
+            [
+                [
+                    'processor'
+                ],
+                'string',
+                'max' => 3
+            ],
+            [
+                [
+                    'brand'
+                ],
+                'string',
+                'max' => 25
+            ],
+            [
+                [
+                    'md5'
+                ],
+                'string',
+                'max' => 32
+            ],
+            [
+                [
+                    'path'
+                ],
+                'string',
+                'max' => 1024
+            ]
         ];
     }
 
@@ -62,12 +126,13 @@ class Download extends \yii\db\ActiveRecord
             'brand' => Yii::t('app', 'Brand'),
             'size' => Yii::t('app', 'Size'),
             'md5' => Yii::t('app', 'MD5'),
-            'path' => Yii::t('app', 'Path'),
+            'path' => Yii::t('app', 'Path')
         ];
     }
 
     /**
      * @inheritdoc
+     *
      * @return DownloadQuery the active query used by this AR class.
      */
     public static function find()

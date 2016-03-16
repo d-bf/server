@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -12,14 +11,33 @@ use app\models\Download;
  */
 class DownloadSearch extends Download
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['sort', 'size'], 'integer'],
-            [['file_type', 'name', 'os', 'arch', 'processor', 'brand', 'md5', 'path'], 'safe'],
+            [
+                [
+                    'sort',
+                    'size'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'file_type',
+                    'name',
+                    'os',
+                    'arch',
+                    'processor',
+                    'brand',
+                    'md5',
+                    'path'
+                ],
+                'safe'
+            ]
         ];
     }
 
@@ -35,40 +53,72 @@ class DownloadSearch extends Download
     /**
      * Creates data provider instance with search query applied
      *
-     * @param array $params
+     * @param array $params            
      *
      * @return ActiveDataProvider
      */
     public function search($params)
     {
         $query = Download::find();
-
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
-
+        
         $this->load($params);
-
-        if (!$this->validate()) {
+        
+        if (! $this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        
         $query->andFilterWhere([
             'sort' => $this->sort,
-            'size' => $this->size,
+            'size' => $this->size
         ]);
-
-        $query->andFilterWhere(['like', 'file_type', $this->file_type])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'os', $this->os])
-            ->andFilterWhere(['like', 'arch', $this->arch])
-            ->andFilterWhere(['like', 'processor', $this->processor])
-            ->andFilterWhere(['like', 'brand', $this->brand])
-            ->andFilterWhere(['like', 'md5', $this->md5])
-            ->andFilterWhere(['like', 'path', $this->path]);
-
+        
+        $query->andFilterWhere([
+            'like',
+            'file_type',
+            $this->file_type
+        ])
+            ->andFilterWhere([
+            'like',
+            'name',
+            $this->name
+        ])
+            ->andFilterWhere([
+            'like',
+            'os',
+            $this->os
+        ])
+            ->andFilterWhere([
+            'like',
+            'arch',
+            $this->arch
+        ])
+            ->andFilterWhere([
+            'like',
+            'processor',
+            $this->processor
+        ])
+            ->andFilterWhere([
+            'like',
+            'brand',
+            $this->brand
+        ])
+            ->andFilterWhere([
+            'like',
+            'md5',
+            $this->md5
+        ])
+            ->andFilterWhere([
+            'like',
+            'path',
+            $this->path
+        ]);
+        
         return $dataProvider;
     }
 }

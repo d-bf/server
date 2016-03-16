@@ -32,10 +32,10 @@ FormAsset::register($this);
 }
 
 #gen_config .config-container {
-    border: #ccc solid 1px;
-    border-radius: 4px;
-    padding-top: 5px;
-    vertical-align: middle;
+	border: #ccc solid 1px;
+	border-radius: 4px;
+	padding-top: 5px;
+	vertical-align: middle;
 }
 </style>
 
@@ -68,8 +68,8 @@ if (empty($model->gen_id))
     $model->gen_id = 0;
 
 $generators = ArrayHelper::map(Generator::find()->orderBy([
-        'name' => SORT_ASC
-    ])->all(), 'id', 'name');
+    'name' => SORT_ASC
+])->all(), 'id', 'name');
 
 echo $form->field($model, 'gen_id')->widget(Select2::classname(), [
     'data' => $generators,
@@ -80,24 +80,28 @@ echo $form->field($model, 'gen_id')->widget(Select2::classname(), [
 ]);
 ?>
 
-<?php echo Html::activeHiddenInput($model, 'gen_config', [
-    'id' => 'crack-gen_config'
-]); ?>
+<?php
 
-<div class="form-group gen-config field-crack-gen_config" style="display: none;" id="gen_config">
-    <label class="control-label col-sm-2">Generator Config</label>
-    <div class="col-sm-8">
+echo Html::activeHiddenInput($model, 'gen_config', [
+    'id' => 'crack-gen_config'
+]);
+?>
+
+<div class="form-group gen-config field-crack-gen_config"
+		style="display: none;" id="gen_config">
+		<label class="control-label col-sm-2">Generator Config</label>
+		<div class="col-sm-8">
 		<?php
-		  foreach ($generators as $genId => $genName) {
-		      if (is_readable(__DIR__ . DIRECTORY_SEPARATOR . 'gen_config' . DIRECTORY_SEPARATOR . $genName . '.php')) {
-		          echo '<div id="gen_config_' . $genId . '" class="config-container col-sm-12" style="display: none;">';
-		          echo $this->render("gen_config/$genName");
-		          echo '</div>';
-		      }
-		  }
-        ?>
+foreach ($generators as $genId => $genName) {
+    if (is_readable(__DIR__ . DIRECTORY_SEPARATOR . 'gen_config' . DIRECTORY_SEPARATOR . $genName . '.php')) {
+        echo '<div id="gen_config_' . $genId . '" class="config-container col-sm-12" style="display: none;">';
+        echo $this->render("gen_config/$genName");
+        echo '</div>';
+    }
+}
+?>
     </div>
-</div>
+	</div>
 
 <?php
 echo $form->field($model, 'algo_id')->widget(Select2::classname(), [

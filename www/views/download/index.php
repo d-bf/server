@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use app\commands\FilesController;
@@ -28,8 +27,8 @@ if (! empty($msg)) {
             'showProgressbar' => false,
             'placement' => [
                 'from' => 'top',
-                'align' => 'center',
-            ],
+                'align' => 'center'
+            ]
         ]
     ]);
 }
@@ -37,56 +36,9 @@ if (! empty($msg)) {
 
 <div class="download-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+	<h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'export' => false,
-        'columns' => [
-            [
-                'attribute' => 'name',
-                'group' => true
-            ],
-            [
-                'attribute' => 'os',
-                'filter' => FilesController::$os,
-                'group' => true
-            ],
-            [
-                'attribute' => 'arch',
-                'filter' => FilesController::$arch
-            ],
-            [
-                'attribute' => 'processor',
-                'filter' => FilesController::$processor
-            ],
-            'brand',
-            'size:shortsize',
-            'md5',
-
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{download}',
-                'buttons' => [
-                    'download' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-download-alt"></span>',
-                            [
-                                'get',
-                                'file' => $model->path,
-                                'md5' => $model->md5
-                            ],
-                            [
-                                'title' => Yii::t('yii', 'Download'),
-                                'aria-label' => Yii::t('yii', 'Download'),
-                                'data-pjax' => '0'
-                            ]
-                        );
-                    },
-                ]
-            ],
-        ],
-    ]); ?>
+    <?=GridView::widget(['dataProvider' => $dataProvider,'filterModel' => $searchModel,'export' => false,'columns' => [['attribute' => 'name','group' => true],['attribute' => 'os','filter' => FilesController::$os,'group' => true],['attribute' => 'arch','filter' => FilesController::$arch],['attribute' => 'processor','filter' => FilesController::$processor],'brand','size:shortsize','md5',['class' => 'yii\grid\ActionColumn','template' => '{download}','buttons' => ['download' => function ($url, $model, $key) {return Html::a('<span class="glyphicon glyphicon-download-alt"></span>', ['get','file' => $model->path,'md5' => $model->md5], ['title' => Yii::t('yii', 'Download'),'aria-label' => Yii::t('yii', 'Download'),'data-pjax' => '0']);}]]]]);?>
 
 </div>
