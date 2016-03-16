@@ -25,13 +25,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'arch') ?>
 
-    <?php // echo $form->field($model, 'size') ?>
-
-    <?php // echo $form->field($model, 'md5') ?>
-
     <?php // echo $form->field($model, 'processor') ?>
 
     <?php // echo $form->field($model, 'brand') ?>
+
+    <?php // echo $form->field($model, 'size') ?>
+
+    <?php // echo $form->field($model, 'md5') ?>
 
     <?php // echo $form->field($model, 'path') ?>
 

@@ -22,10 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'os',
             'arch',
-            'size',
-            'md5',
             'processor',
             'brand',
+            'size',
+            'md5',
             'path',
         ],
     ]) ?>
