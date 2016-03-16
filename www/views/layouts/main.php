@@ -7,6 +7,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\commands\FilesController;
 
 AppAsset::register($this);
 ?>
@@ -82,12 +83,31 @@ echo Nav::widget([
             ]
         ],
         [
-            'label' => 'Downloads',
-            'url' => [
-                '/download/index'
-            ],
+            'label' => 'Download',
             'options' => [
                 'title' => 'List downloads'
+            ],
+            'items' => [
+                [
+                    'label' => 'Client',
+                    'url' => [
+                        '/download/index',
+                        'type' => FilesController::TYPE_CLIENT
+                    ],
+                    'options' => [
+                        'title' => 'List client downloads'
+                    ],
+                ],
+                [
+                    'label' => 'Vendor',
+                    'url' => [
+                        '/download/index',
+                        'type' => FilesController::TYPE_VENDOR
+                    ],
+                    'options' => [
+                        'title' => 'List vendor downloads'
+                    ],
+                ]
             ]
         ]
     ]

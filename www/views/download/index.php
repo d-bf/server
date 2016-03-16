@@ -8,8 +8,9 @@ use kartik\growl\Growl;
 /* @var $searchModel app\models\DownloadSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Downloads');
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'Download') . ' ' . $file_type;
+$this->params['breadcrumbs'][] = 'Download';
+$this->params['breadcrumbs'][] = $file_type;
 ?>
 
 <?php

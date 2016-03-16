@@ -18,6 +18,9 @@ class FilesController extends Controller
     const PROCESSOR_CPU = 'CPU';
     const PROCESSOR_GPU = 'GPU';
     
+    const TYPE_CLIENT = 'Client';
+    const TYPE_VENDOR = 'Vendor';
+    
     public static $os = [
         self::OS_LINUX => self::OS_LINUX,
         self::OS_MAC => self::OS_MAC,
@@ -34,6 +37,11 @@ class FilesController extends Controller
         self::PROCESSOR_GPU => self::PROCESSOR_GPU
     ];
     
+    public static $file_type = [
+        self::TYPE_CLIENT => self::TYPE_CLIENT,
+        self::TYPE_VENDOR => self::TYPE_VENDOR
+    ];
+    
     public function actionSync()
     {
         $pathOfClient               = 'd-bf' . DIRECTORY_SEPARATOR;
@@ -44,28 +52,28 @@ class FilesController extends Controller
 //          sort,   file_type,  name,           os,             arch,           processor,              brand,      path
 //          0       1           2               3               4               5                       6           7
         $files = [
-            ['0',   'Client',   'D-BF',         self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfClient.'linux_32.7z'],
-            ['0',   'Client',   'D-BF',         self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfClient.'linux_64.7z'],
-            ['0',   'Client',   'D-BF',         self::OS_MAC,   self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfClient.'mac_32.7z'],
-            ['0',   'Client',   'D-BF',         self::OS_MAC,   self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfClient.'mac_64.7z'],
-            ['0',   'Client',   'D-BF',         self::OS_WIN,   self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfClient.'windows_32.7z'],
-            ['0',   'Client',   'D-BF',         self::OS_WIN,   self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfClient.'windows_64.7z'],
+            ['0',   self::TYPE_CLIENT,  'D-BF',         self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfClient.'linux_32.7z'],
+            ['0',   self::TYPE_CLIENT,  'D-BF',         self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfClient.'linux_64.7z'],
+            ['0',   self::TYPE_CLIENT,  'D-BF',         self::OS_MAC,   self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfClient.'mac_32.7z'],
+            ['0',   self::TYPE_CLIENT,  'D-BF',         self::OS_MAC,   self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfClient.'mac_64.7z'],
+            ['0',   self::TYPE_CLIENT,  'D-BF',         self::OS_WIN,   self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfClient.'windows_32.7z'],
+            ['0',   self::TYPE_CLIENT,  'D-BF',         self::OS_WIN,   self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfClient.'windows_64.7z'],
             
-            ['1',   'Vendor',   'cudaHashcat',  self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_GPU,    'Nvidia',   $pathOfVendorCudaHashcat.'gpu_linux_32_nv.7z'],
-            ['1',   'Vendor',   'cudaHashcat',  self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_GPU,    'Nvidia',   $pathOfVendorCudaHashcat.'gpu_linux_64_nv.7z'],
-            ['1',   'Vendor',   'cudaHashcat',  self::OS_WIN,   self::ARCH_32,  self::PROCESSOR_GPU,    'Nvidia',   $pathOfVendorCudaHashcat.'gpu_win_32_nv.7z'],
-            ['1',   'Vendor',   'cudaHashcat',  self::OS_WIN,   self::ARCH_64,  self::PROCESSOR_GPU,    'Nvidia',   $pathOfVendorCudaHashcat.'gpu_win_64_nv.7z'],
+            ['1',   self::TYPE_VENDOR,  'cudaHashcat',  self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_GPU,    'Nvidia',   $pathOfVendorCudaHashcat.'gpu_linux_32_nv.7z'],
+            ['1',   self::TYPE_VENDOR,  'cudaHashcat',  self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_GPU,    'Nvidia',   $pathOfVendorCudaHashcat.'gpu_linux_64_nv.7z'],
+            ['1',   self::TYPE_VENDOR,  'cudaHashcat',  self::OS_WIN,   self::ARCH_32,  self::PROCESSOR_GPU,    'Nvidia',   $pathOfVendorCudaHashcat.'gpu_win_32_nv.7z'],
+            ['1',   self::TYPE_VENDOR,  'cudaHashcat',  self::OS_WIN,   self::ARCH_64,  self::PROCESSOR_GPU,    'Nvidia',   $pathOfVendorCudaHashcat.'gpu_win_64_nv.7z'],
             
-            ['1',   'Vendor',   'oclHashcat',   self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_GPU,    'AMD',      $pathOfVendorOclHashcat.'gpu_linux_32_amd.7z'],
-            ['1',   'Vendor',   'oclHashcat',   self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_GPU,    'AMD',      $pathOfVendorOclHashcat.'gpu_linux_64_amd.7z'],
-            ['1',   'Vendor',   'oclHashcat',   self::OS_WIN,   self::ARCH_32,  self::PROCESSOR_GPU,    'AMD',      $pathOfVendorOclHashcat.'gpu_win_32_amd.7z'],
-            ['1',   'Vendor',   'oclHashcat',   self::OS_WIN,   self::ARCH_64,  self::PROCESSOR_GPU,    'AMD',      $pathOfVendorOclHashcat.'gpu_win_64_amd.7z'],
+            ['1',   self::TYPE_VENDOR,  'oclHashcat',   self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_GPU,    'AMD',      $pathOfVendorOclHashcat.'gpu_linux_32_amd.7z'],
+            ['1',   self::TYPE_VENDOR,  'oclHashcat',   self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_GPU,    'AMD',      $pathOfVendorOclHashcat.'gpu_linux_64_amd.7z'],
+            ['1',   self::TYPE_VENDOR,  'oclHashcat',   self::OS_WIN,   self::ARCH_32,  self::PROCESSOR_GPU,    'AMD',      $pathOfVendorOclHashcat.'gpu_win_32_amd.7z'],
+            ['1',   self::TYPE_VENDOR,  'oclHashcat',   self::OS_WIN,   self::ARCH_64,  self::PROCESSOR_GPU,    'AMD',      $pathOfVendorOclHashcat.'gpu_win_64_amd.7z'],
             
-            ['2',   'Vendor',   'hashcat',      self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_linux_32.7z'],
-            ['2',   'Vendor',   'hashcat',      self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_linux_64.7z'],
-            ['2',   'Vendor',   'hashcat',      self::OS_MAC,   self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_mac_64.7z'],
-            ['2',   'Vendor',   'hashcat',      self::OS_WIN,   self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_win_32.7z'],
-            ['2',   'Vendor',   'hashcat',      self::OS_WIN,   self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_win_64.7z']
+            ['2',   self::TYPE_VENDOR,  'hashcat',      self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_linux_32.7z'],
+            ['2',   self::TYPE_VENDOR,  'hashcat',      self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_linux_64.7z'],
+            ['2',   self::TYPE_VENDOR,  'hashcat',      self::OS_MAC,   self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_mac_64.7z'],
+            ['2',   self::TYPE_VENDOR,  'hashcat',      self::OS_WIN,   self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_win_32.7z'],
+            ['2',   self::TYPE_VENDOR,  'hashcat',      self::OS_WIN,   self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfVendorHashcat.'cpu_win_64.7z']
         ];
         
         $path = AppComp::getPublicPath() . 'last' . DIRECTORY_SEPARATOR;

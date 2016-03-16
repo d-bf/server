@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\components\AppComp;
+use app\commands\FilesController;
 
 /**
  * DownloadController implements the CRUD actions for Download model.
@@ -34,12 +35,19 @@ class DownloadController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($type)
     {
+        if (! in_array($type, FilesController::$file_type))
+            throw new NotFoundHttpException('The requested page does not exist.');
+        
         $searchModel = new DownloadSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere([
+            'file_type' => $type
+        ]);
         
         return $this->render('index', [
+            'file_type' => $type,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider
         ]);
