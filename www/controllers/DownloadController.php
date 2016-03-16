@@ -94,7 +94,7 @@ class DownloadController extends Controller
         
         if (file_exists($filePath)) {
             if (strcasecmp(md5_file($filePath), $md5) == 0) {
-                return \Yii::$app->response->sendFile($filePath);
+                return \Yii::$app->response->sendFile($filePath, $file);
             } else {
                 $msg['title'] = 'MD5 mismatch!';
             }
