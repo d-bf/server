@@ -62,7 +62,18 @@ class DownloadSearch extends Download
         $query = Download::find();
         
         $dataProvider = new ActiveDataProvider([
-            'query' => $query
+            'query' => $query,
+            'sort' => false,
+            'pagination' => false
+        ]);
+        
+        $query->orderBy([
+            'sort' => SORT_ASC,
+            'name' => SORT_ASC,
+            'os' => SORT_ASC,
+            'arch' => SORT_ASC,
+            'processor' => SORT_ASC,
+            'brand' => SORT_ASC
         ]);
         
         $this->load($params);
