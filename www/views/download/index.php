@@ -70,9 +70,13 @@ if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . $infoFile . '.php')) {
             ],
             [
                 'attribute' => 'processor',
-                'filter' => FilesController::$processor
+                'filter' => FilesController::$processor,
+                'visible' => ($file_type != FilesController::TYPE_CLIENT)
             ],
-            'brand',
+            [
+                'attribute' => 'brand',
+                'visible' => ($file_type != FilesController::TYPE_CLIENT)
+            ],
             'size:shortsize',
             'md5',
             [
