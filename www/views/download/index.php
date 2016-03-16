@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use app\commands\FilesController;
+use kartik\growl\Growl;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DownloadSearch */
@@ -11,6 +12,29 @@ use app\commands\FilesController;
 $this->title = Yii::t('app', 'Downloads');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php
+$msg = Yii::$app->getSession()->getFlash('download');
+if (! empty($msg)) {
+    echo Growl::widget([
+        'type' => Growl::TYPE_DANGER,
+        'title' => (isset($msg['title']) ? $msg['title'] : 'Error'),
+        'icon' => 'glyphicon glyphicon-ok-sign',
+        'body' => (isset($msg['body']) ? $msg['body'] : 'Unknown!'),
+        'showSeparator' => true,
+        'delay' => 0,
+        'pluginOptions' => [
+            'delay' => 5000,
+            'showProgressbar' => false,
+            'placement' => [
+                'from' => 'top',
+                'align' => 'center',
+            ],
+        ]
+    ]);
+}
+?>
+
 <div class="download-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -44,7 +68,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}'
+                'template' => '{download}',
+                'buttons' => [
+                    'download' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-download-alt"></span>',
+                            [
+                                'get',
+                                'file' => $model->path,
+                                'md5' => $model->md5
+                            ],
+                            [
+                                'title' => Yii::t('yii', 'Download'),
+                                'aria-label' => Yii::t('yii', 'Download'),
+                                'data-pjax' => '0'
+                            ]
+                        );
+                    },
+                ]
             ],
         ],
     ]); ?>
