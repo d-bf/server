@@ -9,6 +9,7 @@ PATH_ME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PATH_GO="$PATH_ME/repo/go"
 PATH_REPO="$PATH_GO/src/github.com/d-bf"
 PATH_DOWNLOAD="$PATH_ME/../public/last/d-bf"
+PATH_YII="$PATH_ME/../../yii"
 
 mkdir -p "$PATH_REPO"
 
@@ -35,4 +36,4 @@ export GOPATH="$PATH_GO"
 7z a "$PATH_DOWNLOAD/mac_64.7z"		"$PATH_GO/bin/darwin_amd64/dbf"
 
 # Sync download table
-./../../yii files/sync
+$PATH_YII files/sync

@@ -9,6 +9,7 @@ PATH_ME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PATH_REPO="$PATH_ME/repo"
 PATH_TARGET="$PATH_ME/7z"
 PATH_DOWNLOAD="$PATH_ME/../public/last"
+PATH_YII="$PATH_ME/../../yii"
 
 # Clone or update dbf-vendor
 if [ -d "$PATH_REPO/generator-general-gpu/.git" ]; then
@@ -98,4 +99,4 @@ done
 rm -f "$PATH_TARGET"
 
 # Sync download table
-./../../yii files/sync
+$PATH_YII files/sync
