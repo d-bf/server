@@ -40,6 +40,15 @@ if (! empty($msg)) {
 	<h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+	<?php
+$infoFile = 'info_' . strtolower($file_type);
+if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . $infoFile . '.php')) {
+    echo $this->render($infoFile);
+}
+?>
+
+	<br>
+
     <?php
     echo GridView::widget([
         'dataProvider' => $dataProvider,
