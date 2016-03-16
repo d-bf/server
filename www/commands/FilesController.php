@@ -4,6 +4,7 @@ namespace app\commands;
 
 use yii\console\Controller;
 use app\components\AppComp;
+use yii\helpers\Console;
 
 class FilesController extends Controller
 {
@@ -18,27 +19,27 @@ class FilesController extends Controller
     const PROCESSOR_GPU = 'GPU';
     
     public static $os = [
-        self::OS_LINUX,
-        self::OS_MAC,
-        self::OS_WIN
+        self::OS_LINUX => self::OS_LINUX,
+        self::OS_MAC => self::OS_MAC,
+        self::OS_WIN => self::OS_WIN
     ];
     
     public static $arch = [
-        self::ARCH_32,
-        self::ARCH_64
+        self::ARCH_32 => self::ARCH_32,
+        self::ARCH_64 => self::ARCH_64
     ];
     
     public static $processor = [
-        self::PROCESSOR_CPU,
-        self::PROCESSOR_GPU
+        self::PROCESSOR_CPU => self::PROCESSOR_CPU,
+        self::PROCESSOR_GPU => self::PROCESSOR_GPU
     ];
     
     public function actionSync()
     {
         $pathOfClient               = 'd-bf' . DIRECTORY_SEPARATOR;
-        $pathOfVendorCudaHashcat    = 'vendor' . DIRECTORY_SEPARATOR . 'cudaHashcat';
-        $pathOfVendorOclHashcat     = 'vendor' . DIRECTORY_SEPARATOR . 'oclHashcat';
-        $pathOfVendorHashcat        = 'vendor' . DIRECTORY_SEPARATOR . 'hashcat';
+        $pathOfVendorCudaHashcat    = 'vendor' . DIRECTORY_SEPARATOR . 'cudaHashcat' . DIRECTORY_SEPARATOR;
+        $pathOfVendorOclHashcat     = 'vendor' . DIRECTORY_SEPARATOR . 'oclHashcat' . DIRECTORY_SEPARATOR;
+        $pathOfVendorHashcat        = 'vendor' . DIRECTORY_SEPARATOR . 'hashcat' . DIRECTORY_SEPARATOR;
 
 //          sort,   file_type,  name,           os,             arch,           processor,              brand,      path
 //          0       1           2               3               4               5                       6           7
@@ -84,14 +85,17 @@ class FilesController extends Controller
                 $params[":i5$i"] = $fileInfo[5];
                 $params[":i6$i"] = $fileInfo[6];
                 $params[":i7$i"] = filesize($path . $fileInfo[7]);
-                $params[":i8$i"] = md5_file($path . $fileInfo[7], false);
+                $params[":i8$i"] = strtoupper(md5_file($path . $fileInfo[7], false));
                 $params[":i9$i"] = $fileInfo[7];
                 
                 $i++;
+            } else {
+                $this->stdout('File not found: ' . $path . $fileInfo[7] . "\n" , Console::FG_YELLOW, Console::BOLD);
             }
         }
         $values = substr($values, 1);
         
-        \Yii::$app->db->createCommand("INSERT INTO {{%download}} (sort, file_type, name, os, arch, processor, brand, size, md5, path) VALUES $values ON DUPLICATE KEY UPDATE sort = VALUES(sort), size = VALUES(size), md5 = VALUES(md5), path = VALUES(path)", $params)->execute();
+        if (count($params) > 0)
+            \Yii::$app->db->createCommand("INSERT INTO {{%download}} (sort, file_type, name, os, arch, processor, brand, size, md5, path) VALUES $values ON DUPLICATE KEY UPDATE sort = VALUES(sort), size = VALUES(size), md5 = VALUES(md5), path = VALUES(path)", $params)->execute();
     }
 }
