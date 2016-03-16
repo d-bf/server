@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'md5',
             'processor',
             'brand',
+            'path',
         ],
     ]) ?>
 

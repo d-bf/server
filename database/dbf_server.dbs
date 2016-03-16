@@ -203,6 +203,7 @@
 			<column name="brand" type="varchar" length="25" jt="12" mandatory="y" />
 			<column name="size" type="int" jt="4" unsigned="y" />
 			<column name="md5" type="char" length="32" jt="1" />
+			<column name="path" type="varchar" length="1024" jt="12" />
 			<index name="pk_download" unique="PRIMARY_KEY" >
 				<column name="file_type" />
 				<column name="name" />

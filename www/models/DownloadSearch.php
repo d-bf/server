@@ -19,7 +19,7 @@ class DownloadSearch extends Download
     {
         return [
             [['sort', 'size'], 'integer'],
-            [['file_type', 'name', 'os', 'arch', 'md5', 'processor', 'brand'], 'safe'],
+            [['file_type', 'name', 'os', 'arch', 'md5', 'processor', 'brand', 'path'], 'safe'],
         ];
     }
 
@@ -66,7 +66,8 @@ class DownloadSearch extends Download
             ->andFilterWhere(['like', 'arch', $this->arch])
             ->andFilterWhere(['like', 'md5', $this->md5])
             ->andFilterWhere(['like', 'processor', $this->processor])
-            ->andFilterWhere(['like', 'brand', $this->brand]);
+            ->andFilterWhere(['like', 'brand', $this->brand])
+            ->andFilterWhere(['like', 'path', $this->path]);
 
         return $dataProvider;
     }

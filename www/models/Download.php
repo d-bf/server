@@ -16,6 +16,7 @@ use Yii;
  * @property string $md5
  * @property string $processor
  * @property string $brand
+ * @property string $path
  */
 class Download extends \yii\db\ActiveRecord
 {
@@ -41,7 +42,8 @@ class Download extends \yii\db\ActiveRecord
             [['arch'], 'string', 'max' => 5],
             [['md5'], 'string', 'max' => 32],
             [['processor'], 'string', 'max' => 3],
-            [['brand'], 'string', 'max' => 25]
+            [['brand'], 'string', 'max' => 25],
+            [['path'], 'string', 'max' => 1024]
         ];
     }
 
@@ -60,6 +62,7 @@ class Download extends \yii\db\ActiveRecord
             'md5' => Yii::t('app', 'Md5'),
             'processor' => Yii::t('app', 'Processor'),
             'brand' => Yii::t('app', 'Brand'),
+            'path' => Yii::t('app', 'Path'),
         ];
     }
 
