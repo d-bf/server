@@ -125,7 +125,7 @@ class Download extends \yii\db\ActiveRecord
             'processor' => Yii::t('app', 'Processor'),
             'brand' => Yii::t('app', 'Brand'),
             'size' => Yii::t('app', 'Size'),
-            'md5' => Yii::t('app', 'MD5'),
+            'md5' => Yii::t('app', 'MD5 Checksum'),
             'path' => Yii::t('app', 'Path')
         ];
     }
