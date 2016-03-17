@@ -80,11 +80,12 @@ if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . $infoFile . '.php')) {
             'size:shortsize',
             'md5',
             [
+                'header' => Yii::t('yii', 'Download'),
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{download}',
                 'buttons' => [
                     'download' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-download-alt"></span>', [
+                        return Html::a(basename($model->path), [
                             'get',
                             'file' => $model->path,
                             'md5' => $model->md5
