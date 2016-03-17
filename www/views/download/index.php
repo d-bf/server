@@ -77,7 +77,11 @@ if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . $infoFile . '.php')) {
                 'attribute' => 'brand',
                 'visible' => ($file_type != FilesController::TYPE_CLIENT)
             ],
-            'size:shortsize',
+            [
+                'attribute' => 'size',
+                'format' => 'shortsize',
+                'filter' => false
+            ],
             'md5',
             [
                 'header' => Yii::t('yii', 'Download'),
