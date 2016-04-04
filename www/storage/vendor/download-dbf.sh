@@ -22,6 +22,7 @@ else
 fi
 
 cd "$PATH_REPO/client/main/dbf"
+export GOPATH="$PATH_GO"
 ./cross-compile.sh
 
 PATH_BUILD="/dbf_release"
