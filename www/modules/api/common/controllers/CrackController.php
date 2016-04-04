@@ -59,23 +59,4 @@ class CrackController extends Controller
         
         return '';
     }
-
-    /**
-     * Scape crack's special characters
-     *
-     * @param string $chars            
-     * @return string
-     */
-    private function scapeChars($chars)
-    {
-        return str_replace([
-            '\\',
-            '"',
-            '?'
-        ], [
-            '\\\\',
-            '\\"',
-            '??'
-        ], $chars);
-    }
 }
