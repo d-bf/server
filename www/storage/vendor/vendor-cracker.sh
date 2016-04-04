@@ -10,13 +10,16 @@ PATH_REPO="$PATH_ME/repo"
 PATH_SERVER="$PATH_ME/cracker"
 
 # Clone or update dbf-vendor
-if [ -d "$PATH_REPO/generator-gpu/.git" ]; then
-	cd "$PATH_REPO/generator-gpu"
-	git pull origin
-else
-	git clone "https://github.com/dbf-vendor/generator-gpu" "-b" "bin" "$PATH_REPO/generator-gpu"
-	cd "$PATH_REPO/generator-gpu"
-fi
+for vendor_name in generator-cpu generator-gpu
+do
+	if [ -d "$PATH_REPO/$vendor_name/.git" ]; then
+		cd "$PATH_REPO/$vendor_name"
+		git pull origin
+	else
+		git clone "https://github.com/dbf-vendor/$vendor_name" "-b" "bin" "$PATH_REPO/$vendor_name"
+		cd "$PATH_REPO/$vendor_name"
+	fi
+done
 
 # Loop through vendors
 for vendor_name in hashcat oclHashcat cudaHashcat
@@ -72,21 +75,23 @@ do
 			# Compress vendor
 			cp -f "$PATH_DEP_ZIP" "$PATH_VENDOR_REPO/bin/$os_arch.zip"
 
-			if [ ${os_arch%%_*} == "gpu" ]; then # GPU
-				cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/hashcat.${os_arch##*.}"
-				zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/hashcat.${os_arch##*.}"
+			PU=${os_arch%%_*} # cpu | gpu
 
+			cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/hashcat.${os_arch##*.}"
+			zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/hashcat.${os_arch##*.}"
+
+			if [ $PU == "cpu"]; then
+				temp=${os_arch#cpu_}
+			else
 				temp=${os_arch#gpu_}
-				osarch=${temp%%_*}
-				temp=${temp#*_}
-				osarch="$osarch"_${temp%%_*}
+			fi
+			osarch=${temp%%_*}
+			temp=${temp#*_}
+			temp=${temp%%.*}
+			osarch="$osarch"_${temp%%_*}
 
-				if [ -f "$PATH_REPO/generator-gpu/$osarch" ]; then
-					cp -af "$PATH_REPO/generator-gpu/$osarch" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
-					zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
-				fi
-			else # CPU
-				cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
+			if [ -f "$PATH_REPO/generator-$PU/$osarch" ]; then
+				cp -af "$PATH_REPO/generator-$PU/$osarch" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
 				zip -jg "$PATH_VENDOR_REPO/bin/$os_arch.zip" "$PATH_VENDOR_REPO/bin/cracker.${os_arch##*.}"
 			fi
 
