@@ -12,12 +12,12 @@ PATH_DOWNLOAD="$PATH_ME/../public/last"
 PATH_YII="$PATH_ME/../../yii"
 
 # Clone or update dbf-vendor
-if [ -d "$PATH_REPO/generator-general-gpu/.git" ]; then
-	cd "$PATH_REPO/generator-general-gpu"
+if [ -d "$PATH_REPO/generator-gpu/.git" ]; then
+	cd "$PATH_REPO/generator-gpu"
 	git pull origin
 else
-	git clone "https://github.com/dbf-vendor/generator-general-gpu" "-b" "bin" "$PATH_REPO/generator-general-gpu"
-	cd "$PATH_REPO/generator-general-gpu"
+	git clone "https://github.com/dbf-vendor/generator-gpu" "-b" "bin" "$PATH_REPO/generator-gpu"
+	cd "$PATH_REPO/generator-gpu"
 fi
 
 # Loop through vendors
@@ -73,8 +73,8 @@ do
 				temp=${temp#*_}
 				osarch="$osarch"_${temp%%_*}
 
-				if [ -f "$PATH_REPO/generator-general-gpu/$osarch" ]; then
-					cp -af "$PATH_REPO/generator-general-gpu/$osarch" "$PATH_VENDOR_OS_ARCH/cracker.${os_arch##*.}"
+				if [ -f "$PATH_REPO/generator-gpu/$osarch" ]; then
+					cp -af "$PATH_REPO/generator-gpu/$osarch" "$PATH_VENDOR_OS_ARCH/cracker.${os_arch##*.}"
 				fi
 			else # CPU
 				cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_OS_ARCH/cracker.${os_arch##*.}"
