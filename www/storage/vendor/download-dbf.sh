@@ -25,7 +25,7 @@ cd "$PATH_REPO/client/main/dbf"
 export GOPATH="$PATH_GO"
 ./cross-compile.sh
 
-PATH_BUILD="/dbf_release"
+PATH_BUILD="./dbf_release"
 
 # Compress to download dir
 7z a "$PATH_DOWNLOAD/linux_32.7z"	"$PATH_BUILD/linux_32/dbf"
