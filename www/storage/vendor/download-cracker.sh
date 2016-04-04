@@ -68,11 +68,11 @@ do
 			# Copy dep
 			cp -af $PATH_VENDOR_REPO/bin/dep/* "$PATH_VENDOR_OS_ARCH/"
 
-			PU=${os_arch%%_*} # cpu | gpu
+			pu=${os_arch%%_*} # cpu | gpu
 
 			cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_OS_ARCH/hashcat.${os_arch##*.}"
 
-			if [ $PU == "cpu"]; then
+			if [ "$pu" == "cpu" ]; then
 				temp=${os_arch#cpu_}
 			else
 				temp=${os_arch#gpu_}
@@ -82,8 +82,8 @@ do
 			temp=${temp%%.*}
 			osarch="$osarch"_${temp%%_*}
 
-			if [ -f "$PATH_REPO/generator-$PU/$osarch" ]; then
-				cp -af "$PATH_REPO/generator-$PU/$osarch" "$PATH_VENDOR_OS_ARCH/cracker.${os_arch##*.}"
+			if [ -f "$PATH_REPO/generator-$pu/$osarch" ]; then
+				cp -af "$PATH_REPO/generator-$pu/$osarch" "$PATH_VENDOR_OS_ARCH/cracker.${os_arch##*.}"
 			fi
 
 			# Compress vendor
