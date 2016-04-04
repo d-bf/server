@@ -22,18 +22,19 @@ else
 fi
 
 cd "$PATH_REPO/client/main/dbf"
-export GOPATH="$PATH_GO"
 ./cross-compile.sh
 
+PATH_BUILD="/dbf_release"
+
 # Compress to download dir
-7z a "$PATH_DOWNLOAD/linux_32.7z"	"$PATH_GO/bin/linux_386/dbf"
-7z a "$PATH_DOWNLOAD/linux_64.7z"	"$PATH_GO/bin/dbf"
+7z a "$PATH_DOWNLOAD/linux_32.7z"	"$PATH_BUILD/linux_32/dbf"
+7z a "$PATH_DOWNLOAD/linux_64.7z"	"$PATH_BUILD/linux_64/dbf"
 
-7z a "$PATH_DOWNLOAD/windows_32.7z"	"$PATH_GO/bin/windows_386/dbf.exe"
-7z a "$PATH_DOWNLOAD/windows_64.7z" "$PATH_GO/bin/windows_amd64/dbf.exe"
+7z a "$PATH_DOWNLOAD/windows_32.7z"	"$PATH_BUILD/win_32/dbf.exe"
+7z a "$PATH_DOWNLOAD/windows_64.7z"	"$PATH_BUILD/win_64/dbf.exe"
 
-7z a "$PATH_DOWNLOAD/mac_32.7z"		"$PATH_GO/bin/darwin_386/dbf"
-7z a "$PATH_DOWNLOAD/mac_64.7z"		"$PATH_GO/bin/darwin_amd64/dbf"
+7z a "$PATH_DOWNLOAD/mac_32.7z"		"$PATH_BUILD/mac_32/dbf"
+7z a "$PATH_DOWNLOAD/mac_64.7z"		"$PATH_BUILD/mac_64/dbf"
 
 # Sync download table
 $PATH_YII files/sync
