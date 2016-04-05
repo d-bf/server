@@ -505,6 +505,10 @@ class Crack extends \yii\db\ActiveRecord
             
             $this->has_dep = 0;
             
+            if ($this->key_total == 0) {
+                return false;
+            }
+            
             return true;
         } else {
             return false;

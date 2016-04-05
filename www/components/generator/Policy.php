@@ -59,6 +59,14 @@ class Policy extends \yii\base\Component
         // // TODO: Mask is not supported yet!
         // }
         
+        if ($key_total == 0) {
+            if ($model->len_max < 4) {
+                $model->addError('len_max', 'This generator requires at least 4 characters.');
+            } else {
+                $model->addError('charset', 'At leaset one digit, one upper case, one lower case and one special char are needed.');
+            }
+        }
+        
         return $key_total;
     }
 }
