@@ -5,6 +5,7 @@ use Yii;
 use app\components\AppComp;
 use yii\web\UploadedFile;
 use app\controllers\SetupController;
+use app\components\GenComp;
 
 /**
  * This is the model class for table "{{%crack}}".
@@ -488,38 +489,18 @@ class Crack extends \yii\db\ActiveRecord
                 $this->charset_4 = '';
                 
                 $this->mask = str_repeat('?1', $this->len_max);
-                $this->key_total = 0;
-                for ($len = $this->len_min; $len <= $this->len_max; $len ++)
-                    $this->key_total += pow(strlen($this->charset_1), $len);
+                $this->key_total = GenComp::getKeyTotal($this, true);
             } else { // Mask
                 $this->charset_1 = count_chars($this->charset_1, 3); // Get unique chars only
                 $this->charset_2 = count_chars($this->charset_2, 3); // Get unique chars only
                 $this->charset_3 = count_chars($this->charset_3, 3); // Get unique chars only
                 $this->charset_4 = count_chars($this->charset_4, 3); // Get unique chars only
                 
-                $charLenMap = [
-                    '?l' => 26,
-                    '?u' => 26,
-                    '?d' => 10,
-                    '?s' => 33,
-                    '?a' => 95,
-                    '?1' => strlen($this->charset_1),
-                    '?2' => strlen($this->charset_2),
-                    '?3' => strlen($this->charset_3),
-                    '?4' => strlen($this->charset_4)
-                ];
-                
                 $this->mask = '';
                 foreach ($this->maskChar as $mc)
                     $this->mask .= $mc;
                 
-                $this->key_total = 0;
-                for ($len = $this->len_min; $len <= $this->len_max; $len ++) {
-                    $charLen = 1;
-                    for ($l = 1; $l <= $len; $l ++)
-                        $charLen *= isset($charLenMap[$this->maskChar[$l]]) ? $charLenMap[$this->maskChar[$l]] : 1;
-                    $this->key_total += $charLen;
-                }
+                $this->key_total = GenComp::getKeyTotal($this, false);
             }
             
             $this->has_dep = 0;
