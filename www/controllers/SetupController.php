@@ -31,7 +31,7 @@ class SetupController extends Controller
     private function initEndMsg($function)
     {
         $tableName = substr($function, 10);
-        echo "\"$tableName\" table Initialized.<br><br>";
+        echo 'Done.<br><br>';
     }
 
     public static $platforms = [
