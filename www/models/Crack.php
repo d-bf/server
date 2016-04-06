@@ -354,7 +354,11 @@ class Crack extends \yii\db\ActiveRecord
         if ($status === false) {
             return $statusMap;
         } elseif (isset($statusMap[$status])) {
-            return $statusMap[$status];
+            if ($status == 0) { // Assigning, show percent too
+                return $statusMap[$status] . ' ' . round($this->key_assigned * (100 / $this->key_total), 2) . '%';
+            } else {
+                return $statusMap[$status];
+            }
         } else {
             return \Yii::t('app', 'Unknown');
         }
