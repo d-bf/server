@@ -73,7 +73,15 @@ class TaskController extends Controller
                 }
                 
                 if (($status === 0) && (! empty($taskInfo['result']))) { // Result exists and is valid
-                    $result = explode("\n", base64_decode($taskInfo['result']));
+                    $result = explode("\n", str_replace([
+                        "\r\n",
+                        "\r"
+                    ], "\n", base64_decode($taskInfo['result'])));
+                    
+                    // Remove empty results
+                    $result = array_diff($result, [
+                        ''
+                    ]);
                     
                     $transaction = \Yii::$app->db->beginTransaction();
                     
