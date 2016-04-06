@@ -101,11 +101,11 @@ do
 			echo "Warning, vendor not found: $PATH_VENDOR_REPO/bin/$os_arch"
 		fi
 	done
+
+	# Remove temp files
+	rm -f "$PATH_VENDOR_REPO"/bin/hashcat.*
+	rm -f "$PATH_VENDOR_REPO"/bin/cracker.*
+
+	# Remove dep.zip file
+	rm -f "$PATH_DEP_ZIP"
 done
-
-# Remove temp files
-rm -f "$PATH_VENDOR_REPO"/bin/hashcat.*
-rm -f "$PATH_VENDOR_REPO"/bin/cracker.*
-
-# Remove dep.zip file
-rm -f "$PATH_DEP_ZIP"

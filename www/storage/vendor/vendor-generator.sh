@@ -71,7 +71,7 @@ do
 			echo "Error, vendor not found: $PATH_VENDOR_REPO/bin/$os_arch"
 		fi
 	done
-done
 
-# Remove generator.*
-rm -f "$PATH_VENDOR_REPO"/bin/generator.*
+	# Remove generator.*
+	rm -f "$PATH_VENDOR_REPO"/bin/generator.*
+done
