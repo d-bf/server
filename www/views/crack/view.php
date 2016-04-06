@@ -78,10 +78,10 @@ echo DetailView::widget([
         'charset_3',
         'charset_4',
         'mask',
-        'key_total',
-        'key_assigned',
-        'key_finished',
-        'key_error'
+        'key_total:integer',
+        'key_assigned:integer',
+        'key_finished:integer',
+        'key_error:integer'
     ]
 ]);
 ?>
