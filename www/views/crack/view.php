@@ -51,7 +51,13 @@ echo DetailView::widget([
             'value' => $model->getDuration()
         ],
         'algoName',
-        'target:ntext',
+        [
+            'attribute' => 'target',
+            'format' => 'html',
+            'value' => empty($model->target) ? null : Html::tag('pre', nl2br(htmlentities($model->target)), [
+                'style' => 'white-space: nowrap;'
+            ])
+        ],
         [
             'attribute' => 'result',
             'format' => 'html',
