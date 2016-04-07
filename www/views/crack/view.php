@@ -55,7 +55,7 @@ echo DetailView::widget([
         [
             'attribute' => 'result',
             'format' => 'html',
-            'value' => empty($model->result) ? null : Html::tag('span', nl2br(htmlentities($model->result)), [
+            'value' => empty($model->result) ? null : Html::tag('pre', nl2br(htmlentities($model->result)), [
                 'style' => 'white-space: nowrap;'
             ])
         ],

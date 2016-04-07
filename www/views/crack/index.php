@@ -35,7 +35,7 @@ echo GridView::widget([
                 if (empty($model->result))
                     return null;
                 else
-                    return Html::tag('span', nl2br(htmlentities($model->result)), [
+                    return Html::tag('pre', nl2br(htmlentities($model->result)), [
                         'style' => 'white-space: nowrap;'
                     ]);
             }
