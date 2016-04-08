@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use kartik\grid\GridView;
 use app\commands\FilesController;
 use kartik\growl\Growl;
@@ -82,7 +82,13 @@ if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . $infoFile . '.php')) {
                 'format' => 'shortsize',
                 'filter' => false
             ],
-            'md5',
+            [
+                'attribute' => 'md5',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::tag('pre', $model->md5);
+                }
+            ],
             [
                 'header' => Yii::t('yii', 'Download'),
                 'class' => 'yii\grid\ActionColumn',
