@@ -184,19 +184,22 @@ class TaskController extends Controller
         // TODO: Assign dynamic amount of work based on remained keys.
         $power *= 188743680; // Assign 3 minute of work: (3 min = 180 sec), (1M = 1048576) => 180 * 1048576 = 188743680
         
-        $assign = $crack['keyTotal'] - $crack['keyAssigned'];
-        
-        if ($assign > $power) { // Task won't be finished by this assignment
-            $assign = $power;
-            $setStatus = '';
-        } else { // All keys will be assigned by this assignment
-            $setStatus = ', status = 1';
-        }
-        
-        // Calculate start key
-        if ($crack['status'] == 0) {
+        if ($crack['status'] == 0) { // Not assigned all
+            $assign = $crack['keyTotal'] - $crack['keyAssigned'];
+            
+            if ($assign > $power) { // Task won't be finished by this assignment
+                $assign = $power;
+                $setStatus = '';
+            } else { // All keys will be assigned by this assignment
+                $setStatus = ', status = 1';
+                
+                if ($assign < $power) // Less resource would be assigned to this crack
+                    $info['benchmark'] *= ($assign / $power);
+            }
+            
             $taskStart = $crack['keyAssigned'];
             
+            // Insert task
             \Yii::$app->db->createCommand("INSERT INTO {{%task}} (crack_id, start, offset, status, ts_save) VALUES (:crackId, :start, :offset, :status, :tsSave)", [
                 ':crackId' => $crack['crack_id'],
                 ':start' => $taskStart,
@@ -204,18 +207,27 @@ class TaskController extends Controller
                 ':status' => null,
                 ':tsSave' => gmdate('U')
             ])->execute();
-        } else {
-            // TODO: Handle situations where task is bigger or is too small
+            
+            // Update crack table
+            \Yii::$app->db->createCommand("UPDATE {{%crack}} SET key_assigned = key_assigned + :keyAssigned, res_assigned = res_assigned + :resAssigned, ts_last_connect = :tsLastConnect $setStatus WHERE id = :crackId", [
+                ':keyAssigned' => $assign,
+                ':resAssigned' => $info['benchmark'],
+                ':tsLastConnect' => gmdate('U'),
+                ':crackId' => $crack['crack_id']
+            ])->execute();
+        } else { // Assigned all
+                 // TODO: Handle situations where task is bigger or is too small
             $task = \Yii::$app->db->createCommand("SELECT start, offset, ts_save FROM {{%task}} WHERE crack_id = :crackId AND (status IS NULL OR status <> 0) AND ts_save < :timeout AND offset <= :assign ORDER BY retry ASC, ts_save ASC", [
                 ':crackId' => $crack['crack_id'],
                 ':timeout' => $timeout,
-                ':assign' => $assign
+                ':assign' => $power
             ])->queryOne(\PDO::FETCH_ASSOC);
             
             if ($task) {
                 $taskStart = $task['start'];
                 $assign = $task['offset'];
                 
+                // Update task table
                 \Yii::$app->db->createCommand("UPDATE {{%task}} SET retry = retry + 1, ts_save =:updateTsSave WHERE crack_id = :crackId AND start = :start AND offset = :offset AND ts_save = :tsSave", [
                     ':updateTsSave' => gmdate('U'),
                     ':crackId' => $crack['crack_id'],
@@ -223,20 +235,20 @@ class TaskController extends Controller
                     ':offset' => $task['offset'],
                     ':tsSave' => $task['ts_save']
                 ])->execute();
+                
+                if ($assign < $power) // Less resource would be assigned to this crack
+                    $info['benchmark'] *= ($assign / $power);
+                    
+                    // Update crack table
+                \Yii::$app->db->createCommand("UPDATE {{%crack}} SET res_assigned = res_assigned + :resAssigned, ts_last_connect = :tsLastConnect WHERE id = :crackId", [
+                    ':resAssigned' => $info['benchmark'],
+                    ':tsLastConnect' => gmdate('U'),
+                    ':crackId' => $crack['crack_id']
+                ])->execute();
             } else {
                 return false;
             }
         }
-        
-        if ($assign < $power) // Less resource is assigned to this crack
-            $info['benchmark'] *= ($assign / $power);
-        
-        \Yii::$app->db->createCommand("UPDATE {{%crack}} SET key_assigned = key_assigned + :keyAssigned, res_assigned = res_assigned + :resAssigned, ts_last_connect = :tsLastConnect $setStatus WHERE id = :crackId", [
-            ':keyAssigned' => $assign,
-            ':resAssigned' => $info['benchmark'],
-            ':tsLastConnect' => gmdate('U'),
-            ':crackId' => $crack['crack_id']
-        ])->execute();
         
         unset($crack['status']);
         unset($crack['keyTotal']);
