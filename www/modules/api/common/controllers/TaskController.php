@@ -226,8 +226,6 @@ class TaskController extends Controller
             } else {
                 return false;
             }
-            
-            $updateRetry = ', retry = retry + 1';
         }
         
         if ($assign < $power) // Less resource is assigned to this crack
