@@ -200,6 +200,7 @@ class Crack extends \yii\db\ActiveRecord
             [
                 'len_max',
                 'compare',
+                'type' => 'number',
                 'compareAttribute' => 'len_min',
                 'operator' => '>='
             ],
