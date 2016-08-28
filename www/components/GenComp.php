@@ -30,10 +30,10 @@ class GenComp extends \yii\base\Component
                 '?d' => 10,
                 '?s' => 33,
                 '?a' => 95,
-                '?1' => strlen($this->charset_1),
-                '?2' => strlen($this->charset_2),
-                '?3' => strlen($this->charset_3),
-                '?4' => strlen($this->charset_4)
+                '?1' => strlen($model->charset_1),
+                '?2' => strlen($model->charset_2),
+                '?3' => strlen($model->charset_3),
+                '?4' => strlen($model->charset_4)
             ];
             
             for ($len = $model->len_min; $len <= $model->len_max; $len ++) {
