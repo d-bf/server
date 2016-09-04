@@ -87,6 +87,7 @@ echo Nav::widget([
             'options' => [
                 'title' => 'List downloads'
             ],
+            'active' => (Yii::$app->controller->id == 'download'),
             'items' => [
                 [
                     'label' => 'Client',
