@@ -1,8 +1,7 @@
 <?php
 namespace app\commands;
 
-use Yii;
-use yii\web\Controller;
+use yii\console\Controller;
 
 /**
  * SetupController performs the initial setup and initialization of database.
