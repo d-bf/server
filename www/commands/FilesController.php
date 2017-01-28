@@ -49,8 +49,8 @@ class FilesController extends Controller
         $pathOfVendorOclHashcat     = 'vendor' . DIRECTORY_SEPARATOR . 'oclHashcat' . DIRECTORY_SEPARATOR;
         $pathOfVendorHashcat        = 'vendor' . DIRECTORY_SEPARATOR . 'hashcat' . DIRECTORY_SEPARATOR;
 
-//          sort,   file_type,  name,           os,             arch,           processor,              brand,      path
-//          0       1           2               3               4               5                       6           7
+//          sort,   file_type,          name,           os,             arch,           processor,              brand,      path
+//          0       1                   2               3               4               5                       6           7
         $files = [
             ['0',   self::TYPE_CLIENT,  'D-BF',         self::OS_LINUX, self::ARCH_32,  self::PROCESSOR_CPU,    '',         $pathOfClient.'linux_32.7z'],
             ['0',   self::TYPE_CLIENT,  'D-BF',         self::OS_LINUX, self::ARCH_64,  self::PROCESSOR_CPU,    '',         $pathOfClient.'linux_64.7z'],
