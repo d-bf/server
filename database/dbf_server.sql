@@ -17,10 +17,6 @@ CREATE TABLE `algorithm` (
   `rate_gpu` double UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONS FOR TABLE `algorithm`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -53,14 +49,6 @@ CREATE TABLE `crack` (
   `ts_last_connect` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONS FOR TABLE `crack`:
---   `gen_id`
---       `generator` -> `id`
---   `algo_id`
---       `algorithm` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -74,10 +62,6 @@ CREATE TABLE `cracker` (
   `input_mode` tinyint(3) UNSIGNED DEFAULT NULL COMMENT '0: none; 1: infile; 2: stdin; 3: both;'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONS FOR TABLE `cracker`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -88,14 +72,6 @@ CREATE TABLE `cracker_algo` (
   `cracker_id` int(10) UNSIGNED NOT NULL,
   `algo_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONS FOR TABLE `cracker_algo`:
---   `cracker_id`
---       `cracker` -> `id`
---   `algo_id`
---       `algorithm` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -109,14 +85,6 @@ CREATE TABLE `cracker_gen` (
   `config` varchar(500) DEFAULT NULL COMMENT '{}'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- RELATIONS FOR TABLE `cracker_gen`:
---   `cracker_id`
---       `cracker` -> `id`
---   `gen_id`
---       `generator` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -128,14 +96,6 @@ CREATE TABLE `cracker_plat` (
   `plat_id` tinyint(3) UNSIGNED NOT NULL,
   `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONS FOR TABLE `cracker_plat`:
---   `cracker_id`
---       `cracker` -> `id`
---   `plat_id`
---       `platform` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -150,17 +110,24 @@ CREATE TABLE `crack_info` (
   `cracker_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- RELATIONS FOR TABLE `crack_info`:
---   `crack_id`
---       `crack` -> `id`
---   `plat_id`
---       `platform` -> `id`
---   `gen_id`
---       `generator` -> `id`
---   `cracker_id`
---       `cracker` -> `id`
+-- Table structure for table `download`
 --
+
+CREATE TABLE `download` (
+  `sort` tinyint(4) DEFAULT NULL,
+  `file_type` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `os` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `arch` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `processor` char(3) COLLATE utf8_unicode_ci NOT NULL,
+  `brand` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `size` int(10) UNSIGNED DEFAULT NULL,
+  `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `path` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -173,10 +140,6 @@ CREATE TABLE `generator` (
   `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `config` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '{\n    "stdout":"",\n    "infile":""\n}'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONS FOR TABLE `generator`:
---
 
 -- --------------------------------------------------------
 
@@ -191,16 +154,6 @@ CREATE TABLE `gen_plat` (
   `md5` char(32) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONS FOR TABLE `gen_plat`:
---   `gen_id`
---       `generator` -> `id`
---   `plat_id`
---       `platform` -> `id`
---   `alt_plat_id`
---       `platform` -> `id`
---
-
 -- --------------------------------------------------------
 
 --
@@ -213,10 +166,6 @@ CREATE TABLE `info` (
   `info_value` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- RELATIONS FOR TABLE `info`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -227,10 +176,6 @@ CREATE TABLE `platform` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT 'os_arch_processor[_brand]'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONS FOR TABLE `platform`:
---
 
 -- --------------------------------------------------------
 
@@ -246,12 +191,6 @@ CREATE TABLE `task` (
   `ts_save` int(10) UNSIGNED DEFAULT '0',
   `retry` tinyint(3) UNSIGNED DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- RELATIONS FOR TABLE `task`:
---   `crack_id`
---       `crack` -> `id`
---
 
 --
 -- Indexes for dumped tables
@@ -313,6 +252,12 @@ ALTER TABLE `crack_info`
   ADD KEY `idx_crack_info_0` (`plat_id`),
   ADD KEY `idx_crack_info_1` (`gen_id`),
   ADD KEY `idx_crack_info_2` (`cracker_id`);
+
+--
+-- Indexes for table `download`
+--
+ALTER TABLE `download`
+  ADD PRIMARY KEY (`file_type`,`name`,`os`,`arch`,`processor`,`brand`);
 
 --
 -- Indexes for table `generator`

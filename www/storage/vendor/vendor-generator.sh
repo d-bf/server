@@ -9,11 +9,11 @@
 #
 # Mac OS X (http://powdertoy.co.uk/Wiki/W/Compiling_for_Mac_on_Linux.html)
 # Download and install the following files from: https://launchpad.net/~flosoft/+archive/ubuntu/cross-apple/+packages
-#	ccache-lipo
-#	apple-x86-odcctools
-#	apple-uni-sdk-10.5 (OR apple-uni-sdk-10.6 And then: ln -s /usr/lib/apple/SDKs/MacOSX10.6.sdk /usr/lib/apple/SDKs/MacOSX10.5.sdk)
-#	apple-x86-gcc
-#	apple-uni-framework-sdl
+#	ccache-lipo [https://launchpad.net/~flosoft/+archive/ubuntu/cross-apple/+files/ccache-lipo_1.0-0flosoft3_amd64.deb]
+#	apple-uni-sdk-10.5 (OR apple-uni-sdk-10.6 And then: ln -s /usr/lib/apple/SDKs/MacOSX10.6.sdk /usr/lib/apple/SDKs/MacOSX10.5.sdk [wget])
+#	apple-uni-framework-sdl [https://launchpad.net/~flosoft/+archive/ubuntu/cross-apple/+files/apple-uni-framework-sdl_1.2.14-0flosoft3_amd64.deb]
+#	apple-x86-odcctools [https://launchpad.net/~flosoft/+archive/ubuntu/cross-apple/+files/apple-x86-odcctools_758.159-0flosoft11_amd64.deb]
+#	apple-x86-gcc [https://launchpad.net/~flosoft/+archive/ubuntu/cross-apple/+files/apple-x86-gcc_4.2.1~5646.1flosoft2_amd64.deb]
 
 PATH_ME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
