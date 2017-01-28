@@ -2,6 +2,7 @@
 namespace app\commands;
 
 use yii\console\Controller;
+use yii\helpers\Console;
 
 /**
  * SetupController performs the initial setup and initialization of database.
@@ -24,13 +25,13 @@ class SetupController extends Controller
     private function initStartMsg($function)
     {
         $tableName = substr($function, 10);
-        echo "Initializing \"$tableName\" table...<br>";
+        $this->stdout("Initializing \"$tableName\" table..." . PHP_EOL);
     }
 
     private function initEndMsg($function)
     {
         $tableName = substr($function, 10);
-        echo 'Done.<br><br>';
+        $this->stdout('Done.' . PHP_EOL . PHP_EOL);
     }
 
     public static $platforms = [
