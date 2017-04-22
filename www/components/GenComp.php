@@ -11,10 +11,10 @@ class GenComp extends \yii\base\Component
         $genClassName = '\app\components\generator\\' . ucfirst($model->gen->name);
         
         if (method_exists($genClassName, __FUNCTION__)) {
-            return call_user_func([
+            return call_user_func_array([
                 $genClassName,
                 __FUNCTION__
-            ], $model, $simpleMode);
+            ], [&$model, $simpleMode]);
         }
         
         // Default implementation

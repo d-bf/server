@@ -10,6 +10,17 @@ class Policy extends \yii\base\Component
     {
         $key_total = 0;
         
+        if (! $simpleMode) { // TODO: Mask is not supported yet! Convert mask mode to simple mode!
+            $model->charset_1 = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~';
+            $model->charset_2 = '';
+            $model->charset_3 = '';
+            $model->charset_4 = '';
+            
+            $model->mask = str_repeat('?1', $model->len_max);
+            
+            $simpleMode = true;
+        }
+        
         if ($simpleMode) {
             $charsetLen = strlen($model->charset_1);
             
