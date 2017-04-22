@@ -4,7 +4,7 @@ namespace app\models;
 use Yii;
 use app\components\AppComp;
 use yii\web\UploadedFile;
-use app\controllers\SetupController;
+use app\commands\SetupController;
 use app\components\GenComp;
 
 /**
