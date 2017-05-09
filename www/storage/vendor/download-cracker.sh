@@ -61,7 +61,7 @@ do
 		if [ -f "$PATH_VENDOR_REPO/bin/$os_arch" ]; then
 			rm -f -R "$PATH_TARGET"
 
-			PATH_VENDOR_OS_ARCH="$PATH_VENDOR/${os_arch%.*}"
+			PATH_VENDOR_OS_ARCH="$PATH_VENDOR/${os_arch%.*}" # ${os_arch%.*} removes extension
 
 			mkdir -p "$PATH_VENDOR_OS_ARCH"
 
@@ -72,15 +72,15 @@ do
 
 			cp -af "$PATH_VENDOR_REPO/bin/$os_arch" "$PATH_VENDOR_OS_ARCH/hashcat.${os_arch##*.}"
 
-			if [ "$pu" == "cpu" ]; then
-				temp=${os_arch#cpu_}
-			else
-				temp=${os_arch#gpu_}
-			fi
-			osarch=${temp%%_*}
-			temp=${temp#*_}
-			temp=${temp%%.*}
-			osarch="$osarch"_${temp%%_*}
+			# Get platform (linux|windows|mac)
+			platform=${os_arch#*_} # Remove *pu_
+			platform=${platform%%_*} # Get platform
+
+			# Get bitness (32|64)
+			bitness=${os_arch#*_*_} # Remove *pu_platform_
+			bitness=${bitness%%[_|.]*} # Get bitness
+
+			osarch="$platform"_"$bitness" # platform_bitness
 
 			if [ -f "$PATH_REPO/generator-$pu/$osarch" ]; then
 				cp -af "$PATH_REPO/generator-$pu/$osarch" "$PATH_VENDOR_OS_ARCH/cracker.${os_arch##*.}"
